@@ -1,0 +1,49 @@
+debug file 2 open in case dci
+offset 1 is 0
+313c0400f05100008880after313c0400f05100008880offset 2 is 4
+after decode dci header
+debug file 2 close try62debug file 2 open in case dci
+offset 1 is 0
+317c020015400000e880after317c020015400000e880offset 2 is 4
+after decode dci header
+debug file 2 close try62debug file 2 open in case dci
+offset 1 is 0
+313c0500f90402009002after313c0500f90402009002offset 2 is 4
+after decode dci header
+debug file 2 close try62debug file 2 open in case dci
+offset 1 is 0
+313c0500fe2002009002after313c0500fe2002009002offset 2 is 4
+after decode dci header
+debug file 2 close try62debug file 2 open in case dci
+offset 1 is 0
+313c050006490000a080after313c050006490000a080offset 2 is 4
+after decode dci header
+debug file 2 close try62debug file 2 open in case dci
+offset 1 is 0
+313c0500135900008080after313c0500135900008080offset 2 is 4
+after decode dci header
+debug file 2 close try62debug file 2 open in case dci
+offset 1 is 0
+313c05001f5900008080after313c05001f5900008080offset 2 is 4
+after decode dci header
+debug file 2 close try62debug file 2 open in case dci
+offset 1 is 0
+31fc0300310502003003after31fc0300310502003003offset 2 is 4
+after decode dci header
+debug file 2 close try62debug file 2 open in case dci
+offset 1 is 0
+31fc0000d7410000a880after31fc0000d7410000a880offset 2 is 4
+after decode dci header
+debug file 2 close try62debug file 2 open in case dci
+offset 1 is 0
+313c0500224200008080after313c0500224200008080offset 2 is 4
+after decode dci header
+debug file 2 close try62debug file 2 open in case dci
+offset 1 is 0
+313c050066520000c080after313c050066520000c080offset 2 is 4
+after decode dci header
+debug file 2 close try62debug file 2 open in case dci
+offset 1 is 0
+313c050075560000b080after313c050075560000b080offset 2 is 4
+after decode dci header
+debug file 2 close try62
