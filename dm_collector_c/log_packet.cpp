@@ -76,7 +76,7 @@
 #include "gnss_glonass_measurement_report.h"
 #include "gnss_gal_measurement_report.h"
 #include "ml1_dci_infomaion_report.h"
-
+#include "../asn1c/asn1_changebyte.c"
 
 // #define SSTR(x) static_cast< std::ostringstream & >( \
 //         ( std::ostringstream() << std::dec << x ) ).str()
@@ -12302,7 +12302,38 @@ on_demand_decode (const char *b, size_t length, LogPacketType type_id, PyObject*
             offset += _decode_gnss_gal_payload(b, offset, length, result);
             break;    
 
-        //ty add
+        //ty mobileinsight version dci
+        // case ML1_DCI_Infomation_Report:
+        // {
+        //     fprintf(debug_file_2,"debug file 2 open in case dci\n");
+        //     fprintf(debug_file_2,"offset 1 is %d\n",offset);
+        //     for(size_t i=0;i<10;i++)
+        //     {
+        //         fprintf(debug_file_2,"%02x",(unsigned char)b[i]);
+        //     }
+        //     offset += _decode_by_fmt(dci_info_head_Fmt,
+        //         ARRAY_SIZE(dci_info_head_Fmt, Fmt),
+        //         b, offset, length, result);
+        //     fprintf(debug_file_2,"after");
+        //     for(size_t i=0;i<10;i++)
+        //     {
+        //         fprintf(debug_file_2,"%02x",(unsigned char)b[i]);
+        //     }
+        //     fprintf(debug_file_2,"offset 2 is %d\n",offset);
+        //     fprintf(debug_file_2,"after decode dci header\n");
+
+        //     fprintf(debug_file_2,"debug file 2 close try62");
+        //     fclose(debug_file_2);
+
+
+        //     offset += _decode_dci_info_report_payload(b, offset, length, result);
+
+        //     break;    
+        // }      
+
+        
+
+        //asn1 version dci
         case ML1_DCI_Infomation_Report:
         {
             fprintf(debug_file_2,"debug file 2 open in case dci\n");
@@ -12311,43 +12342,18 @@ on_demand_decode (const char *b, size_t length, LogPacketType type_id, PyObject*
             {
                 fprintf(debug_file_2,"%02x",(unsigned char)b[i]);
             }
-            offset += _decode_by_fmt(dci_info_head_Fmt,
-                ARRAY_SIZE(dci_info_head_Fmt, Fmt),
-                b, offset, length, result);
-            fprintf(debug_file_2,"after");
-            for(size_t i=0;i<10;i++)
-            {
-                fprintf(debug_file_2,"%02x",(unsigned char)b[i]);
-            }
+            process_data(b,length);
+
             fprintf(debug_file_2,"offset 2 is %d\n",offset);
             fprintf(debug_file_2,"after decode dci header\n");
-            
-            
-            // int version1 = (int) _map_result_field_to_name(
-            //     result,
-            //     "Version",
-            //     LogPacketTypeID_To_Name,
-            //     ARRAY_SIZE(LogPacketTypeID_To_Name, ValueName),
-            //     "Unsupported");
-            // fprintf(debug_file_2,"version1 is 0x%02x\n", version1);
 
-            // int num_records_and_cfg_1 = (int) _map_result_field_to_name(
-            //     result,
-            //     "num records and cfg",
-            //     LogPacketTypeID_To_Name,
-            //     ARRAY_SIZE(LogPacketTypeID_To_Name, ValueName),
-            //     "Unsupported");
-            // fprintf(debug_file_2,"num records and cfg is 0x%02x\n", num_records_and_cfg_1);
-            
-            
             fprintf(debug_file_2,"debug file 2 close try62");
             fclose(debug_file_2);
-
-
-            offset += _decode_dci_info_report_payload(b, offset, length, result);
+            
+            //offset += _decode_dci_info_report_payload(b, offset, length, result);
 
             break;    
-        }      
+        }  
         default:
             break;
     };
@@ -12399,6 +12405,7 @@ decode_log_packet(const char *b, size_t length, bool skip_decoding) {
 		}	
 	    }
     }
+
 
 
     PyObject *result = NULL;

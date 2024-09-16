@@ -18,6 +18,9 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+// #include "asn1c/asn1_changebyte.h"
+// #include "../asn1c/asn1_changebyte.c"
+
 
 #ifdef __ANDROID__
 #include <android/log.h>
@@ -27,8 +30,6 @@
 #ifndef _WIN32
 
 #include <sys/time.h>
-// asn1 dci try
-#include "../asn1c/asn1_changebyte.c"
 
 #endif
 
@@ -736,22 +737,21 @@ dm_collector_c_receive_log_packet(PyObject *self, PyObject *args) {
                 continue;
             if (is_log_packet(frame.c_str(), frame.size())) 
             {
-                // dci information asn1 try: just let the following 1 line run, the following other code should be comment
-                // process_data(s+4, frame.size()-4);
                 const char *s = frame.c_str();
+                printf("d");
+                //process_data(s+4, frame.size()-4);
                 PyObject *decoded = decode_log_packet(s + 2,  // skip first two bytes
                                                       frame.size() - 2,
                                                       skip_decoding);
 		        if (include_timestamp) 
                 {
                     PyObject *ret = Py_BuildValue("(Od)", decoded, posix_timestamp);
-
 		            if(decoded != Py_None)
                     {
                         Py_DECREF(decoded);
                     }
 
-		        return ret;
+		            return ret;
                 } 
                 else 
                 {
@@ -833,7 +833,7 @@ dm_collector_c_receive_log_packet_debug(PyObject *self, PyObject *args) {
     {
         fprintf(debug_file,"%02x",(unsigned char)s[i]);
     }
-    fprintf(debug_file,"\n file close end \n");
+    fprintf(debug_file,"\n 0 file close end \n");
     fclose(debug_file);
     PyObject *decoded = decode_log_packet(s + 2,  // skip first two bytes
                                             debug_string.size() - 2,

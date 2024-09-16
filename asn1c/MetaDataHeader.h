@@ -13,7 +13,6 @@
 
 /* Including external dependencies */
 #include <NativeInteger.h>
-#include <OCTET_STRING.h>
 #include "NumInfoMetaHeaderStructure.h"
 #include <constr_SEQUENCE.h>
 
@@ -23,9 +22,6 @@ extern "C" {
 
 /* MetaDataHeader */
 typedef struct MetaDataHeader {
-	long	 msglen;
-	OCTET_STRING_t	 logcode;
-	OCTET_STRING_t	 timestamp;
 	long	 version;
 	NumInfoMetaHeaderStructure_t	 numinfometaheader;
 	long	 skip0;
@@ -37,7 +33,7 @@ typedef struct MetaDataHeader {
 /* Implementation */
 extern asn_TYPE_descriptor_t asn_DEF_MetaDataHeader;
 extern asn_SEQUENCE_specifics_t asn_SPC_MetaDataHeader_specs_1;
-extern asn_TYPE_member_t asn_MBR_MetaDataHeader_1[6];
+extern asn_TYPE_member_t asn_MBR_MetaDataHeader_1[3];
 
 #ifdef __cplusplus
 }

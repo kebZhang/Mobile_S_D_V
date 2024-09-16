@@ -1,4 +1,4 @@
-This version is built on sep 4 2024  
+This version is built on sep 16 2024  
 b16c ml1 dci information report is added by using dm_collector_c/ml1_dci_infomation_report.h  
 we developed the receive_log_packet_debug in dm_collector_c.cpp, examples/debug.py, Dmcollector_c/dm_collector.py/run_debug func  
 we developed this by using mobileinsight protocal and way
@@ -16,6 +16,8 @@ The documents are: asn1c code series, convert function, dm_collector_c.cpp
 1.asn1c -S /usr/local/share/asn1c -fcompound-names -fskeletons-copy -gen-PER -pdu=auto dci_test.asn1  
 2. make -f coverter-example.mk  
 3. the executable file is converter-example
+4. sudo cp /asn1c/converter-example /usr/local/bin  
+we should put the executable file to /usr/local/bin so that we can use system command to call the executable file in convert function
 ```
 
 - convert function  
@@ -25,19 +27,17 @@ if we want to offline test the data, we can define the hex data compile the conv
 gcc try.c -o try
 ```
 
-- dm_collector_c.cpp  
-<font color="red">  
-The following process is used now(deal the whole process include metadataheader), but in the future, I have to recognized the message metadataheader without asn1, and then use the logcode and version to switch into exact process function.
-We also need to change the way of calling converter-example     
-</font>  
-in the dm_collector_c_receive_log_packet function, after we make sure it is a frame, we include the asn1c/asn1_changebyte.c and call the process_data function.  
-In order to call and link the asn1c code series and asn1_changebyte.c, we should make the asn1_changebyte.c a dynamic linke library.  \
-
-
+- dm_collector_c.cpp and log_packet.cpp  
+In the previous version, in the dm_collector_c_receive_log_packet function, after we make sure it is a frame, we include the asn1c/asn1_changebyte.c and call the process_data function.  
+But in this version, after the mobileinsight recognized msg_len, logcode, timstamp, and according to the logcode go into the specific switch branch, we call the process_data function in log_packet.cpp.   
+We also delete msg_len, logcode and timestamp field in dci_test.asn1 file.  
+In order to call and link the asn1c code series and asn1_changebyte.c, we should make the asn1_changebyte.c a dynamic linke library.  
+```
 1.gcc -fPIC -shared asn1_changebyte.c -o libchangebyte.so  
 2.sudo cp /asn1c/libchangebyte.so /usr/local/lib  
 3.sudo Idconfig  
 4.change the setup.py, add the library_dirs=['../asn1c'], libraries=['changebyte']
+```
 ```
 dm_collector_c_module = Extension('mobile_insight.monitor.dm_collector.dm_collector_c',
                                   sources=["dm_collector_c/dm_collector_c.cpp",
@@ -62,3 +62,5 @@ dm_collector_c_module = Extension('mobile_insight.monitor.dm_collector.dm_collec
 ```
 sudo python3 monitor-example.py /dev/ttyUSB0 9600 > /home/ty/Desktop/log/asn1/try1.txt 2>&1
 ```
+
+In the following test, we need to test two logcode in the same time.

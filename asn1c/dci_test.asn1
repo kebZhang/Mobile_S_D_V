@@ -7,9 +7,6 @@ DCIReport ::= SEQUENCE
 
 MetaDataHeader ::= SEQUENCE
 {
-    msglen                  INTEGER (0..65535),
-    logcode                 OCTET STRING (SIZE (2)),
-    timestamp               OCTET STRING (SIZE (8)),
     version                 INTEGER (0..255),
     numinfometaheader       NumInfoMetaHeaderStructure,
     skip0                   INTEGER (0..255)

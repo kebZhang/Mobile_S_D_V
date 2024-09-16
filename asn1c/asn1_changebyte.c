@@ -41,35 +41,35 @@ uint64_t convert_8_bytes_little_to_big(uint64_t little_endian)
 // Metadata header
 void convert_M_H(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
-    // 处理2字节的字段
-    if (*index + 2 <= length)
-    {
-        uint16_t field1 = *(uint16_t *)(hex_data + *index);
-        field1 = convert_2_bytes_little_to_big(field1);
-        memcpy(output + *out_index, &field1, 2);
-        *index += 2;
-        *out_index += 2;
-    }
+    // 2 byte msg_len
+    // if (*index + 2 <= length)
+    // {
+    //     uint16_t field1 = *(uint16_t *)(hex_data + *index);
+    //     field1 = convert_2_bytes_little_to_big(field1);
+    //     memcpy(output + *out_index, &field1, 2);
+    //     *index += 2;
+    //     *out_index += 2;
+    // }
 
-    // 处理2字节的字段
-    if (*index + 2 <= length)
-    {
-        uint16_t field2 = *(uint16_t *)(hex_data + *index);
-        field2 = convert_2_bytes_little_to_big(field2);
-        memcpy(output + *out_index, &field2, 2);
-        *index += 2;
-        *out_index += 2;
-    }
+    // 2 byte typeid
+    // if (*index + 2 <= length)
+    // {
+    //     uint16_t field2 = *(uint16_t *)(hex_data + *index);
+    //     field2 = convert_2_bytes_little_to_big(field2);
+    //     memcpy(output + *out_index, &field2, 2);
+    //     *index += 2;
+    //     *out_index += 2;
+    // }
 
-    // 处理8字节的字段
-    if (*index + 8 <= length)
-    {
-        uint64_t field3 = *(uint64_t *)(hex_data + *index);
-        field3 = convert_8_bytes_little_to_big(field3);
-        memcpy(output + *out_index, &field3, 8);
-        *index += 8;
-        *out_index += 8;
-    }
+    // 8 byte timestamp
+    // if (*index + 8 <= length)
+    // {
+    //     uint64_t field3 = *(uint64_t *)(hex_data + *index);
+    //     field3 = convert_8_bytes_little_to_big(field3);
+    //     memcpy(output + *out_index, &field3, 8);
+    //     *index += 8;
+    //     *out_index += 8;
+    // }
 
     // 处理1字节的字段
     if (*index + 1 <= length)
@@ -315,7 +315,7 @@ void process_data(const char *b, size_t length)
 
 
 
-    int num_of_records = ((output[13] & 0x07) << 2) | ((output[14] & 0xC0) >> 6);
+    int num_of_records = ((output[1] & 0x07) << 2) | ((output[2] & 0xC0) >> 6);
     printf("num of records=%d\n", num_of_records);
 
     for(int i=0;i<num_of_records;i++)
