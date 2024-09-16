@@ -28,14 +28,14 @@ gcc try.c -o try
 - dm_collector_c.cpp  
 <font color="red">  
 The following process is used now(deal the whole process include metadataheader), but in the future, I have to recognized the message metadataheader without asn1, and then use the logcode and version to switch into exact process function.
-We also need to change the way of calling converter-example   
-</font>
+We also need to change the way of calling converter-example     
+</font>  
 in the dm_collector_c_receive_log_packet function, after we make sure it is a frame, we include the asn1c/asn1_changebyte.c and call the process_data function.  
 In order to call and link the asn1c code series and asn1_changebyte.c, we should make the asn1_changebyte.c a dynamic linke library.  
 1.gcc -fPIC -shared asn1_changebyte.c -o libchangebyte.so  
 2.sudo cp /asn1c/libchangebyte.so /usr/local/lib  
 3.sudo Idconfig  
-4.change the setup.py, add the library_dirs=['../asn1c'], libraries=['changebyte'],
+4.change the setup.py, add the library_dirs=['../asn1c'], libraries=['changebyte']
 ```
 dm_collector_c_module = Extension('mobile_insight.monitor.dm_collector.dm_collector_c',
                                   sources=["dm_collector_c/dm_collector_c.cpp",
