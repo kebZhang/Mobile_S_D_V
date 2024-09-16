@@ -27,6 +27,8 @@
 #ifndef _WIN32
 
 #include <sys/time.h>
+// asn1 dci try
+#include "../asn1c/asn1_changebyte.c"
 
 #endif
 
@@ -732,19 +734,27 @@ dm_collector_c_receive_log_packet(PyObject *self, PyObject *args) {
 
             if (!manager_export_binary(&g_emanager, frame.c_str(), frame.size()))
                 continue;
-            if (is_log_packet(frame.c_str(), frame.size())) {
+            if (is_log_packet(frame.c_str(), frame.size())) 
+            {
+                // dci information asn1 try: just let the following 1 line run, the following other code should be comment
+                // process_data(s+4, frame.size()-4);
                 const char *s = frame.c_str();
                 PyObject *decoded = decode_log_packet(s + 2,  // skip first two bytes
                                                       frame.size() - 2,
                                                       skip_decoding);
-		if (include_timestamp) {
+		        if (include_timestamp) 
+                {
                     PyObject *ret = Py_BuildValue("(Od)", decoded, posix_timestamp);
 
-		    if(decoded != Py_None)
-                      Py_DECREF(decoded);
+		            if(decoded != Py_None)
+                    {
+                        Py_DECREF(decoded);
+                    }
 
-		    return ret;
-                } else {
+		        return ret;
+                } 
+                else 
+                {
                     return decoded;
                 }
 
