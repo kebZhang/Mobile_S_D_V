@@ -64,3 +64,19 @@ sudo python3 monitor-example.py /dev/ttyUSB0 9600 > /home/ty/Desktop/log/asn1/tr
 ```
 
 In the following test, we need to test two logcode in the same time.
+
+
+## 1005 change:  
+we redesign the bytechange module and decode module in asn1c  
+in asn1c/asn1_cb_dcall.c  
+we directly use the uper_decode() function provided by ans1c to do the decode operations  
+now the asn1c code series
+```
+asn1c -S /usr/local/share/asn1c -fcompound-names -fskeletons-copy -gen-PER -pdu=auto dci_test.asn1  
+rm converter-example.c(this file just provide main function we need to delete it)
+cc -I. -o test *.c
+./test
+```
+in asn1_cb_dcall.c main() we change the byte sequence and use uper_decode to decode, we write the glue code to realize the loop which would be faster compared with the original system command one.  
+the call.c is just a test file to test a easy asn1 module and the uper_decode function  
+We'll default to using the per to decode.

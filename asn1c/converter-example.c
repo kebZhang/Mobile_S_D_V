@@ -537,6 +537,54 @@ main(int ac, char *av[]) {
     return 0;
 }
 
+/* 实现函数，替换原来的main函数 */
+int asn1_decode_file(const char *pdu_type_name, const char *file_path) {
+    FILE *binary_out;
+    asn_TYPE_descriptor_t *pduType = PDU_Type_Ptr;
+    asn_TYPE_descriptor_t *anyPduType = PDU_Type_Ptr;
+    ssize_t suggested_bufsize = 8192;  /* 接近stdio buffer大小 */
+    int first_pdu = 1;
+    void *structure = NULL;
+    asn_dec_rval_t rval;
+    
+    /* 打开文件 */
+    FILE *file = fopen(file_path, "rb");
+    if (!file) {
+        fprintf(stderr, "Error opening file: %s\n", file_path);
+        return -1;
+    }
+    
+    /* 准备缓冲区 */
+    uint8_t *fbuf = (uint8_t *)malloc(suggested_bufsize);
+    if (!fbuf) {
+        perror("malloc()");
+        fclose(file);
+        return -1;
+    }
+    
+    /* 读取文件并解码 */
+    size_t rd = fread(fbuf, 1, suggested_bufsize, file);
+    if (rd > 0) {
+        rval = asn_decode(0, ATS_UNALIGNED_BASIC_PER, pduType, &structure, fbuf, rd);
+        if (rval.code == RC_OK) {
+            printf("Decoded successfully!\n");
+        } else {
+            fprintf(stderr, "Decode failed!\n");
+            free(fbuf);
+            fclose(file);
+            return -1;
+        }
+    }
+    
+    /* 释放资源 */
+    ASN_STRUCT_FREE(*pduType, structure);
+    free(fbuf);
+    fclose(file);
+    return 0;
+}
+
+
+
 static struct dynamic_buffer {
     uint8_t *data;        /* Pointer to the data bytes */
     size_t offset;        /* Offset from the start */
