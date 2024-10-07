@@ -85,11 +85,12 @@ int main(int argc, char *argv[])
         {
             printf("into B16C branch\n");
             decode_B16C(hex_data, file_size, output, &index, &out_index);
+            return 1;
         }
         default:
         {
             printf("over\n");
-            return 0;
+            return 999;
         }
     }
 

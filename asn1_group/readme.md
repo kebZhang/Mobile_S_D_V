@@ -1,4 +1,25 @@
+## 1007 version:
+We use main.c as the external interface  
+input: data.dat logcode  
+output:decode xml  
+
+For each message type, we need to write five files:  
+1.corresponding asn1  
+2.logcode_cb_dacll.c--change byte sequence & call uper_decode to decode   
+3.logcode_cb_dcall.h--just include decode_logcode function  
+4.logcode_test_data.txt  
+5.logcode_test_data.dat  
 
 
-LTE_ML1_DCI_Information_Report----logcode----0xB16C----finished  
-LTE_RLC_DL_AM_Control_PDU     ----logcode----0xB083----finished
+
+
+### Support Message Types
+LTE_ML1_DCI_Information_Report----logcode----0xB16C----finished----tested  
+LTE_RLC_DL_AM_Control_PDU     ----logcode----0xB083----finished----tested
+
+
+#### Tip
+1.in logcode_cb_dacll.c remember to call converter function with the paramter index, no * 
+2.change_byte_sequence c and h file is used for change byte sequence, print hex, write to file  
+ 
+

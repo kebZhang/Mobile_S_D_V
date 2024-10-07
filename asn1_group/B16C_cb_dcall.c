@@ -9,7 +9,7 @@
 
 
 // Metadata header
-void convert_S_H_B16C(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_S_H_B16C(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
     int size=1;
     // 处理1字节的字段
@@ -44,7 +44,7 @@ void convert_S_H_B16C(const uint8_t *hex_data, size_t length, uint8_t *output, s
 }
 
 // 函数：解析和转换字节序并返回修改后的十六进制数据
-void convert_R_H_B16C(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_R_H_B16C(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
     if (*index + 4 <= length)
     {
@@ -60,7 +60,7 @@ void convert_R_H_B16C(const uint8_t *hex_data, size_t length, uint8_t *output, s
 }
 
 
-void convert_UL_B16C(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_UL_B16C(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
     // 2 Byte
     if (*index + 2 <= length)
@@ -162,7 +162,7 @@ void convert_UL_B16C(const uint8_t *hex_data, size_t length, uint8_t *output, si
 
 
 //DL decode
-void convert_DL_B16C(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_DL_B16C(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
     // 2 Byte
     if (*index + 2 <= length)
@@ -206,19 +206,7 @@ void convert_DL_B16C(const uint8_t *hex_data, size_t length, uint8_t *output, si
 
 
 
-// 将输出数据写入文件
-void write_data_to_file(const char *filename, const uint8_t *data, size_t length)
-{
-    FILE *file = fopen(filename, "wb");
-    if (file == NULL)
-    {
-        perror("Failed to open file");
-        return;
-    }
 
-    fwrite(data, 1, length, file);
-    fclose(file);
-}
 
 void decode_B16C(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {

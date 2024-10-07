@@ -4,7 +4,7 @@
 #include "change_byte_sequence.h"
 #include "Metadata_Header_cb_dcall.h"
 
-void convert_M_H(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_M_H(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
     /*convert byte sequence*/
     int size=2;

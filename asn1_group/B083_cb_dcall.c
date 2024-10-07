@@ -7,7 +7,7 @@
 #include "B083_cb_dcall.h"
 
 // specific header
-void convert_S_H_B083(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_S_H_B083(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
     // version 1 Byte
     if (*index + 1 <= length)
@@ -49,7 +49,7 @@ void convert_S_H_B083(const uint8_t *hex_data, size_t length, uint8_t *output, s
 }
 
 // pdu structure
-void convert_pdu_B083(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_pdu_B083(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
     /*systime*/
     //skip2+subfn
@@ -145,7 +145,7 @@ void convert_pdu_B083(const uint8_t *hex_data, size_t length, uint8_t *output, s
 }
 
 // specific header
-void convert_E1_B083(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_E1_B083(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
     // version 1 Byte
     if (*index + 1 <= length)
