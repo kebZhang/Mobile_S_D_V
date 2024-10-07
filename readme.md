@@ -80,3 +80,9 @@ cc -I. -o test *.c
 in asn1_cb_dcall.c main() we change the byte sequence and use uper_decode to decode, we write the glue code to realize the loop which would be faster compared with the original system command one.  
 the call.c is just a test file to test a easy asn1 module and the uper_decode function  
 We'll default to using the per to decode.
+
+
+## 1006 change
+we design a main.c to decode the metadataheader and get logcode  
+we use logcode to switch into different branch  
+waiting for test!!!

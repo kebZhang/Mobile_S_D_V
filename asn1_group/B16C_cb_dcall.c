@@ -1,80 +1,15 @@
 #include <stdio.h>
 #include <stdint.h>
+#include "change_byte_sequence.c"
 #include "DCIReport.h"
 #include "RecordHeader.h"
 #include "DCIUL.h"
 #include "DCIDL.h"
 
 
-// 将2字节的小端整数转换为大端
-uint16_t convert_2_bytes_little_to_big(uint16_t little_endian)
-{
-    return (little_endian >> 8) | (little_endian << 8);
-}
-
-// 将3字节的小端整数转换为大端
-uint32_t convert_3_bytes_little_to_big(uint32_t little_endian)
-{
-    return ((little_endian & 0x0000FF) << 16) | // 提取第1个字节并移到最高位
-           ((little_endian & 0x00FF00)) |       // 保持中间的字节不变
-           ((little_endian & 0xFF0000) >> 16);  // 提取第3个字节并移到最低位
-}
-
-// 函数：将4字节的小端整数转换为大端
-uint32_t convert_4_bytes_little_to_big(uint32_t little_endian)
-{
-    return ((little_endian & 0x000000FF) << 24) |
-           ((little_endian & 0x0000FF00) << 8) |
-           ((little_endian & 0x00FF0000) >> 8) |
-           ((little_endian & 0xFF000000) >> 24);
-}
-
-// 函数：将8字节的小端整数转换为大端
-uint64_t convert_8_bytes_little_to_big(uint64_t little_endian)
-{
-    return ((little_endian & 0x00000000000000FF) << 56) |
-           ((little_endian & 0x000000000000FF00) << 40) |
-           ((little_endian & 0x0000000000FF0000) << 24) |
-           ((little_endian & 0x00000000FF000000) << 8) |
-           ((little_endian & 0x000000FF00000000) >> 8) |
-           ((little_endian & 0x0000FF0000000000) >> 24) |
-           ((little_endian & 0x00FF000000000000) >> 40) |
-           ((little_endian & 0xFF00000000000000) >> 56);
-}
-
 // Metadata header
-void convert_M_H(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_S_H(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
-    // 2 byte msg_len
-    // if (*index + 2 <= length)
-    // {
-    //     uint16_t field1 = *(uint16_t *)(hex_data + *index);
-    //     field1 = convert_2_bytes_little_to_big(field1);
-    //     memcpy(output + *out_index, &field1, 2);
-    //     *index += 2;
-    //     *out_index += 2;
-    // }
-
-    // 2 byte typeid
-    // if (*index + 2 <= length)
-    // {
-    //     uint16_t field2 = *(uint16_t *)(hex_data + *index);
-    //     field2 = convert_2_bytes_little_to_big(field2);
-    //     memcpy(output + *out_index, &field2, 2);
-    //     *index += 2;
-    //     *out_index += 2;
-    // }
-
-    // 8 byte timestamp
-    // if (*index + 8 <= length)
-    // {
-    //     uint64_t field3 = *(uint64_t *)(hex_data + *index);
-    //     field3 = convert_8_bytes_little_to_big(field3);
-    //     memcpy(output + *out_index, &field3, 8);
-    //     *index += 8;
-    //     *out_index += 8;
-    // }
-
     // 处理1字节的字段
     if (*index + 1 <= length)
     {
@@ -293,19 +228,51 @@ void write_data_to_file(const char *filename, const uint8_t *data, size_t length
     fclose(file);
 }
 
-int main()
+void decode_B16C(uint8_t *hex_data, size_t length, uint8_t *output, size_t index, size_t out_index)
 {
-    char *filename="data.dat";      /* Input file name */
-    FILE *fp;         
-    size_t size;         /* Number of bytes read  */ 
-    size_t file_size;
+    // char *filename="data.dat";      /* Input file name */
+    // FILE *fp;         
+    // size_t size;         /* Number of bytes read  */ 
+    // size_t file_size;
     // char buf[1024];      /* Temporary buffer      */ 
+    // uint8_t *hex_data = NULL; /*input pointer*/
+    // uint8_t *output = NULL;
+    // size_t index = 0;
+    // size_t out_index = 0;
 
 
-    uint8_t *hex_data = NULL; /*input pointer*/
-    uint8_t *output = NULL;
-    size_t index = 0;
-    size_t out_index = 0;
+
+
+
+    // fp = fopen(filename, "rb");
+    // if(!fp) {
+    //   perror(filename);
+    //   exit(66); /* better, EX_NOINPUT */
+    // }
+
+    // //获取大小
+    // fseek(fp, 0, SEEK_END);
+    // file_size = ftell(fp);
+    // fseek(fp, 0, SEEK_SET);
+
+    // /* 分配缓冲区以读取文件内容 */
+    // hex_data = (uint8_t *)malloc(file_size);  
+    // output = (uint8_t *)malloc(file_size); 
+    // if (!hex_data) {
+    //     perror("malloc");
+    //     fclose(fp);
+    //     return -1;
+    // }
+
+    // /* 读取文件内容到缓冲区 */
+    // if (fread(hex_data, 1, file_size, fp) != file_size) {
+    //     perror("fread");
+    //     free(hex_data);
+    //     fclose(fp);
+    //     return -1;
+    // }
+
+    // fclose(fp);
 
     /*引入不同的子结构*/
     DCIReport_t *t =0;
@@ -318,73 +285,38 @@ int main()
     asn_dec_rval_t rval3;
 
 
-
-    fp = fopen(filename, "rb");
-    if(!fp) {
-      perror(filename);
-      exit(66); /* better, EX_NOINPUT */
-    }
-
-    //获取大小
-    fseek(fp, 0, SEEK_END);
-    file_size = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
-
-    /* 分配缓冲区以读取文件内容 */
-    hex_data = (uint8_t *)malloc(file_size);  
-    output = (uint8_t *)malloc(file_size); 
-    if (!hex_data) {
-        perror("malloc");
-        fclose(fp);
-        return -1;
-    }
-
-    /* 读取文件内容到缓冲区 */
-    if (fread(hex_data, 1, file_size, fp) != file_size) {
-        perror("fread");
-        free(hex_data);
-        fclose(fp);
-        return -1;
-    }
-
-    fclose(fp);
-
     //M_H
-    convert_M_H(hex_data, file_size, output, &index, &out_index);
-    int M_H_length = index;
-    printf("M_H_Length=%d\n", M_H_length);
+    int start_S_H = index;
+    convert_S_H(hex_data, length, output, &index, &out_index);
+    int S_H_length = index - start_S_H;
+    printf("S_H_length=%d\n", S_H_length);
     printf("Converted Hex Data: ");
-    print_hex(output, 0, M_H_length);
-    write_data_to_file("data_mh.dat", output, M_H_length);
+    print_hex(output, start_S_H, index);
 
-    rval = uper_decode(0, &asn_DEF_DCIReport, (void **)&t, output, M_H_length, 0, 0);
+    rval = uper_decode(0, &asn_DEF_DCIReport, (void **)&t, output+start_S_H, S_H_length, 0, 0);
     if(rval.code != RC_OK) {
-      fprintf(stderr,
-        "%s: ravl %ld\n",
-        filename, (long)rval.consumed);
+        printf("rval_S_H decode error\n");
       exit(65); /* better, EX_DATAERR */
     }
     //xml输出结构
     xer_fprint(stdout, &asn_DEF_DCIReport, t);
 
-    int num_of_records = ((output[1] & 0x07) << 2) | ((output[2] & 0xC0) >> 6);
+    int num_of_records = ((output[start_S_H+1] & 0x07) << 2) | ((output[start_S_H+2] & 0xC0) >> 6);
     printf("num of records=%d\n", num_of_records);
 
     for(int i=0;i<num_of_records;i++)
     {
         //R_H
         int temp_start_R_H = index;
-        convert_R_H(hex_data, file_size, output, &index, &out_index);
+        convert_R_H(hex_data, length, output, &index, &out_index);
         int R_H_length = index-temp_start_R_H;
         print_hex(output, temp_start_R_H,index);
-        write_data_to_file("data_rh.dat",output+temp_start_R_H,R_H_length);
+        // write_data_to_file("data_rh.dat",output+temp_start_R_H,R_H_length);
         
         rval1 = uper_decode(0, &asn_DEF_RecordHeader, (void **)&t1, output+temp_start_R_H, R_H_length, 0, 0);
         if(rval1.code != RC_OK) {
-        fprintf(stderr,
-            "%s: ravl1 %ld\n",
-            filename, (long)rval.consumed);
-        exit(66); /* better, EX_DATAERR */
+            printf("rval_R_H decode error\n");
+            exit(66); /* better, EX_DATAERR */
         }
         xer_fprint(stdout, &asn_DEF_RecordHeader, t1);
 
@@ -397,16 +329,14 @@ int main()
         for(int j=0;j<num_of_ul;j++)
         {
             int temp_start_UL = index;
-            convert_UL(hex_data, file_size, output, &index, &out_index);
+            convert_UL(hex_data, length, output, &index, &out_index);
             int U_L_length = index - temp_start_UL;
             print_hex(output, temp_start_UL, index);
-            write_data_to_file("data_ul.dat", output+temp_start_UL, U_L_length);
+            // write_data_to_file("data_ul.dat", output+temp_start_UL, U_L_length);
             rval2 = uper_decode(0, &asn_DEF_DCIUL, (void **)&t2, output+temp_start_UL, U_L_length, 0, 0);
             if(rval2.code != RC_OK) {
-            fprintf(stderr,
-                "%s: ravl2 %ld\n",
-                filename, (long)rval.consumed);
-            exit(67); /* better, EX_DATAERR */
+                printf("rval_UL decode error\n");
+                exit(67); /* better, EX_DATAERR */
             }
             xer_fprint(stdout, &asn_DEF_DCIUL, t2);
         }
@@ -415,16 +345,14 @@ int main()
         for(int j=0;j<num_of_dl;j++)
         {
             int temp_start_DL = index;
-            convert_DL(hex_data, file_size, output, &index, &out_index);
+            convert_DL(hex_data, length, output, &index, &out_index);
             int D_L_length = index - temp_start_DL;
             print_hex(output, temp_start_DL, index);
-            write_data_to_file("data_dl.dat", output+temp_start_DL, D_L_length);
+            // write_data_to_file("data_dl.dat", output+temp_start_DL, D_L_length);
             rval3 = uper_decode(0, &asn_DEF_DCIDL, (void **)&t3, output+temp_start_DL, D_L_length, 0, 0);
             if(rval3.code != RC_OK) {
-            fprintf(stderr,
-                "%s: ravl3 %ld\n",
-                filename, (long)rval.consumed);
-            exit(68); /* better, EX_DATAERR */
+                printf("rval_DL decode error\n");
+                exit(68); /* better, EX_DATAERR */
             }
             xer_fprint(stdout, &asn_DEF_DCIDL, t3);
         }
