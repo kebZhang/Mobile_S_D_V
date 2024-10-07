@@ -82,7 +82,8 @@ the call.c is just a test file to test a easy asn1 module and the uper_decode fu
 We'll default to using the per to decode.
 
 
-## 1006 change
-we design a main.c to decode the metadataheader and get logcode in ans1 group  
-we use logcode to switch into different branch  
-waiting for test!!!
+## 1007 change
+we introduce asn1_group directory to save the files before running asn1c compile code  
+we export the main.c and executable file test to use  
+./test data.dat B16C
+Actually we don't need the logcode in command but we still keep it for future
