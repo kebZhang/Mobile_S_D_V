@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-#include "change_byte_sequence.c"
-#include "Metadata_Header_cb_dcall.c"
-#include "B16C_cb_dcall.c"
-#include "B083_cb_dcall.c"
+#include "Metadata_Header_cb_dcall.h"
+#include "B16C_cb_dcall.h"
+#include "B083_cb_dcall.h"
 
 
 long get_file_size(const char *filename) {
@@ -66,16 +65,32 @@ int main(int argc, char *argv[])
         fclose(fp);
         return -1;
     }
+    printf("filesize =%d\n",file_size);
     // decode Metadata header
     decode_metadata_header(hex_data, file_size, output, &index, &out_index);
+    
+    printf("index after decode M_H=%d\n",index);
+
     //get logcode
     uint16_t logcode = (output[2] << 8) | output[3];
     switch(logcode)
     {
         case 0xB083:
+        {
+            printf("into B083 branch\n");
             decode_B083(hex_data, file_size, output, &index, &out_index);
+            return 0;
+        }
         case 0xB16C:
-            decode_B16c(hex_data, file_size, output, &index, &out_index);
+        {
+            printf("into B16C branch\n");
+            decode_B16C(hex_data, file_size, output, &index, &out_index);
+        }
+        default:
+        {
+            printf("over\n");
+            return 0;
+        }
     }
 
 

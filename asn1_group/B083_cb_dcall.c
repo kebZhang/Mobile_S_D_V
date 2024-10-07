@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdint.h>
-#include "change_byte_sequence.c"
+#include "change_byte_sequence.h"
 #include "RLC-DL-AM-CONTROL-PDU-S-HEADER.h"
 #include "RLC-DL-AM-CONTROL-PDU-PDU.h"
 #include "RLC-DL-AM-Control-PDU-E1.h"
+#include "B083_cb_dcall.h"
 
 // specific header
-void convert_S_H(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_S_H_B083(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
     // version 1 Byte
     if (*index + 1 <= length)
@@ -48,7 +49,7 @@ void convert_S_H(const uint8_t *hex_data, size_t length, uint8_t *output, size_t
 }
 
 // pdu structure
-void convert_pdu(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_pdu_B083(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
     /*systime*/
     //skip2+subfn
@@ -144,7 +145,7 @@ void convert_pdu(const uint8_t *hex_data, size_t length, uint8_t *output, size_t
 }
 
 // specific header
-void convert_E1(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_E1_B083(const uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
     // version 1 Byte
     if (*index + 1 <= length)
@@ -164,42 +165,26 @@ void convert_E1(const uint8_t *hex_data, size_t length, uint8_t *output, size_t 
     }
 }
 
-// 打印十六进制数据
-void print_hex(const uint8_t *data, size_t start, size_t end)
-{
-    printf("print hex\n");
-    for (size_t i = start; i < end; i++)
-    {
-        printf("%02x", data[i]);
-    }
-    printf("\n");
-}
 
-void decode_B083(const char *b, size_t length)
+void decode_B083(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
 {
-    uint8_t *hex_data = (uint8_t *)b;
-    uint8_t *output=NULL;
-    output = (uint8_t *)malloc(length); 
-    size_t index = 0;
-    size_t out_index = 0;
-
     /*introduce different sub structure*/
     RLC_DL_AM_CONTROL_PDU_S_HEADER_t *t_S_H =0;
     asn_dec_rval_t rval_S_H; /* Decoder return value  */
     RLC_DL_AM_CONTROL_PDU_PDU_t *t_PDU =0;
     asn_dec_rval_t rval_PDU; /* Decoder return value  */
-    RLC_DL_AM_CONTROL_PDU_E1_t *t_E1 =0;
+    RLC_DL_AM_Control_PDU_E1_t *t_E1 =0;
     asn_dec_rval_t rval_E1; /* Decoder return value  */
 
 
-
     /*S_H*/
-    int start_S_H = index;
-    convert_S_H(hex_data,length,output,&index, &out_index);
-    int S_H_length = index - start_S_H;
+    int start_S_H = *index;
+    printf("index=%d\n",*index);
+    convert_S_H_B083(hex_data, length, output, index, out_index);
+    int S_H_length = *index - start_S_H;
     printf("S_H_Length=%d\n", S_H_length);
     printf("Converted Hex Data: ");
-    print_hex(output, 0, index);
+    print_hex(output, start_S_H, *index);
 
     rval_S_H = uper_decode(0, &asn_DEF_RLC_DL_AM_CONTROL_PDU_S_HEADER, (void **)&t_S_H, output+start_S_H, S_H_length, 0, 0);
     if(rval_S_H.code != RC_OK) {
@@ -208,48 +193,55 @@ void decode_B083(const char *b, size_t length)
     }
     xer_fprint(stdout, &asn_DEF_RLC_DL_AM_CONTROL_PDU_S_HEADER, t_S_H);   
 
-    /*PDU*/
-    int start_PDU = index;
-    convert_pdu(hex_data,length,output,&inedx,&out_index);
-    int PDU_length = index-start_PDU;
-    printf("PDU_Length=%d\n", PDU_length);
-    printf("Converted Hex Data: ");
-    print_hex(output, start_PDU, index);
-
-    rval_PDU = uper_decode(0, &asn_DEF_RLC_DL_AM_CONTROL_PDU_PDU, (void **)&t_PDU, output+start_PDU, PDU_length, 0, 0);
-    if(rval_PDU.code != RC_OK) {
-      printf("rval_PDU decode error\n");
-      exit(65);
-    }
-    xer_fprint(stdout, &asn_DEF_RLC_DL_AM_CONTROL_PDU_PDU, t_PDU); 
-
-    //E1 exist flag
-    int E1_exist_flag =  ((output[17] & 0x03) >> 1 );
-    printf("E1_exist_flag=%d\n", E1_exist_flag);
-    int E2_exist_flag =  ((output[17] & 0x01));
-    printf("E2_exist_flag=%d\n", E2_exist_flag);
-
-    if(E1_exist_flag)
+    int num_control_pdu = output[start_S_H+4];
+    printf("num_control_pdu:%d\n",num_control_pdu);
+    for(int i=0;i<num_control_pdu;i++)
     {
-        /*E1结构*/
-        int start_E1 = index;
-        convert_E1(hex_data,length,output,&inedx,&out_index);
-        int E1_length = index-start_E1;
-        printf("E1_length=%d\n", E1_length);
+        /*PDU*/
+        printf("[%d]\n",i);
+        int start_PDU = *index;
+        convert_pdu_B083(hex_data,length,output, index, out_index);
+        int PDU_length = *index-start_PDU;
+        printf("PDU_Length=%d\n", PDU_length);
         printf("Converted Hex Data: ");
-        print_hex(output, start_E1, index);
+        print_hex(output, start_PDU, *index);
 
-        rval_E1 = uper_decode(0, &asn_DEF_RLC_DL_AM_CONTROL_PDU_E1, (void **)&t_E1, output+start_E1, E1_length, 0, 0);
-        if(rval_E1.code != RC_OK) {
-            printf("rval_E1 decode error\n");
-            exit(65);
+        rval_PDU = uper_decode(0, &asn_DEF_RLC_DL_AM_CONTROL_PDU_PDU, (void **)&t_PDU, output+start_PDU, PDU_length, 0, 0);
+        if(rval_PDU.code != RC_OK) {
+        printf("rval_PDU decode error\n");
+        exit(65);
         }
-        xer_fprint(stdout, &asn_DEF_RLC_DL_AM_CONTROL_PDU_E1, t_E1); 
-    }
+        xer_fprint(stdout, &asn_DEF_RLC_DL_AM_CONTROL_PDU_PDU, t_PDU); 
 
-    /*目前没有E2子结构数据*/
-    if(E2_exist_flag)
-    {
-        printf("warning E2 exist flag=1\n");
+        //E1 exist flag
+        int E1_exist_flag =  ((output[start_PDU+9] & 0x03) >> 1 );
+        printf("E1_exist_flag=%d\n", E1_exist_flag);
+        int E2_exist_flag =  ((output[start_PDU+9] & 0x01));
+        printf("E2_exist_flag=%d\n", E2_exist_flag);
+
+        if(E1_exist_flag==1)
+        {
+            /*E1结构*/
+            int start_E1 = *index;
+            convert_E1_B083(hex_data,length,output, index, out_index);
+            int E1_length = *index-start_E1;
+            printf("E1_length=%d\n", E1_length);
+            printf("Converted Hex Data: ");
+            print_hex(output, start_E1, *index);
+
+            rval_E1 = uper_decode(0, &asn_DEF_RLC_DL_AM_Control_PDU_E1, (void **)&t_E1, output+start_E1, E1_length, 0, 0);
+            if(rval_E1.code != RC_OK) {
+                printf("rval_E1 decode error\n");
+                exit(65);
+            }
+            xer_fprint(stdout, &asn_DEF_RLC_DL_AM_Control_PDU_E1, t_E1); 
+        }
+
+        /*目前没有E2子结构数据*/
+        if(E2_exist_flag)
+        {
+            printf("warning E2 exist flag=1\n");
+        }
     }
+    printf("decode_B083 over!!!!\n");
 }
