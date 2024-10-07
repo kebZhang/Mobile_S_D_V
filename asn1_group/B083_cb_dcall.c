@@ -194,13 +194,14 @@ void decode_B083(const char *b, size_t length)
 
 
     /*S_H*/
+    int start_S_H = index;
     convert_S_H(hex_data,length,output,&index, &out_index);
-    int S_H_length = index;
+    int S_H_length = index - start_S_H;
     printf("S_H_Length=%d\n", S_H_length);
     printf("Converted Hex Data: ");
     print_hex(output, 0, index);
 
-    rval_S_H = uper_decode(0, &asn_DEF_RLC_DL_AM_CONTROL_PDU_S_HEADER, (void **)&t_S_H, output, S_H_length, 0, 0);
+    rval_S_H = uper_decode(0, &asn_DEF_RLC_DL_AM_CONTROL_PDU_S_HEADER, (void **)&t_S_H, output+start_S_H, S_H_length, 0, 0);
     if(rval_S_H.code != RC_OK) {
       printf("rval_S_H decode error\n");
       exit(65);

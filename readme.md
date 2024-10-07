@@ -83,6 +83,6 @@ We'll default to using the per to decode.
 
 
 ## 1006 change
-we design a main.c to decode the metadataheader and get logcode  
+we design a main.c to decode the metadataheader and get logcode in ans1 group  
 we use logcode to switch into different branch  
 waiting for test!!!

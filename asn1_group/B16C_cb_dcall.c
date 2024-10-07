@@ -285,7 +285,7 @@ void decode_B16C(uint8_t *hex_data, size_t length, uint8_t *output, size_t index
     asn_dec_rval_t rval3;
 
 
-    //M_H
+    //S_H
     int start_S_H = index;
     convert_S_H(hex_data, length, output, &index, &out_index);
     int S_H_length = index - start_S_H;
@@ -296,7 +296,7 @@ void decode_B16C(uint8_t *hex_data, size_t length, uint8_t *output, size_t index
     rval = uper_decode(0, &asn_DEF_DCIReport, (void **)&t, output+start_S_H, S_H_length, 0, 0);
     if(rval.code != RC_OK) {
         printf("rval_S_H decode error\n");
-      exit(65); /* better, EX_DATAERR */
+        exit(65); /* better, EX_DATAERR */
     }
     //xml输出结构
     xer_fprint(stdout, &asn_DEF_DCIReport, t);
