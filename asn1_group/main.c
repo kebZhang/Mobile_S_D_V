@@ -5,6 +5,7 @@
 #include "Metadata_Header_cb_dcall.h"
 #include "B16C_cb_dcall.h"
 #include "B083_cb_dcall.h"
+#include "B0A1_cb_dcall.h"
 
 
 long get_file_size(const char *filename) {
@@ -86,6 +87,11 @@ int main(int argc, char *argv[])
             printf("into B16C branch\n");
             decode_B16C(hex_data, file_size, output, &index, &out_index);
             return 1;
+        }
+        case 0xB0A1:
+        {
+            printf("into B0A1 branch\n");
+            decode_B0A1(hex_data, file_size, &index);
         }
         default:
         {

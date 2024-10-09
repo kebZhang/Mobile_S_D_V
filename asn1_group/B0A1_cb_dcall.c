@@ -7,152 +7,27 @@
 #include "B0A1_cb_dcall.h"
 
 // specific header
-void convert_S_H_B0A1(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_S_H_B0A1(uint8_t *hex_data, size_t *index)
 {
-    // version 1 Byte
-    int size=1;
-    if (*index + size <= length)
-    {
-        uint8_t field1 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field1, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    // skip0 3Byte without convert
-    size=3;
-    if (*index + size <= length)
-    {
-        memcpy(output + *out_index, hex_data + *index, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    // versions->number of meta 2 Byte
-    size=2;
-    if (*index + size <= length)
-    {
-        uint16_t field2 = *(uint16_t *)(hex_data + *index);
-        field2 = convert_2_bytes_little_to_big(field2);
-        memcpy(output + *out_index, &field2, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    //number of rb 2 Byte
-    size=2;
-    if (*index + size <= length)
-    {
-        uint16_t field3 = *(uint16_t *)(hex_data + *index);
-        field3 = convert_2_bytes_little_to_big(field3);
-        memcpy(output + *out_index, &field3, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    //log count 2 Byte
-    size=2;
-    if (*index + size <= length)
-    {
-        uint16_t field4 = *(uint16_t *)(hex_data + *index);
-        field4 = convert_2_bytes_little_to_big(field4);
-        memcpy(output + *out_index, &field4, size);
-        *index += size;
-        *out_index += size;
-    }
+    convert_endianess(hex_data, index, 1);
+    convert_endianess(hex_data, index, 3);
+    convert_endianess(hex_data, index, 2);
+    convert_endianess(hex_data, index, 2);
+    convert_endianess(hex_data, index, 2);
 }
 
 // PDCP State
-void convert_pdcp_state_B0A1(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_pdcp_state_B0A1(uint8_t *hex_data, size_t *index)
 {
-    // RB cfg index 1 Byte
-    int size=1;
-    if (*index + size <= length)
-    {
-        uint8_t field1 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field1, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    // skip1 2Byte without convert
-    size=2;
-    if (*index + size <= length)
-    {
-        memcpy(output + *out_index, hex_data + *index, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    //pdcp sn length 1 Byte
-    size=1;
-    if (*index + size <= length)
-    {
-        uint8_t field2 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field2, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    //rx deliv 2 Byte
-    size=2;
-    if (*index + size <= length)
-    {
-        uint16_t field3 = *(uint16_t *)(hex_data + *index);
-        field3 = convert_2_bytes_little_to_big(field3);
-        memcpy(output + *out_index, &field3, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    // skip2 2Byte without convert
-    size=2;
-    if (*index + size <= length)
-    {
-        memcpy(output + *out_index, hex_data + *index, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    //rx next 2 Byte
-    size=2;
-    if (*index + size <= length)
-    {
-        uint16_t field4 = *(uint16_t *)(hex_data + *index);
-        field4 = convert_2_bytes_little_to_big(field4);
-        memcpy(output + *out_index, &field4, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    // skip3 2Byte without convert
-    size=2;
-    if (*index + size <= length)
-    {
-        memcpy(output + *out_index, hex_data + *index, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    //next count 2 Byte
-    size=2;
-    if (*index + size <= length)
-    {
-        uint16_t field5 = *(uint16_t *)(hex_data + *index);
-        field5 = convert_2_bytes_little_to_big(field5);
-        memcpy(output + *out_index, &field5, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    // skip4 2Byte without convert
-    size=2;
-    if (*index + size <= length)
-    {
-        memcpy(output + *out_index, hex_data + *index, size);
-        *index += size;
-        *out_index += size;
-    }
+    convert_endianess(hex_data, index, 1);
+    convert_endianess(hex_data, index, 2);
+    convert_endianess(hex_data, index, 1);
+    convert_endianess(hex_data, index, 2);
+    convert_endianess(hex_data, index, 2);
+    convert_endianess(hex_data, index, 2);
+    convert_endianess(hex_data, index, 2);
+    convert_endianess(hex_data, index, 2);
+    convert_endianess(hex_data, index, 2);
 }
 
 //meta log buffer
@@ -180,7 +55,7 @@ void convert_meta_log_buffer_B0A1(uint8_t *hex_data, size_t *index)
     convert_endianess(hex_data, index, 2);
 }
 
-void decode_B0A1(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void decode_B0A1(uint8_t *hex_data, size_t length, size_t *index)
 {
     LTE_PDCP_DL_Data_PDU_Specific_Header_t *t_S_H=0;
     asn_dec_rval_t rval_S_H;
@@ -192,22 +67,22 @@ void decode_B0A1(uint8_t *hex_data, size_t length, uint8_t *output, size_t *inde
     /*S_H*/
     int start_S_H = *index;
     printf("index=%d\n",*index);
-    convert_S_H_B0A1(hex_data, length, output, index, out_index);
+    convert_S_H_B0A1(hex_data, index);
     int S_H_length = *index - start_S_H;
     printf("S_H_Length=%d\n", S_H_length);
     printf("Converted Hex Data: ");
-    print_hex(output, start_S_H, *index);
+    print_hex(hex_data, start_S_H, *index);
 
-    rval_S_H = uper_decode(0, &asn_DEF_LTE_PDCP_DL_Data_PDU_Specific_Header, (void **)&t_S_H, output+start_S_H, S_H_length, 0, 0);
+    rval_S_H = uper_decode(0, &asn_DEF_LTE_PDCP_DL_Data_PDU_Specific_Header, (void **)&t_S_H, hex_data+start_S_H, S_H_length, 0, 0);
     if(rval_S_H.code != RC_OK) {
       printf("rval_S_H decode error\n");
       exit(65);
     }
     xer_fprint(stdout, &asn_DEF_LTE_PDCP_DL_Data_PDU_Specific_Header, t_S_H);   
 
-    int num_of_Meta = (output[start_S_H+4]<<8)||(output[start_S_H+5]);
+    int num_of_Meta = (hex_data[start_S_H+4]<<8)|(hex_data[start_S_H+5]);
     printf("num of meta=%d\n",num_of_Meta);
-    int num_of_RB = (output[start_S_H+6]<<8)||(output[start_S_H+7]);
+    int num_of_RB = (hex_data[start_S_H+6]<<8)|(hex_data[start_S_H+7]);
     printf("num_of_RB=%d\n",num_of_RB);
     
     printf("PDCP State\n");
@@ -215,13 +90,13 @@ void decode_B0A1(uint8_t *hex_data, size_t length, uint8_t *output, size_t *inde
     {
         printf("[%d]\n",i);
         int start_Pdcp = *index;
-        convert_pdcp_state_B0A1(hex_data,length,output, index, out_index);
+        convert_pdcp_state_B0A1(hex_data, index);
         int Pdcp_length = *index-start_Pdcp;
         printf("Pdcp_length=%d\n", Pdcp_length);
         printf("Converted Hex Data: ");
-        print_hex(output, start_Pdcp, *index);
+        print_hex(hex_data, start_Pdcp, *index);
 
-        rval_Pdcp_State = uper_decode(0, &asn_DEF_LTE_PDCP_DL_Data_PDU_Pdcp_State, (void **)&t_pdcp_State, output+start_Pdcp, Pdcp_length, 0, 0);
+        rval_Pdcp_State = uper_decode(0, &asn_DEF_LTE_PDCP_DL_Data_PDU_Pdcp_State, (void **)&t_pdcp_State, hex_data+start_Pdcp, Pdcp_length, 0, 0);
         if(rval_Pdcp_State.code != RC_OK) {
         printf("rval_Pdcp_State decode error\n");
         exit(65);
@@ -230,7 +105,7 @@ void decode_B0A1(uint8_t *hex_data, size_t length, uint8_t *output, size_t *inde
     }
 
     printf("Meta Log Buffer\n");
-    for(int i=0;i<num_of_RB;i++)
+    for(int i=0;i<num_of_Meta;i++)
     {
         printf("[%d]\n",i);
         int start_Meta = *index;
