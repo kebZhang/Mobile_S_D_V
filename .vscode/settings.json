@@ -49,6 +49,9 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "b083_cb_dcall.h": "c",
+        "b0a1_cb_dcall.h": "c",
+        "b0cd_cb_dcall.h": "c"
     }
 }
