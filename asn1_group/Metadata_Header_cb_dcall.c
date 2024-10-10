@@ -53,8 +53,8 @@ void decode_metadata_header(uint8_t *hex_data, size_t length, uint8_t *output, s
     /*asn1c decode*/
     int M_H_Length = *index-start_M_H;
     printf("M_H_Length=%d\n",M_H_Length);
-    printf("Converted Hex Data: \n");
-    print_hex(output, 0, M_H_Length);
+    // printf("Converted Hex Data: \n");
+    // print_hex(output, 0, M_H_Length);
     rval_M_H = uper_decode(0, &asn_DEF_MetadataHeader, (void **)&t_M_H, output+start_M_H, M_H_Length, 0, 0);
     if(rval_M_H.code != RC_OK) {
         printf("rval_M_H decode error\n");

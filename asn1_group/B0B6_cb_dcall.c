@@ -73,7 +73,7 @@ void decode_B0B6(uint8_t *hex_data, size_t length, size_t *index)
     /*S_H*/
     int start_S_H = *index;
     printf("index=%d\n",*index);
-    convert_S_H_B0A1(hex_data, index);
+    convert_S_H_B0B6(hex_data, index);
     int S_H_length = *index - start_S_H;
     printf("S_H_Length=%d\n", S_H_length);
     // printf("Converted Hex Data: ");
@@ -96,7 +96,7 @@ void decode_B0B6(uint8_t *hex_data, size_t length, size_t *index)
         printf("RST Structure unknown!\n");
         printf("record this situation!\n");
     }
-
+    printf("RBs\n");
     for(int i=0;i<num_of_RBs;i++)
     {
         printf("[%d]\n",i);
