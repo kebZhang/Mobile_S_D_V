@@ -9,16 +9,17 @@ For each message type, we need to write five files:
 3.logcode_cb_dcall.h--just include decode_logcode function  
 4.logcode_test_data.txt  
 5.logcode_test_data.dat  
+6.main.c -- add the corresponding branch in switch  
 
 
 
 
 ### Support Message Types
 LTE_ML1_DCI_Information_Report----logcode----0xB16C----finished----tested  
-LTE_RLC_DL_AM_Control_PDU     ----logcode----0xB083----finished----tested
-LTE_PDCP_DL_Data_PDU          ----logcode----0xB0A1----finished----tested
-LTE_PDCP_UL_Delay_Statistics  ----logcode----0xB0B6----finished----tested
-LTE RRC Supported CA Combos   ----logcode----0xB0CD----finished----untested
+LTE_RLC_DL_AM_Control_PDU     ----logcode----0xB083----finished----tested  
+LTE_PDCP_DL_Data_PDU          ----logcode----0xB0A1----finished----tested  
+LTE_PDCP_UL_Delay_Statistics  ----logcode----0xB0B6----finished----tested  
+LTE_RRC_Supported_CA_Combos   ----logcode----0xB0CD----finished----untested  
 
 #### Tip
 1.in logcode_cb_dacll.c remember to call converter function with the paramter index, no * 
