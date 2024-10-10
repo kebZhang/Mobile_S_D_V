@@ -33,4 +33,5 @@ void decode_B116(uint8_t *hex_data, size_t length, size_t *index)
     }
     xer_fprint(stdout, &asn_DEF_LTE_LL1_Serving_Cell_Measurement_Results_S_H, t_S_H); 
     printf("decode_B116 over!!!!\n");
+    printf("index=%d\n",*index);
 }

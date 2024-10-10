@@ -3,7 +3,7 @@ LTE-RRC-Supported-CA-Combos DEFINITIONS ::=BEGIN
 LTE-RRC-Supported-CA-Combos-S-H ::=SEQUENCE
 {
     version                      INTEGER (0..255),
-    versions-num-conbos          INTEGER (0..255),
+    versions-num-conbos          INTEGER (0..255)
 }
 
 LTE-RRC-Supported-CA-Combos-CA-H ::=SEQUENCE

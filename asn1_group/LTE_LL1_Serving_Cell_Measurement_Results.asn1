@@ -10,7 +10,6 @@ LTE-LL1-Serving-Cell-Measurement-Results-S-H ::=SEQUENCE
 
     skip0                        BIT STRING(SIZE(2)),
     carrier-Type                 Carrier-Type,
-    skip1                        BIT STRING(SIZE(2)),
     measurement-BW               Measurement-BW,
 
     cell-ID                      INTEGER(0..65535),
@@ -46,7 +45,7 @@ Measurement-BW ::=ENUMERATED
     unknown5                    (5),
     bw-10-MHz                   (6),
     unknown7                    (7),
-    bw-15-MHz                   (8),
+    bw-15-MHz                   (8)
 }
 
 Timing-Offset-Rx ::=SEQUENCE

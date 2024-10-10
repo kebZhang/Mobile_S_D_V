@@ -107,6 +107,7 @@ int main(int argc, char *argv[])
         {
             printf("into B0CD branch\n");
             decode_B0CD(hex_data, file_size, &index);
+            
             return 4;
         }
         case 0xB116:
