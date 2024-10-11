@@ -123,6 +123,12 @@ int main(int argc, char *argv[])
             decode_B12A(hex_data, file_size, &index);
             return 6;
         }
+        case 0xB144:
+        {
+            printf("into B144 branch\n");
+            decode_B144(hex_data, file_size, &index);
+            return 7;
+        }
         default:
         {
             printf("over\n");
