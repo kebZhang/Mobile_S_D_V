@@ -42,7 +42,7 @@ LTE-LL1-PCFICH-Decoding-Results-Record ::=SEQUENCE
     phich-tdd-mi                BIT STRING(SIZE(3)),--not sure
     decode-abort                BIT STRING(SIZE(3)),--not sure
     is-macro-sleep-sf           BIT STRING(SIZE(2)),--not sure
-    rnti-bitmask                BIT STRING(SIZE(11)),--at least lowest 6 bit
+    rnti-bitmask                BIT STRING(SIZE(10)),--at least lowest 6 bit
     skip5                       BIT STRING(SIZE(14))
 }
 END

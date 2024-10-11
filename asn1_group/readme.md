@@ -21,6 +21,7 @@ LTE_PDCP_DL_Data_PDU          ----logcode----0xB0A1----finished----tested
 LTE_PDCP_UL_Delay_Statistics  ----logcode----0xB0B6----finished----tested  
 LTE_RRC_Supported_CA_Combos   ----logcode----0xB0CD----finished----tested  
 LTE_LL1_Serving_Cell_Measurement_Results  ----logcode----0xB116----finished----tested  
+LTE_LL1_PCFICH_Decoding_Results     ----logcode----0xB12A----finished----tested
 
 #### Tip
 1.in logcode_cb_dacll.c remember to call converter function with the paramter index, no * 

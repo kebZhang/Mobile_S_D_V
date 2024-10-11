@@ -43,7 +43,7 @@ void decode_B12A(uint8_t *hex_data, size_t length, size_t *index)
     }
     xer_fprint(stdout, &asn_DEF_LTE_LL1_PCFICH_Decoding_Results_S_H, t_S_H); 
 
-    int num_Record = (hex_data[start_S_H+2]&0x3E);
+    int num_Record = ((hex_data[start_S_H+2] & 0x3E) >> 1);
     printf("num_Record=%d\n",num_Record);
 
     for(int i=0;i<num_Record;i++)
@@ -51,6 +51,8 @@ void decode_B12A(uint8_t *hex_data, size_t length, size_t *index)
         printf("[%d]\n",i);
         int start_record = *index;
         convert_Record_B12A(hex_data, index);
+        // printf("Converted Hex Data: ");
+        // print_hex(hex_data, start_record, *index);
         int Record_length = *index-start_record;
         printf("Record_length=%d\n", Record_length);
         rval_Record = uper_decode(0, &asn_DEF_LTE_LL1_PCFICH_Decoding_Results_Record, (void **)&t_Record, hex_data+start_record, Record_length, 0, 0);
