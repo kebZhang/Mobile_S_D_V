@@ -10,6 +10,7 @@
 #include "B0CD_cb_dcall.h"
 #include "B116_cb_dcall.h"
 #include "B12A_cb_dcall.h"
+#include "B167_cb_dcall.h"
 
 
 long get_file_size(const char *filename) {
@@ -128,6 +129,12 @@ int main(int argc, char *argv[])
             printf("into B144 branch\n");
             decode_B144(hex_data, file_size, &index);
             return 7;
+        }
+        case 0xB167:
+        {
+            printf("into B167 branch\n");
+            decode_B167(hex_data, file_size, &index);
+            return 8;
         }
         default:
         {
