@@ -22,8 +22,8 @@ For each message type, we need to write five files:
 5.LTE_RRC_Supported_CA_Combos   ----logcode----0xB0CD----finished----tested  
 6.LTE_LL1_Serving_Cell_Measurement_Results  ----logcode----0xB116----finished----tested  
 7.LTE_LL1_PCFICH_Decoding_Results     ----logcode----0xB12A----finished----tested
-8.LTE_LL1_RACH_TX_Report        ----logcode----0xB144----finished----wrongtest----negative integer less 1  
-9.
+8.LTE_LL1_RACH_TX_Report        ----logcode----0xB144----finished----wrongtest----negative integer less 1    
+9.LTE_ML1_Random_Access_Request(MSG1)_Report    --logcode----0xB167----finished----wrongtest--------negative integer less 1    
 
 
 #### Tip
