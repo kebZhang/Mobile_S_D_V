@@ -27,6 +27,8 @@ void decode_B168(uint8_t *hex_data, size_t length, size_t *index)
     convert_S_H_B168(hex_data, index);
     int S_H_length = *index - start_S_H;
     printf("S_H_Length=%d\n", S_H_length);
+    // printf("Converted Hex Data: ");
+    // print_hex(hex_data, start_S_H, *index);
 
     rval_S_H = uper_decode(0, &asn_DEF_LTE_ML1_Random_Access_Response_MSG2_Report_S_H, (void **)&t_S_H, hex_data+start_S_H, S_H_length, 0, 0);
     if(rval_S_H.code != RC_OK) {
@@ -34,6 +36,6 @@ void decode_B168(uint8_t *hex_data, size_t length, size_t *index)
       exit(65);
     }
     xer_fprint(stdout, &asn_DEF_LTE_ML1_Random_Access_Response_MSG2_Report_S_H, t_S_H); 
-    printf("decode_B167 over!!!!\n");
+    printf("decode_B168 over!!!!\n");
     printf("index=%d\n",*index);
 }

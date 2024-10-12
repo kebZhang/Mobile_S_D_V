@@ -1,11 +1,12 @@
 LTE-ML1-Random-Access-Response-MSG2-Report DEFINITIONS ::= BEGIN
 
-LTE-ML1-Random-Access-Response-MSG2-Report-S-H ::SEQUENCE
+LTE-ML1-Random-Access-Response-MSG2-Report-S-H ::=SEQUENCE
 {
     version                      INTEGER (0..255),
 
-    skip0                        BIT STRING (SIZE (29)),
+    skip0                        BIT STRING (SIZE (22)),
     cell-index                   Carrier-Type,
+    skip1                        BIT STRING (SIZE (7)),
     rnti-value                   INTEGER (0..32767),
     timing-advance-included      Timing-advance-included,
     rach-procedure-type          Rach-procedure-type,
@@ -13,10 +14,11 @@ LTE-ML1-Random-Access-Response-MSG2-Report-S-H ::SEQUENCE
     rNTI-Type                    RNTI-Type,
 
     system-frame-number          INTEGER(0..15),
+    skip2                        BIT STRING (SIZE (2)),
     sub-frame-number             INTEGER(0..1023),
 
     tIMING-ADVANCE               INTEGER (0..255),
-    skip1                        BIT STRING (SIZE (8))
+    skip3                        BIT STRING (SIZE (8))
 }
 
 Carrier-Type ::=ENUMERATED
@@ -54,11 +56,11 @@ RNTI-Type ::=ENUMERATED
     unknown1                    (1),
     unknown2                    (2),
     unknown3                    (3),
-    unknown4                    (4)
+    unknown4                    (4),
     unknown5                    (5),
     unknown6                    (6),
     unknown7                    (7),
-    temp-C                      (8),
+    temp-C                      (8)
 }
 
 END
