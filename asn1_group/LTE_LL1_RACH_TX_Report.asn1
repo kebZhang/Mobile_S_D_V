@@ -4,7 +4,7 @@ LTE-LL1-RACH-Tx-Report-S-H ::=SEQUENCE
 {
     version                      INTEGER (0..255),
 
-    skip0                        INTEGER (0..255),
+    skip0                        BIT STRING (SIZE (1)),
 
     versions-current-sfn-sf      INTEGER (0..65535),
 
@@ -14,7 +14,7 @@ LTE-LL1-RACH-Tx-Report-S-H ::=SEQUENCE
 
     cycle-Shift                  INTEGER (0..65535),
 
-    skip1                        OCTET STRING (SIZE (1)),
+    skip1                        BIT STRING (SIZE (1)),
     logical-Root-q               INTEGER (0..1023),
     preamble-Format              INTEGER (0..3),
     dL-Carrier-Index             Carrier-Type,
