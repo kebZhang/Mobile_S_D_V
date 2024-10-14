@@ -29,8 +29,8 @@ LTE-UE-Identification-Message-MSG3-Report-S-H ::=SEQUENCE
     skip4                        BIT STRING(SIZE(5)),
 
     skip5                        BIT STRING(SIZE(2)),
-    harq-id                      INTEGER (0..15),
-    skip6                        BIT STRING(SIZE(2))
+    harq-id                      INTEGER (0..7),
+    skip6                        BIT STRING(SIZE(3))
 }
 
 ModulationType ::= ENUMERATED
@@ -55,7 +55,7 @@ Cqi ::=ENUMERATED
     abled                       (1)--guess
 }
 
-Ul-Delay ::ENUMERATED
+Ul-Delay ::=ENUMERATED
 {
     dont-delay                  (0),
     delay                       (1)--guess
@@ -78,9 +78,9 @@ Hopping-flag ::=ENUMERATED
 
 Transport-Block-Size-Index ::=ENUMERATED
 {
-    tBS-INDEX-2                 (0),
+    unknown0                    (0),
     unknown1                    (1),
-    unknown2                    (2),
+    tBS-INDEX-2                 (2),
     unknown3                    (3),
     unknown4                    (4),
     unknown5                    (5),

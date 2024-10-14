@@ -12,7 +12,7 @@
 #include "B12A_cb_dcall.h"
 #include "B167_cb_dcall.h"
 #include "B168_cb_dcall.h"
-
+#include "B169_cb_dcall.h"
 
 long get_file_size(const char *filename) {
     FILE *file = fopen(filename, "rb");
@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
         case 0xB169:
         {
             printf("into B169 branch\n");
-            decode_B168(hex_data, file_size, &index);
+            decode_B169(hex_data, file_size, &index);
             return 10;
         }
         default:

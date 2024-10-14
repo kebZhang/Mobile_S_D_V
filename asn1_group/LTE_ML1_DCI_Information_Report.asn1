@@ -104,7 +104,7 @@ ModulationType ::= ENUMERATED
     qpsk        (1),
     i16qam       (2),
     i64qam       (3),
-    i25qam       (4)
+    i25qam       (4),
     unknown5    (5),
     unknown6    (6),
     unknown7    (7)
