@@ -101,10 +101,10 @@ SRSQUEST ::= ENUMERATED
 ModulationType ::= ENUMERATED
 {
     unknown0    (0),
-    unknown1    (1),
+    qpsk        (1),
     i16qam       (2),
     i64qam       (3),
-    unknown4    (4),
+    i25qam       (4)
     unknown5    (5),
     unknown6    (6),
     unknown7    (7)

@@ -141,7 +141,13 @@ int main(int argc, char *argv[])
         {
             printf("into B168 branch\n");
             decode_B168(hex_data, file_size, &index);
-            return 8;
+            return 9;
+        }
+        case 0xB169:
+        {
+            printf("into B169 branch\n");
+            decode_B168(hex_data, file_size, &index);
+            return 10;
         }
         default:
         {
