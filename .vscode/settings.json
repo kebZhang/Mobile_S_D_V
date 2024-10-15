@@ -53,6 +53,7 @@
         "b083_cb_dcall.h": "c",
         "b0a1_cb_dcall.h": "c",
         "b0cd_cb_dcall.h": "c",
-        "b169_cb_dcall.h": "c"
+        "b169_cb_dcall.h": "c",
+        "b116_cb_dcall.h": "c"
     }
 }

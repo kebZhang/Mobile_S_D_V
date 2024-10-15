@@ -14,6 +14,7 @@
 #include "B168_cb_dcall.h"
 #include "B169_cb_dcall.h"
 #include "B16A_cb_dcall.h"
+#include "B17A_cb_dcall.h"
 
 long get_file_size(const char *filename) {
     FILE *file = fopen(filename, "rb");
@@ -155,6 +156,12 @@ int main(int argc, char *argv[])
             printf("into B16A branch\n");
             decode_B16A(hex_data, file_size, &index);
             return 11;
+        }
+        case 0xB17A:
+        {
+            printf("into B17A branch\n");
+            decode_B17A(hex_data, file_size, &index);
+            return 12;
         }
         default:
         {
