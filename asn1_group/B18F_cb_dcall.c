@@ -69,14 +69,16 @@ void decode_B18F(uint8_t *hex_data, size_t length, size_t *index)
     xer_fprint(stdout, &asn_DEF_LTE_ML1_AdvRx_IC_Cell_List_S_H, t_S_H);
 
     //num neighbord
-    int num_neighbors = hex_data[start_S_H+9]
-    printf("num_neighbors=%d\n",num_neighbors);
+    int num_neighbors = hex_data[start_S_H+9];
+    printf("num_neighbors= %d\n",num_neighbors);
 
     for(int i=0;i<num_neighbors;i++)
     {
-        int start_neighbor = hex_data[*index];
+        printf("[%d]\n",i);
+        printf("*index=%d",*index);
+        int start_neighbor = *index;
         convert_Neighbor_B18F(hex_data, index);
-        int neighbor_length = *index-start_neighbor;
+        int neighbor_length = *index - start_neighbor;
         printf("neighbor_length=%d\n", neighbor_length);
         rval_Neighbor = uper_decode(0, &asn_DEF_LTE_ML1_AdvRx_IC_Cell_List_Neighbor, (void **)&t_Neighbor, hex_data+start_neighbor, neighbor_length, 0, 0);
         if(rval_Neighbor.code != RC_OK) {

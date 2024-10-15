@@ -29,7 +29,8 @@ For each message type, we need to write five files:
 12.LTE_Contention_Resulution_Message_MSG4_Report----logcode----0xB16A----finished----tested  
 13.LTE_ML1_S_Criteria_Check_Procedure----logcode----0xB17A----finished----tested  
 14.LTE_ML1_Idle_Measurement_Request----logcode--0xB17D----finished----tested  
-15.
+15.LTE_ML1_AdvRx_IC_Cell_List----logcode----0xB18F----finished----tested  
+16.
 
 
 #### Tip
