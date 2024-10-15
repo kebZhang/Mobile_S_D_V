@@ -89,6 +89,7 @@ void decode_B17A(uint8_t *hex_data, size_t length, size_t *index)
         {
             case 4:
             {
+                printf("SubPacket ID : 4\n");
                 int start_id4 = *index;
                 convert_Subpacket_id4_B17A(hex_data, index);
                 int id4_length = *index - start_id4;
@@ -103,6 +104,7 @@ void decode_B17A(uint8_t *hex_data, size_t length, size_t *index)
             }
             case 9:
             {
+                printf("SubPacket ID : 9\n");
                 int start_id9 = *index;
                 convert_Subpacket_id9_B17A(hex_data, index);
                 int id9_length = *index - start_id9;

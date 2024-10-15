@@ -16,9 +16,9 @@ LTE-ML1-S-Criteria-Check-Procedure-Subpacket-ID-4 ::=SEQUENCE
 
 SubPacket-Idle-Meas-Cell-Select-Request ::=SEQUENCE
 {
-    skip1                                       BIT STRING(SIZE(6)),
+    skip1                                       BIT STRING(SIZE(14)),
     versions-Standards-Version                  Versions-Standards-Version,
-    skip16                                      BIT STRING(SIZE(32)),
+    skip17                                      BIT STRING(SIZE(24)),
 
     e-ARFCN                                     INTEGER(0..16777215),
 
@@ -31,14 +31,11 @@ SubPacket-Idle-Meas-Cell-Select-Request ::=SEQUENCE
     skip3                                       BIT STRING(SIZE(5)),--not sure
     qrxlevmin-Data                              INTEGER(0..7),
 
-    skip4                                       BIT STRING(SIZE(2)),--not sure
-    p-max-Data                                  INTEGER(0..63),
+    p-max-Data                                  INTEGER(0..255),
 
-    skip5                                       BIT STRING(SIZE(2)),--not sure
-    max-UE-Tx-Power-Data                        INTEGER(0..63),
+    max-UE-Tx-Power-Data                        INTEGER(0..255),
 
-    skip6                                       BIT STRING(SIZE(2)),--not sure
-    srxlev-Data                                 INTEGER(0..63),
+    srxlev-Data                                 INTEGER(0..255),
 
     release-9-Info                              Release-9-Info,
 
@@ -64,15 +61,14 @@ LTE-ML1-S-Criteria-Check-Procedure-Subpacket-ID-9 ::=SEQUENCE
 {
     version                                     INTEGER (0..255),
     subpacket-size                              INTEGER (0..255),
-    subPacket-Idle-Meas-Serving-Cell-Measurements     SubPacket-Idle-Meas-Serving-Cell-Measurements,
-
+    subPacket-Idle-Meas-Serving-Cell-Measurements     SubPacket-Idle-Meas-Serving-Cell-Measurements
 }
 
 SubPacket-Idle-Meas-Serving-Cell-Measurements ::=SEQUENCE
 {
-    skip9                                       BIT STRING(SIZE(6)),
+    skip9                                       BIT STRING(SIZE(14)),
     versions-Standards-Version                  Versions-Standards-Version,
-    skip10                                      BIT STRING(SIZE(32)),
+    skip10                                      BIT STRING(SIZE(24)),
 
     inst-Measured-RSRQ-Data                     INTEGER (0..255),
 
@@ -92,11 +88,10 @@ SubPacket-Idle-Meas-Serving-Cell-Measurements ::=SEQUENCE
 
     avg-Measured-RSSI-Data                      INTEGER (0..65535),
 
-    skip14                                      BIT STRING(SIZE(2)),
-    s-qual-data                                 INTEGER (0..63),
     skip14                                      BIT STRING(SIZE(8)),
+    s-qual-data                                 INTEGER (0..255),
 
-    skip15                                      BIT STRING(SIZE(16))
+    skip16                                      BIT STRING(SIZE(16))
 }
 
 Display-Avg ::=ENUMERATED

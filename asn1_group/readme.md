@@ -27,7 +27,8 @@ For each message type, we need to write five files:
 10.LTE_ML1_Random_Access_Response(MSG2)_Report    ----logcode----0xB168----finished----tested  
 11.LTE_UE_Identification_Message_MSG3_Report----logcode    ----0xB169----finished----tested  
 12.LTE_Contention_Resulution_Message_MSG4_Report----logcode----0xB16A----finished----tested  
-13.
+13.LTE_ML1_S_Criteria_Check_Procedure----logcode----0xB17A----finished----tested  
+14.
 
 
 #### Tip
