@@ -91,19 +91,19 @@ void decode_B17D(uint8_t *hex_data, size_t length, size_t *index)
 {
     LTE_ML1_Idle_Measurement_Request_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;
-    LTE_ML1_Idle_Measurement_Request_Sub_pkt_1_t  *t_pkt_1 = 0;
+    LTE_ML1_Idle_Measurement_Request_Sub_Pkt_1_t  *t_pkt_1 = 0;
     asn_dec_rval_t rval_pkt_1;
-    LTE_ML1_Idle_Measurement_Request_Sub_pkt_2_t  *t_pkt_2 = 0;
+    LTE_ML1_Idle_Measurement_Request_Sub_Pkt_2_t  *t_pkt_2 = 0;
     asn_dec_rval_t rval_pkt_2;
-    LTE_ML1_Idle_Measurement_Request_Sub_pkt_5_t  *t_pkt_5 = 0;
+    LTE_ML1_Idle_Measurement_Request_Sub_Pkt_5_t  *t_pkt_5 = 0;
     asn_dec_rval_t rval_pkt_5;
-    LTE_ML1_Idle_Measurement_Request_Sub_pkt_6_t  *t_pkt_6 = 0;
+    LTE_ML1_Idle_Measurement_Request_Sub_Pkt_6_t  *t_pkt_6 = 0;
     asn_dec_rval_t rval_pkt_6;
-    LTE_ML1_Idle_Measurement_Request_Sub_pkt_7_t  *t_pkt_7 = 0;
+    LTE_ML1_Idle_Measurement_Request_Sub_Pkt_7_t  *t_pkt_7 = 0;
     asn_dec_rval_t rval_pkt_7;
-    LTE_ML1_Idle_Measurement_Request_Sub_pkt_7_cell_t  *t_pkt_7_cell = 0;
+    LTE_ML1_Idle_Measurement_Request_Sub_Pkt_7_cell_t  *t_pkt_7_cell = 0;
     asn_dec_rval_t rval_pkt_7_cell;
-    LTE_ML1_Idle_Measurement_Request_Sub_pkt_8_t  *t_pkt_8 = 0;
+    LTE_ML1_Idle_Measurement_Request_Sub_Pkt_8_t  *t_pkt_8 = 0;
     asn_dec_rval_t rval_pkt_8;
 
     /*S_H*/
@@ -128,6 +128,7 @@ void decode_B17D(uint8_t *hex_data, size_t length, size_t *index)
     {
         /*subpacket id*/
         int subpacket_id = hex_data[*index];
+        printf("subpkt_id = %d\n",subpacket_id);
         *index+=1;
         printf("index=%d\n",*index);
 
@@ -140,12 +141,12 @@ void decode_B17D(uint8_t *hex_data, size_t length, size_t *index)
                 convert_pkt1_B17D(hex_data, index);
                 int id1_length = *index - start_id1;
                 printf("id1_length=%d\n", id1_length);
-                rval_pkt_1 = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_1, (void **)&t_pkt_1, hex_data+start_id1, id1_length, 0, 0);
+                rval_pkt_1 = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_1, (void **)&t_pkt_1, hex_data+start_id1, id1_length, 0, 0);
                 if(rval_pkt_1.code != RC_OK) {
                     printf("rval_pkt_1 decode error\n");
                     exit(65);
                 }
-                xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_1, t_pkt_1); 
+                xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_1, t_pkt_1); 
                 break;
             }
             case 2:
@@ -155,12 +156,12 @@ void decode_B17D(uint8_t *hex_data, size_t length, size_t *index)
                 convert_pkt2_B17D(hex_data, index);
                 int id2_length = *index - start_id2;
                 printf("id2_length=%d\n", id2_length);
-                rval_pkt_2 = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_2, (void **)&t_pkt_2, hex_data+start_id2, id2_length, 0, 0);
+                rval_pkt_2 = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_2, (void **)&t_pkt_2, hex_data+start_id2, id2_length, 0, 0);
                 if(rval_pkt_2.code != RC_OK) {
                     printf("rval_pkt_2 decode error\n");
                     exit(65);
                 }
-                xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_2, t_pkt_2); 
+                xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_2, t_pkt_2); 
                 break;
             }
             case 5:
@@ -170,12 +171,12 @@ void decode_B17D(uint8_t *hex_data, size_t length, size_t *index)
                 convert_pkt5_B17D(hex_data, index);
                 int id5_length = *index - start_id5;
                 printf("id5_length=%d\n", id5_length);
-                rval_pkt_5 = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_5, (void **)&t_pkt_5, hex_data+start_id5, id5_length, 0, 0);
+                rval_pkt_5 = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_5, (void **)&t_pkt_5, hex_data+start_id5, id5_length, 0, 0);
                 if(rval_pkt_5.code != RC_OK) {
                     printf("rval_pkt_5 decode error\n");
                     exit(65);
                 }
-                xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_5, t_pkt_5); 
+                xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_5, t_pkt_5); 
                 break;
             }
             case 6:
@@ -185,12 +186,12 @@ void decode_B17D(uint8_t *hex_data, size_t length, size_t *index)
                 convert_pkt6_B17D(hex_data, index);
                 int id6_length = *index - start_id6;
                 printf("id6_length=%d\n", id6_length);
-                rval_pkt_6 = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_6, (void **)&t_pkt_6, hex_data+start_id6, id6_length, 0, 0);
+                rval_pkt_6 = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_6, (void **)&t_pkt_6, hex_data+start_id6, id6_length, 0, 0);
                 if(rval_pkt_6.code != RC_OK) {
                     printf("rval_pkt_6 decode error\n");
                     exit(65);
                 }
-                xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_6, t_pkt_6); 
+                xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_6, t_pkt_6); 
                 break;
             }
             case 7:
@@ -200,12 +201,12 @@ void decode_B17D(uint8_t *hex_data, size_t length, size_t *index)
                 convert_pkt7_B17D(hex_data, index);
                 int id7_length = *index - start_id7;
                 printf("id7_length=%d\n", id7_length);
-                rval_pkt_7 = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_7, (void **)&t_pkt_7, hex_data+start_id7, id7_length, 0, 0);
+                rval_pkt_7 = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_7, (void **)&t_pkt_7, hex_data+start_id7, id7_length, 0, 0);
                 if(rval_pkt_7.code != RC_OK) {
                     printf("rval_pkt_7 decode error\n");
                     exit(65);
                 }
-                xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_7, t_pkt_7); 
+                xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_7, t_pkt_7); 
 
                 //num_white_listed_cells
                 int num_white_listed_cells = hex_data[start_id7+4] & 0x07;
@@ -218,13 +219,15 @@ void decode_B17D(uint8_t *hex_data, size_t length, size_t *index)
                     convert_pkt7_cell_B17D(hex_data, index);
                     int id7_cell_length = *index - start_id7_cell;
                     printf("id7_cell_length=%d\n", id7_cell_length);
-                    rval_pkt_7_cell = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_7_cell, (void **)&t_pkt_7_cell, hex_data+start_id7_cell, id7_cell_length, 0, 0);
+                    rval_pkt_7_cell = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_7_cell, (void **)&t_pkt_7_cell, hex_data+start_id7_cell, id7_cell_length, 0, 0);
                     if(rval_pkt_7_cell.code != RC_OK) {
                         printf("rval_pkt_7_cell decode error\n");
                         exit(65);
                     }
-                    xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_7_cell, t_pkt_7_cell); 
+                    xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_7_cell, t_pkt_7_cell); 
                 }
+                //skip 2 Bytes in the end
+                *index+=2;
                 break;
             }
             case 8:
@@ -234,12 +237,12 @@ void decode_B17D(uint8_t *hex_data, size_t length, size_t *index)
                 convert_pkt8_B17D(hex_data, index);
                 int id8_length = *index - start_id8;
                 printf("id8_length=%d\n", id8_length);
-                rval_pkt_8 = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_8, (void **)&t_pkt_8, hex_data+start_id8, id8_length, 0, 0);
+                rval_pkt_8 = uper_decode(0, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_8, (void **)&t_pkt_8, hex_data+start_id8, id8_length, 0, 0);
                 if(rval_pkt_8.code != RC_OK) {
                     printf("rval_pkt_8 decode error\n");
                     exit(65);
                 }
-                xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_pkt_8, t_pkt_8); 
+                xer_fprint(stdout, &asn_DEF_LTE_ML1_Idle_Measurement_Request_Sub_Pkt_8, t_pkt_8); 
                 break;
             }
             default:

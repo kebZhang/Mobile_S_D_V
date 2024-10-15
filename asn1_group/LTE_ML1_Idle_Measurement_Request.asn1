@@ -77,8 +77,7 @@ Rel-9-Info ::=SEQUENCE
     skip5                                      BIT STRING(SIZE(6)),
     s-Non-Intra-Search-Q                       INTEGER (0..15),
     skip6                                      BIT STRING(SIZE(2)),
-    thres-Serving-Low-Q                        INTEGER (0..3),
-    skip7                                      BIT STRING(SIZE(2)),
+    thres-Serving-Low-Q                        INTEGER (0..15),
 
     skip8                                      BIT STRING(SIZE(16))
 }
