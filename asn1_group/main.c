@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
         }
         case 0xB197:
         {
-            printf("into B18F branch\n");
+            printf("into B197 branch\n");
             decode_B197(hex_data, file_size, &index);
             return 15;
         }

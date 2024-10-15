@@ -30,7 +30,8 @@ For each message type, we need to write five files:
 13.LTE_ML1_S_Criteria_Check_Procedure----logcode----0xB17A----finished----tested  
 14.LTE_ML1_Idle_Measurement_Request----logcode--0xB17D----finished----tested  
 15.LTE_ML1_AdvRx_IC_Cell_List----logcode----0xB18F----finished----tested  
-16.
+16.LTE_ML1_Serving_Cell_Information----logcode----0xB197----finished----tested  
+17.
 
 
 #### Tip

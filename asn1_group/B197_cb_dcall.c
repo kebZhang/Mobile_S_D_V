@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "change_byte_sequence.h"
-#include "LTE-LL1-Serving-Cell-Measurement-Results-S-H.h"
+#include "LTE-ML1-Serving-Cell-Information-S-H.h"
 #include "B197_cb_dcall.h"
 
 void convert_S_H_B197(uint8_t *hex_data, size_t *index)
@@ -32,7 +32,7 @@ void convert_S_H_B197(uint8_t *hex_data, size_t *index)
 
 void decode_B197(uint8_t *hex_data, size_t length, size_t *index)
 {
-    LTE_LL1_Serving_Cell_Measurement_Results_S_H_t  *t_S_H = 0;
+    LTE_ML1_Serving_Cell_Information_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;
 
     /*S_H*/
@@ -41,13 +41,16 @@ void decode_B197(uint8_t *hex_data, size_t length, size_t *index)
     convert_S_H_B197(hex_data, index);
     int S_H_length = *index - start_S_H;
     printf("S_H_Length=%d\n", S_H_length);
+    
+    printf("index=%d\n",*index);
+    print_hex(hex_data,start_S_H,*index);
 
-    rval_S_H = uper_decode(0, &asn_DEF_LTE_LL1_Serving_Cell_Measurement_Results_S_H, (void **)&t_S_H, hex_data+start_S_H, S_H_length, 0, 0);
+    rval_S_H = uper_decode(0, &asn_DEF_LTE_ML1_Serving_Cell_Information_S_H, (void **)&t_S_H, hex_data+start_S_H, S_H_length, 0, 0);
     if(rval_S_H.code != RC_OK) {
       printf("rval_S_H decode error\n");
       exit(65);
     }
-    xer_fprint(stdout, &asn_DEF_LTE_LL1_Serving_Cell_Measurement_Results_S_H, t_S_H);    
+    xer_fprint(stdout, &asn_DEF_LTE_ML1_Serving_Cell_Information_S_H, t_S_H);    
 
     printf("decode_B197 over!!!!\n");
     printf("index=%d\n",*index);
