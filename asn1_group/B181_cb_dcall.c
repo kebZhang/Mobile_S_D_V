@@ -165,8 +165,9 @@ void decode_B181(uint8_t *hex_data, size_t length, size_t *index)
                 int num_of_layers = hex_data[start_pkt_11+4];
                 printf("num_of_layers=%d\n",num_of_layers);
 
-                for(int j=0;j<num_of_layers;j++)
+                for(int j=0;j<num_of_layers+1;j++)
                 {
+                    printf("layer: [%d] \n",j);
                     int start_pkt_11_layers = *index;
                     convert_pkt_11_layer_B181(hex_data, index);
                     int pkt_11_layer_length = *index-start_pkt_11_layers;
@@ -185,6 +186,7 @@ void decode_B181(uint8_t *hex_data, size_t length, size_t *index)
 
                     for(int k=0;k<num_of_cells;k++)
                     {
+                        printf("cell : [%d]\n");
                         int start_pkt_11_layers_cell = *index;
                         convert_pkt_11_layer_cell_B181(hex_data, index);
                         int pkt_11_layer_cell_length = *index-start_pkt_11_layers_cell;

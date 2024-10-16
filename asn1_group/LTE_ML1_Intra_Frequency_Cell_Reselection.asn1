@@ -4,7 +4,7 @@ LTE-ML1-Intra-Frequency-Cell-Reselection-S-H ::=SEQUENCE
 {
     version                      INTEGER (0..255),
     number-of-subpackets         INTEGER (0..255),
-    skip0                        OCTET STRING(2)
+    skip0                        OCTET STRING(SIZE(2))
 }
 
 LTE-ML1-Intra-Frequency-Cell-Reselection-Payload-H ::=SEQUENCE
@@ -12,7 +12,7 @@ LTE-ML1-Intra-Frequency-Cell-Reselection-Payload-H ::=SEQUENCE
     sub-pkt-id                   INTEGER (0..255),
     sub-pkt-version              INTEGER (0..255),
     sub-pkt-size                 INTEGER (0..255),
-    skip1                        OCTET STRING(1)
+    skip1                        OCTET STRING(SIZE(1))
 }
 
 
@@ -27,11 +27,11 @@ Idle-Mode-Resel-Meas-Common ::=SEQUENCE
 
     skip2                        BIT STRING(SIZE(6)),
     ue-mobility-state            INTEGER(0..1),
-    physicall=cell-id            INTEGER(0..511),
+    physicall-cell-id            INTEGER(0..511),
 
     priority                     INTEGER(0..255),
 
-    skip3                        OCTET STRING(1)
+    skip3                        OCTET STRING(SIZE(1))
 }
 
 --pkt 5
@@ -50,8 +50,8 @@ Idle-Meas-Serving-Freq-Resel-Info ::=SEQUENCE
     thresh-serving-low           INTEGER(0..15),
     skip5                        BIT STRING(SIZE(24)),
 
-    s-non-intra-search-q         INTEGER(0..31),
-    thresh-serving-low-q         INTEGER(0..31),
+    s-non-intra-search-q         INTEGER(0..63),
+    thresh-serving-low-q         INTEGER(0..63),
 
     skip6                        OCTET STRING(SIZE(2))
 }
