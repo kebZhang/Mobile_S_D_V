@@ -31,7 +31,8 @@ For each message type, we need to write five files:
 14.LTE_ML1_Idle_Measurement_Request----logcode--0xB17D----finished----tested  
 15.LTE_ML1_AdvRx_IC_Cell_List----logcode----0xB18F----finished----tested  
 16.LTE_ML1_Serving_Cell_Information----logcode----0xB197----finished----tested  
-17.
+17.LTE_ML1_Common_DC_Offset----logcode----0xB1B2----finished----tested  
+18.
 
 
 #### Tip

@@ -14,7 +14,7 @@ void convert_S_H_B1B2(uint8_t *hex_data, size_t *index)
 }
 
 
-void decode_B17A(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B1B2(uint8_t *hex_data, size_t length, size_t *index)
 {
     LTE_ML1_Common_DC_Offset_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;
