@@ -20,6 +20,7 @@
 #include "B197_cb_dcall.h"
 #include "B1B2_cb_dcall.h"
 #include "B181_cb_dcall.h"
+#include "B184_cb_dcall.h"
 
 long get_file_size(const char *filename) {
     FILE *file = fopen(filename, "rb");
@@ -197,6 +198,12 @@ int main(int argc, char *argv[])
             printf("into B181 branch\n");
             decode_B181(hex_data, file_size, &index);
             return 17;
+        }
+        case 0xB184:
+        {
+            printf("into B184 branch\n");
+            decode_B184(hex_data, file_size, &index);
+            return 18;
         }
         default:
         {
