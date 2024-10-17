@@ -27,7 +27,9 @@ Event ::=ENUMERATED
     sCC-DEACTIVATE              (3),
     sCC-VRLF-ACTIVATE           (4),
     unknown5                    (5),
-    cONNECTION-RELEASE          (6)
+    cONNECTION-RELEASE          (6),
+    unknown7                    (7),
+    unknown8                    (8)
 }
 
 Endc-mode-enabled ::=ENUMERATED
@@ -101,7 +103,7 @@ Scells-start ::=SEQUENCE
     ul-state                            Ul-state,
 
     ml-id                               INTEGER(0..255),
-    ll-id                               INTEGER(0..255),
+    ll-id                               INTEGER(0..255)
 }
 
 Dl-state ::=ENUMERATED
