@@ -91,7 +91,7 @@ void decode_B196(uint8_t *hex_data, size_t length, size_t *index)
         double inst_rssi_rx_0_data = ((hex_data[start_cell+34]&0x07)<<8)|(hex_data[start_cell+35]);
         inst_rssi_rx_0_data = (inst_rssi_rx_0_data*0.0625-110);
         printf("inst_rssi_rx_0_data=%f\n",inst_rssi_rx_0_data);
-        double inst_rssi_rx_1_data = ((hex_data[start_cell+38]&0x07)<<8)|(hex_data[start_cell+39]);
+        double inst_rssi_rx_1_data = ((hex_data[start_cell+33]&0x3f)<<5)|((hex_data[start_cell+34]&0xf8)>>3);
         inst_rssi_rx_1_data = (inst_rssi_rx_1_data*0.0625-110);
         printf("inst_rssi_rx_1_data=%f\n",inst_rssi_rx_1_data);
     }

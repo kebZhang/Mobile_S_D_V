@@ -33,11 +33,11 @@ LTE-ML1-Cell-Measurement-Results-cell-measurement ::=SEQUENCE
     skip8                        BIT STRING(SIZE(22)),
     inst-rsrq-rx-1-data          INTEGER(0..1023),
 
-    skip9                        BIT STRING(SIZE(21)),
+    skip9                        BIT STRING(SIZE(10)),
+    inst-rssi-rx-1-data          INTEGER(0..2047),
     inst-rssi-rx-0-data          INTEGER(0..2047),
 
-    skip10                       BIT STRING(SIZE(21)),
-    inst-rssi-rx-1-data          INTEGER(0..2047)
+    skip10                        OCTET STRING(SIZE(4))
 }
 
 Valid-rx-data ::=ENUMERATED
