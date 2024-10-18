@@ -4,7 +4,7 @@
 #include "LTE-ML1-Serving-Cell-Measurements-And-Evaluation-S-H.h"
 #include "B17F_cb_dcall.h"
 
-void convert_S_H_B17f(uint8_t *hex_data, size_t *index)
+void convert_S_H_B17F(uint8_t *hex_data, size_t *index)
 {
     //1 2 3 4
     *index+=4;
@@ -66,7 +66,7 @@ void decode_B17F(uint8_t *hex_data, size_t length, size_t *index)
     double Measured_RSRQ = ((hex_data[start_S_H+22]&0x03)<<8) | ((hex_data[start_S_H+23]&0xff));
     Measured_RSRQ = (Measured_RSRQ*0.0625)-30;
     printf("Measured_RSRQ=%f\n",Measured_RSRQ);    
-    double Averaged_RSRQ = ((hex_data[start_S_H+21]&0x0f)<<6) | ((hex_data[start_S_H+22]&0xfC)>>2);
+    double Averaged_RSRQ = ((hex_data[start_S_H+20]&0x3f)<<4) | ((hex_data[start_S_H+21]&0xf0)>>4);
     Averaged_RSRQ = (Averaged_RSRQ*0.0625)-30;
     printf("Averaged_RSRQ=%f\n",Averaged_RSRQ);    
 

@@ -35,7 +35,8 @@ For each message type, we need to write five files:
 18.LTE_ML1_Intra_Frequency_Cell_Reselection_Payload----logcode----0xB181----cell part not finished----tested  
 19.LTE_ML1_CA_Metrics_Log_Packet----logcode----0xB184----finished----tested  
 20.LTE_ML1_Cell_Measurement_Results----logcode----0xB196----finished----tested  
-21.
+21.LTE_ML1_Serving_Cell_Measurements_And_Evaluation----logcode----0xB17F----finished except some field----tested  
+22.
 
 
 #### Tip

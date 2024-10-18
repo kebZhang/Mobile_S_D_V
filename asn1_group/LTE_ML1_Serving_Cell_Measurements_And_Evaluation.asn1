@@ -19,13 +19,14 @@ LTE-ML1-Serving-Cell-Measurements-And-Evaluation-S-H ::=SEQUENCE
     skip4                                                   BIT STRING(SIZE(21)),
     average-rsrp                                            INTEGER(0..2047),--need process
 
-    skip5                                                   BIT STRING(SIZE(12)),
+    skip5                                                   BIT STRING(SIZE(2)),
     average-rsrq                                            INTEGER(0..1023),--need process
+    skip17                                                  BIT STRING(SIZE(10)),
     measured-eseq                                           INTEGER(0..1023),--need process
 
     skip6                                                   BIT STRING(SIZE(12)),
     measured-rssi                                           INTEGER(0..1023),--need process
-    skip7                                                   BIT STRING(4),
+    skip7                                                   BIT STRING(SIZE(4)),
     p-max                                                   INTEGER(0..63),
 
     skip8                                                   OCTET STRING(SIZE(2)),
