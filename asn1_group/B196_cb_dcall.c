@@ -34,7 +34,7 @@ void convert_cell_B196(uint8_t *hex_data, size_t *index)
     convert_endianess(hex_data, index, 4);
 }
 
-void decode_B17A(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B196(uint8_t *hex_data, size_t length, size_t *index)
 {
     LTE_ML1_Cell_Measurement_Results_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;
@@ -67,12 +67,12 @@ void decode_B17A(uint8_t *hex_data, size_t length, size_t *index)
         int cell_length = *index - start_cell;
         printf("cell_length=%d\n", cell_length);
 
-        rval_cell = uper_decode(0, &LTE_ML1_Cell_Measurement_Results_cell_measurement, (void **)&t_cell, hex_data+start_cell, cell_length, 0, 0);
+        rval_cell = uper_decode(0, &asn_DEF_LTE_ML1_Cell_Measurement_Results_cell_measurement, (void **)&t_cell, hex_data+start_cell, cell_length, 0, 0);
         if(rval_cell.code != RC_OK) {
             printf("rval_cell decode error\n");
             exit(65);
         }
-        xer_fprint(stdout, &LTE_ML1_Cell_Measurement_Results_cell_measurement, t_cell); 
+        xer_fprint(stdout, &asn_DEF_LTE_ML1_Cell_Measurement_Results_cell_measurement, t_cell); 
 
         double inst_rsrp_rx_0_data = ((hex_data[start_cell+14]&0x0f)<<8)|(hex_data[start_cell+15]);
         inst_rsrp_rx_0_data = (inst_rsrp_rx_0_data*0.0625-180);
