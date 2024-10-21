@@ -22,6 +22,11 @@ void convert_R_H_B16D(uint8_t *hex_data, size_t *index)
     *index+=1;
 }
 
+void convert_R_H_Exd_B16D(uint8_t *hex_data, size_t *index)
+{
+    convert_endianess(hex_data, index, 2);
+}
+
 void convert_PUSCH_B16D(uint8_t *hex_data, size_t *index)
 {
     convert_endianess(hex_data, index, 4);
@@ -79,6 +84,7 @@ void decode_B16D(uint8_t *hex_data, size_t length, size_t *index)
     /*Record*/
     for(int i=0;i<num_of_records;i++)
     {
+        printf("\n[%d] Records\n",i);
         /*R-H*/
         int start_R_H = *index;
         printf("index=%d\n",*index);
@@ -97,21 +103,22 @@ void decode_B16D(uint8_t *hex_data, size_t length, size_t *index)
         int mask_len=hex_data[start_R_H+7]&0x02;
         printf("mask_len=%d\n",mask_len);
 
-        if(mask_len==1)
+        if(mask_len==2)
         {
             *index+=14;
-            printf("ACK/NAK to Send Mask: 0000000000000000000000000000H");
+            printf("ACK/NAK to Send Mask: 0000000000000000000000000000H\n");
         }
         else
         {
             *index+=2;
-            printf("ACK/NAK to Send Mask: 0000H");
+            printf("ACK/NAK to Send Mask: 0000H\n");
         }
 
         /*R-H-Exd*/
         int start_R_H_Exd = *index;
         printf("index=%d\n",*index);
-        *index+=2;//convert
+        convert_R_H_Exd_B16D(hex_data, index);
+        // print_hex(hex_data,start_R_H_Exd,*index);
         int R_H_Exd_length = *index - start_R_H_Exd;
         printf("R_H_Exd_length=%d\n", R_H_Exd_length);
 
@@ -123,7 +130,11 @@ void decode_B16D(uint8_t *hex_data, size_t length, size_t *index)
         xer_fprint(stdout, &asn_DEF_LTE_ML1_GM_TX_Report_R_H_Exd, t_R_H_Exd);
 
         //Total TX Power
-        int Tota_Tx_Power = ((hex_data[start_R_H_Exd]&0x3F)<<2)|((hex_data[start_R_H+1]&0xC0)>>6);
+        int Tota_Tx_Power = ((hex_data[start_R_H_Exd]&0x3F)<<2)|((hex_data[start_R_H_Exd+1]&0xC0)>>6);
+        if(Tota_Tx_Power>128)
+        {
+            Tota_Tx_Power-=256;
+        }
         printf("Tota_Tx_Power=%d\n",Tota_Tx_Power);
 
         if(Tota_Tx_Power>=0)

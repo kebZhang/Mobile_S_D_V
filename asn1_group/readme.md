@@ -36,7 +36,8 @@ For each message type, we need to write five files:
 19.LTE_ML1_CA_Metrics_Log_Packet----logcode----0xB184----finished----tested  
 20.LTE_ML1_Cell_Measurement_Results----logcode----0xB196----finished----tested  
 21.LTE_ML1_Serving_Cell_Measurements_And_Evaluation----logcode----0xB17F----finished except some field----tested  
-22.LTE_ML1_GM_TX_Report----logcode----0xB16D----use total tx power to decide pusch and pucch, some field lack of data----untest  
+22.LTE_ML1_GM_TX_Report----logcode----0xB16D----use total tx power to decide pusch and pucch, some field lack of data----tested  
+
 
 
 #### Tip

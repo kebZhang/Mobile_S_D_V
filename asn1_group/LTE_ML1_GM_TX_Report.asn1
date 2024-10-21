@@ -13,7 +13,8 @@ LTE-ML1-GM-TX-Report-S-H ::=SEQUENCE
 Duplex-mode ::=ENUMERATED
 {
     fdd                         (0),
-    tdd                         (1)
+    tdd                         (1),
+    unknown2
 }
 
 --R-H    8Byte
@@ -61,10 +62,10 @@ Ca-mode-enabled ::=ENUMERATED
 LTE-ML1-GM-TX-Report-R-H-Exd ::=SEQUENCE
 {
     skip5                       BIT STRING(SIZE(2)),
-    total-tx-power              INTEGER(-64,64),--not sure
+    total-tx-power              INTEGER(0..255),--not sure
     eca-ack-reporting-mode      Eca-ack-reporting-mode,
     w-ul-dai                    INTEGER(0..1),
-    skip6                       BIT SRTING(SIZE(4))
+    skip6                       BIT STRING(SIZE(4))
 }
 Eca-ack-reporting-mode ::=ENUMERATED
 {
@@ -76,7 +77,7 @@ Eca-ack-reporting-mode ::=ENUMERATED
 LTE-ML1-GM-TX-Report-R-H-PUCCH ::=SEQUENCE
 {
     skip14                      BIT STRING(SIZE(4)),
-    n-1-pucch-0                 INTEGER(0..255),
+    n-1-pucch                   INTEGER(0..255),
     beta-pucch                  INTEGER(0..65535),
     temp-rnti-ack-flag          Scheduling-request-present,
     scheduling-request-present  Scheduling-request-present,
@@ -103,7 +104,7 @@ LTE-ML1-GM-TX-Report-R-H-PUCCH ::=SEQUENCE
     n-pucch-4-rb                INTEGER(0..15),
     n-5-cdm-idx                 INTEGER(0..15),
     n-5-pucch                   INTEGER(0..15),
-    skip12                      BIT SRTINg(SIZE(4)),
+    skip12                      BIT STRING(SIZE(4)),
 
     cc-max-tx-power             INTEGER(0..255),
     total-max-tx-power          INTEGER(0..255),
@@ -129,7 +130,7 @@ LTE-ML1-GM-TX-Report-R-H-PUSCH ::=SEQUENCE
     harq-id                     INTEGER(0..7),
     redundancy-version          INTEGER(0..3),
     ack-nak-length              INTEGER(0..7),
-    skip16                      BIT SRTING(SIZE(2)),
+    skip16                      BIT STRING(SIZE(2)),
     transport-block-size        INTEGER(0..4095),
     skip17                      BIT STRING(SIZE(1)),
 
@@ -148,7 +149,7 @@ LTE-ML1-GM-TX-Report-R-H-PUSCH ::=SEQUENCE
     cyclic-shift-dmrs           INTEGER(0..7),
 
     cqi-offset-index            INTEGER(0..15),
-    harq-ack-offset-index       INTEGER(0..15),
+    harq-ack-offset-x           INTEGER(0..15),
 
     tti-bundle-index            Tti-bundle-index,
     skip21                      BIT STRING(SIZE(6)),
