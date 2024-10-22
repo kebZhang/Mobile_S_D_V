@@ -11615,9 +11615,13 @@ is_custom_packet (const char *b, size_t length) {
 
 void
 on_demand_decode (const char *b, size_t length, LogPacketType type_id, PyObject* result)
-{
+{   
+    FILE *fp_demand=freopen("ondemand_decode_result.txt","a",stdout);
+    printf("ondemand decode start\n");
+
     int offset = 0;
-    switch (type_id) {
+    switch (type_id) 
+    {
 
         case NR_L2_UL_TB:
             offset += _decode_by_fmt(NrL2UlTb_Fmt,
@@ -12293,6 +12297,8 @@ on_demand_decode (const char *b, size_t length, LogPacketType type_id, PyObject*
         default:
             break;
     };
+    printf("end demand\n");
+    fclose(fp_demand);
 
 }
 
@@ -12363,26 +12369,36 @@ decode_log_packet(const char *b, size_t length, bool skip_decoding) {
     uint8_t *b_8 = (uint8_t *)b;
     int ans=0;
     int asn1=0;
+    FILE *debug_file_asn1_1 = NULL;
     
     if(type_id_uint16==0xB16D || type_id_uint16==0xB16C || type_id_uint16==0xB083 || type_id_uint16==0xB0A1 || type_id_uint16==0xB0B6 ||
         type_id_uint16==0xB0CD || type_id_uint16==0xB116 || type_id_uint16==0xB12A || type_id_uint16==0xB144 || type_id_uint16==0xB167 || 
         type_id_uint16==0xB168 || type_id_uint16==0xB169 || type_id_uint16==0xB16A || type_id_uint16==0xB17A || type_id_uint16==0xB17D || 
         type_id_uint16==0xB18F || type_id_uint16==0xB197 || type_id_uint16==0xB1B2 || type_id_uint16==0xB181 || type_id_uint16==0xB184 ||
         type_id_uint16==0xB196 || type_id_uint16==0xB17F)
-    {    
-        FILE *debug_file_asn1_1 = fopen("ty_debug_asn1_2.txt","a");
-        fprintf(debug_file_asn1_1,"ty_debug_asn1_2 open\n");
+    {
+        debug_file_asn1_1 = fopen("switch_logcode.txt","a");
+        fprintf(debug_file_asn1_1,"switch_logcode situation\n");
         fprintf(debug_file_asn1_1,"type_id=0x%04X\n",type_id_uint16);
         fclose(debug_file_asn1_1);
         
         ans = S_D_V_decode(b_8+offset, length-offset, type_id_uint16);
-
-        //ans=trY();
+        
+        debug_file_asn1_1 = fopen("switch_logcode.txt","a");
+        fprintf(debug_file_asn1_1,"test output\n");
+        fclose(debug_file_asn1_1);
     }
     else
     {
-        //trY();
+        debug_file_asn1_1 = fopen("switch_logcode.txt","a");
+        fprintf(debug_file_asn1_1,"on demand situation\n");
+        fclose(debug_file_asn1_1);
+
         on_demand_decode(b + offset, length - offset, type_id, result);
+
+        debug_file_asn1_1 = fopen("switch_logcode.txt","a");
+        fprintf(debug_file_asn1_1,"after demand situation\n");
+        fclose(debug_file_asn1_1);
     }
     return result;
 }

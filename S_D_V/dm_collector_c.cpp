@@ -793,7 +793,6 @@ PyInit_dm_collector_c(void) {
     PyObject *dm_collector_c = PyModule_Create(&moduledef);
 
     PyObject *log_packet_types;
-    int a=5;
     // dm_ccllector_c.log_packet_types: stores all supported type names
     if (EXPOSE_INTERNAL_LOGS == 1) {
         //YUANJIE: expose all logs to MobileInsight

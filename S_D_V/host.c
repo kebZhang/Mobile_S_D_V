@@ -185,9 +185,6 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode)
         }
         case 0xB16D:
         {
-            // FILE *fp1 = fopen("decode3.txt","a");
-            // fprintf(fp1,"into B16D branch\n");
-            // fclose(fp1);
             printf("into B16D branch\n");
             decode_B16D(hex_data, file_size, &index);
             fclose(fp);
@@ -195,7 +192,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode)
         }
         default:
         {
-            printf("over\n");
+            printf("default\n");
             fclose(fp);
             return 999;
         }
