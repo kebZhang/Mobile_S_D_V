@@ -87,3 +87,6 @@ we introduce asn1_group directory to save the files before running asn1c compile
 we export the main.c and executable file test to use  
 ./test data.dat B16C
 Actually we don't need the logcode in command but we still keep it for future
+
+## 1022 change
+We add the S_D_V_plugin directory as the plugin to the mobileinsight-core repository  
