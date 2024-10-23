@@ -40,14 +40,14 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode)
     {
         case 0xB083:
         {
-            decode_B083(hex_data, file_size, output, &index, &out_index);
+            decode_B083(hex_data, file_size, &index);
             fclose(fp);
             return 0;
         }
         case 0xB16C:
         {
 
-            decode_B16C(hex_data, file_size, output, &index, &out_index);
+            decode_B16C(hex_data, file_size, &index);
             fclose(fp);
             return 1;
         }

@@ -7,166 +7,28 @@
 #include "B083_cb_dcall.h"
 
 // specific header
-void convert_S_H_B083(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_S_H_B083(uint8_t *hex_data, size_t *index)
 {
-    // version 1 Byte
-    if (*index + 1 <= length)
-    {
-        uint8_t field1 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field1, 1);
-        *index += 1;
-        *out_index += 1;
-    }
-
-    // skip0 3Byte
-    if (*index + 3 <= length)
-    {
-        uint16_t field2 = *(uint16_t *)(hex_data + *index);
-        field2 = convert_3_bytes_little_to_big(field2);
-        memcpy(output + *out_index, &field2, 3);
-        *index += 3;
-        *out_index += 3;
-    }
-
-    // versions-> num control pdu 1 Byte
-    if (*index + 1 <= length)
-    {
-        uint8_t field3 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field3, 1);
-        *index += 1;
-        *out_index += 1;
-    }
-
-    // skip1 3Byte
-    if (*index + 3 <= length)
-    {
-        uint16_t field4 = *(uint16_t *)(hex_data + *index);
-        field4 = convert_3_bytes_little_to_big(field4);
-        memcpy(output + *out_index, &field4, 3);
-        *index += 3;
-        *out_index += 3;
-    }
+    *index+=8;
 }
 
 // pdu structure
-void convert_pdu_B083(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_pdu_B083(uint8_t *hex_data, size_t *index)
 {
-    /*systime*/
-    //skip2+subfn
-    int size=1;
-    if (*index + size <= length)
-    {
-        uint8_t field1 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field1, size);
-        *index += size;
-        *out_index += size;
-    }
-    
-    //skip3
-    size=1;
-    if (*index + size <= length)
-    {
-        uint8_t field2 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field2, size);
-        *index += size;
-        *out_index += size;
-    }
+    *index+=2;
+    convert_endianess(hex_data, index, 2);
+    *index+=6;
 
-    // skip4+sfn
-    size=2;
-    if (*index + size <= length)
-    {
-        uint16_t field3 = *(uint16_t *)(hex_data + *index);
-        field3 = convert_2_bytes_little_to_big(field3);
-        memcpy(output + *out_index, &field3, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    //skip5
-    size=1;
-    if (*index + size <= length)
-    {
-        uint8_t field4 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field4, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    //skip6+ sn_length
-    size=1;
-    if (*index + size <= length)
-    {
-        uint8_t field5 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field5, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    //control_pdu_size
-    size=1;
-    if (*index + size <= length)
-    {
-        uint8_t field6 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field6, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    //d/c + cpt + skip7
-    size=1;
-    if (*index + size <= length)
-    {
-        uint8_t field7 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field7, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    //skip8 + ack_part
-    size=1;
-    if (*index + size <= length)
-    {
-        uint8_t field8 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field8, size);
-        *index += size;
-        *out_index += size;
-    }
-
-    //rlcdl-ctrl-dck-sn + e1-exist-flag + e2-exist-flag   
-    size=1;
-    if (*index + size <= length)
-    {
-        uint8_t field9 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field9, size);
-        *index += size;
-        *out_index += size;
-    }
 }
 
 // specific header
-void convert_E1_B083(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void convert_E1_B083(uint8_t *hex_data, size_t *index)
 {
-    // version 1 Byte
-    if (*index + 1 <= length)
-    {
-        uint8_t field1 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field1, 1);
-        *index += 1;
-        *out_index += 1;
-    }
-    // versions-> num control pdu 1 Byte
-    if (*index + 1 <= length)
-    {
-        uint8_t field3 = *(uint8_t *)(hex_data + *index);
-        memcpy(output + *out_index, &field3, 1);
-        *index += 1;
-        *out_index += 1;
-    }
+    *index+=2;
 }
 
 
-void decode_B083(uint8_t *hex_data, size_t length, uint8_t *output, size_t *index, size_t *out_index)
+void decode_B083(uint8_t *hex_data, size_t length, size_t *index)
 {
     /*introduce different sub structure*/
     RLC_DL_AM_CONTROL_PDU_S_HEADER_t *t_S_H =0;
@@ -180,33 +42,29 @@ void decode_B083(uint8_t *hex_data, size_t length, uint8_t *output, size_t *inde
     /*S_H*/
     int start_S_H = *index;
     printf("index=%d\n",*index);
-    convert_S_H_B083(hex_data, length, output, index, out_index);
+    convert_S_H_B083(hex_data, index);
     int S_H_length = *index - start_S_H;
     printf("S_H_Length=%d\n", S_H_length);
-    printf("Converted Hex Data: ");
-    print_hex(output, start_S_H, *index);
 
-    rval_S_H = uper_decode(0, &asn_DEF_RLC_DL_AM_CONTROL_PDU_S_HEADER, (void **)&t_S_H, output+start_S_H, S_H_length, 0, 0);
+    rval_S_H = uper_decode(0, &asn_DEF_RLC_DL_AM_CONTROL_PDU_S_HEADER, (void **)&t_S_H, hex_data+start_S_H, S_H_length, 0, 0);
     if(rval_S_H.code != RC_OK) {
       printf("rval_S_H decode error\n");
       exit(65);
     }
     xer_fprint(stdout, &asn_DEF_RLC_DL_AM_CONTROL_PDU_S_HEADER, t_S_H);   
 
-    int num_control_pdu = output[start_S_H+4];
+    int num_control_pdu = hex_data[start_S_H+4];
     printf("num_control_pdu:%d\n",num_control_pdu);
     for(int i=0;i<num_control_pdu;i++)
     {
         /*PDU*/
         printf("[%d]\n",i);
         int start_PDU = *index;
-        convert_pdu_B083(hex_data,length,output, index, out_index);
+        convert_pdu_B083(hex_data, index);
         int PDU_length = *index-start_PDU;
         printf("PDU_Length=%d\n", PDU_length);
-        printf("Converted Hex Data: ");
-        print_hex(output, start_PDU, *index);
 
-        rval_PDU = uper_decode(0, &asn_DEF_RLC_DL_AM_CONTROL_PDU_PDU, (void **)&t_PDU, output+start_PDU, PDU_length, 0, 0);
+        rval_PDU = uper_decode(0, &asn_DEF_RLC_DL_AM_CONTROL_PDU_PDU, (void **)&t_PDU, hex_data+start_PDU, PDU_length, 0, 0);
         if(rval_PDU.code != RC_OK) {
         printf("rval_PDU decode error\n");
         exit(65);
@@ -214,22 +72,20 @@ void decode_B083(uint8_t *hex_data, size_t length, uint8_t *output, size_t *inde
         xer_fprint(stdout, &asn_DEF_RLC_DL_AM_CONTROL_PDU_PDU, t_PDU); 
 
         //E1 exist flag
-        int E1_exist_flag =  ((output[start_PDU+9] & 0x03) >> 1 );
+        int E1_exist_flag =  ((hex_data[start_PDU+9] & 0x03) >> 1 );
         printf("E1_exist_flag=%d\n", E1_exist_flag);
-        int E2_exist_flag =  ((output[start_PDU+9] & 0x01));
+        int E2_exist_flag =  ((hex_data[start_PDU+9] & 0x01));
         printf("E2_exist_flag=%d\n", E2_exist_flag);
 
         if(E1_exist_flag==1)
         {
             /*E1结构*/
             int start_E1 = *index;
-            convert_E1_B083(hex_data,length,output, index, out_index);
+            convert_E1_B083(hex_data, index);
             int E1_length = *index-start_E1;
             printf("E1_length=%d\n", E1_length);
-            printf("Converted Hex Data: ");
-            print_hex(output, start_E1, *index);
 
-            rval_E1 = uper_decode(0, &asn_DEF_RLC_DL_AM_Control_PDU_E1, (void **)&t_E1, output+start_E1, E1_length, 0, 0);
+            rval_E1 = uper_decode(0, &asn_DEF_RLC_DL_AM_Control_PDU_E1, (void **)&t_E1, hex_data+start_E1, E1_length, 0, 0);
             if(rval_E1.code != RC_OK) {
                 printf("rval_E1 decode error\n");
                 exit(65);
