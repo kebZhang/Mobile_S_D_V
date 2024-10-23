@@ -46,43 +46,43 @@ TpcDciRntiType ::= ENUMERATED
 
 DCIUL ::= SEQUENCE
 {
-    kofdci0                  BIT STRING(SIZE (3)),
-    ulinedxdai               BIT STRING(SIZE (3)),
+    kofdci0                  INTEGER(0..7),
+    ulinedxdai               INTEGER(0..3),
     cellIndex                CELLINDEX,
-    tpc                      BIT STRING(SIZE (2)),
-    harqid                   BIT STRING(SIZE (3)),
-    ndi                      BIT STRING(SIZE (1)),
-    rntitype                 BIT STRING(SIZE (3)),
+    tpc                      INTEGER(0..3),
+    harqid                   INTEGER(0..7),
+    ndi                      INTEGER(0..1),
+    rntitype                 INTEGER(0..7),
 
-    tbsindex                 BIT STRING(SIZE (6)),
-    mcsindex                 BIT STRING(SIZE (5)),
-    redundancyversionindex   BIT STRING(SIZE (2)),
-    skip5                    BIT STRING(SIZE (3)),
+    tbsindex                 INTEGER(0..63),
+    mcsindex                 INTEGER(0..31),
+    redundancyversionindex   INTEGER(0..3),
+    skip5                    INTEGER(0..7),
 
-    resourceallocationtype   BIT STRING(SIZE (1)),
+    resourceallocationtype   INTEGER(0..1),
     srsquest                 SRSQUEST,
-    cqirequest               BIT STRING(SIZE (3)),
+    cqirequest               INTEGER(0..7),
     modulationtype           ModulationType,
 
-    numberofresourceblocks   BIT STRING(SIZE (6)),
-    startofresourceblock     BIT STRING(SIZE (7)),
-    rbgsize                  BIT STRING(SIZE (3)),
+    numberofresourceblocks   INTEGER(0..63),
+    startofresourceblock     INTEGER(0..127),
+    rbgsize                  INTEGER(0..7),
 
     hoppingflag              HOPPINGFLAG,
-    searchspace              BIT STRING(SIZE (2)),
-    skip6                    BIT STRING(SIZE (1)),
-    cyclicshiftdmrs          BIT STRING(SIZE (3)),
-    skip7                    BIT STRING(SIZE (1)),
+    searchspace              INTEGER(0..3),
+    skip6                    INTEGER(0..1),
+    cyclicshiftdmrs          INTEGER(0..7),
+    skip7                    INTEGER(0..1),
 
-    rivvalue                 BIT STRING(SIZE (12)),
-    rivwidth                 BIT STRING(SIZE (4)),
+    rivvalue                 INTEGER(0..4095),
+    rivwidth                 INTEGER(0..15),
 
-    numberofresourceblocks2  BIT STRING(SIZE (7)),
-    startofresourceblock2    BIT STRING(SIZE (7)),
+    numberofresourceblocks2  INTEGER(0..127),
+    startofresourceblock2    INTEGER(0..127),
     skip8                    BIT STRING(SIZE (2)),
 
     skip9                    BIT STRING(SIZE (3)),
-    aggregationlevel         BIT STRING(SIZE (2)),
+    aggregationlevel         INTEGER(0..3),
     skip10                   BIT STRING(SIZE (3)),
 
     skip11                   OCTET STRING (SIZE (3))
@@ -91,7 +91,8 @@ DCIUL ::= SEQUENCE
 CELLINDEX ::= ENUMERATED
 {
     pcc        (0),
-    unknown     (1)
+    scc1       (1),
+    scc2       (2)
 }
 SRSQUEST ::= ENUMERATED
 {
@@ -118,12 +119,12 @@ HOPPINGFLAG ::= ENUMERATED
 DCIDL ::= SEQUENCE
 {
     rntitype            RntiType,
-    dlggregationlevel   BIT STRING(SIZE (1)),
-    dlsearchspace       BIT STRING(SIZE (1)),
-    dldai               BIT STRING(SIZE (1)),
+    dlggregationlevel   INTEGER(0..1),
+    dlsearchspace       INTEGER(0..1),
+    dldai               INTEGER(0..1),
     skip12              BIT STRING(SIZE (1)),
-    dlgranttpccmd       BIT STRING(SIZE (2)),
-    numacknackbits      BIT STRING(SIZE (2)),
+    dlgranttpccmd       INTEGER(0..3),
+    numacknackbits      INTEGER(0..3),
     dlgrantformattype   DlGrantFormatType,
     skip13              BIT STRING(SIZE (2)),
     dlgrantcellindex    DlGrantCellIndex,

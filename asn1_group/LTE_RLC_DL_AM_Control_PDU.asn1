@@ -15,7 +15,7 @@ RLC-DL-AM-CONTROL-PDU-PDU ::=SEQUENCE
     skip5                        INTEGER (0..255),
 
     skip6                        BIT STRING(SIZE (4)),
-    sn-length                    BIT STRING(SIZE (4)),
+    sn-length                    INTEGER(0..15),
 
     control-pdu-size             INTEGER (0..255),
 
@@ -25,12 +25,12 @@ RLC-DL-AM-CONTROL-PDU-PDU ::=SEQUENCE
 Sys-Time ::=SEQUENCE
 {
     skip2                        BIT STRING(SIZE (4)),
-    sub-fn                       BIT STRING(SIZE (4)),
+    sub-fn                       INTEGER(0..15),
 
-    skip3                        INTEGER (0..255),
+    skip3                        BIT STRING(SIZE (8)),
 
     skip4                        BIT STRING(SIZE (6)),
-    sfn                          BIT STRING(SIZE (10))
+    sfn                          INTEGER(0..1023)
 }
 
 Payload ::=SEQUENCE
@@ -45,16 +45,16 @@ AM-PDU ::=SEQUENCE
 
 Control-PDU ::=SEQUENCE
 {
-    d-c                         BIT STRING(SIZE (1)),
+    d-c                         INTEGER(0..1),
     cpt                         Cpt,
     skip7                       BIT STRING(SIZE (4)),
 
     skip8                       BIT STRING(SIZE (4)),
-    ack-part                    BIT STRING(SIZE (4)),
+    ack-part                    INTEGER(0..15),
 
-    rlcdl-ctrl-dck-sn           BIT STRING(SIZE (6)),
-    e1-exist-flag               BIT STRING(SIZE (1)),
-    e2-exist-flag               BIT STRING(SIZE (1))
+    rlcdl-ctrl-dck-sn           INTEGER(0..63),
+    e1-exist-flag               INTEGER(0..1),
+    e2-exist-flag               INTEGER(0..1)
 }
 
 Cpt ::= ENUMERATED
@@ -71,9 +71,9 @@ Cpt ::= ENUMERATED
 
 RLC-DL-AM-Control-PDU-E1 ::=SEQUENCE
 {
-    nack-sn                     BIT STRING(SIZE (9)),
-    e1-e1-exist-flag            BIT STRING(SIZE (1)),
-    e1-e2-exist-flag            BIT STRING(SIZE (1)),
+    nack-sn                     INTEGER(0..511),
+    e1-e1-exist-flag            INTEGER(0..1),
+    e1-e2-exist-flag            INTEGER(0..1),
     skip9                       BIT STRING(SIZE (5))
 }
 
