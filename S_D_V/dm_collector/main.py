@@ -6,6 +6,7 @@ import sys
 import timeit
 
 from . import dm_collector_c
+from .dm_endec import *
 
 
 def run():
@@ -13,13 +14,15 @@ def run():
     phy_baudrate = 9600
     print(("PHY COM: %s", phy_ser_name))
     print(("PHY BAUD RATE: %d", phy_baudrate))
-    _type_names=[]
+    
+    _type_names=["LTE_MAC_DL_Transport_Block"]
     
     
     try:
         phy_ser = serial.Serial(phy_ser_name,
                 baudrate=phy_baudrate,
                 timeout=None, rtscts=True, dsrdtr=True)     
+        
         print("disable logs")
         dm_collector_c.disable_logs(phy_ser)
         
@@ -48,3 +51,8 @@ def run():
         
     except (KeyboardInterrupt, RuntimeError, Exception) as e:
         sys.exit(e)
+        
+
+
+if __name__ == "__main__":
+    run()
