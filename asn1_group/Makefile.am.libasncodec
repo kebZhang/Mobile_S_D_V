@@ -1,0 +1,389 @@
+ASN_MODULE_SRCS=	\
+	LTE-Contention-Resolution-Message-MSG4-Report-S-H.c	\
+	Contention-Result.c	\
+	LTE-LL1-PCFICH-Decoding-Results-S-H.c	\
+	Carrier-Index.c	\
+	LTE-LL1-PCFICH-Decoding-Results-Record.c	\
+	LTE-LL1-RACH-Tx-Report-S-H.c	\
+	LTE-LL1-RACH-Tx-Report_Carrier-Type.c	\
+	LTE-LL1-Serving-Cell-Measurement-Results-S-H.c	\
+	Is-Idle-Mode.c	\
+	LTE-LL1-Serving-Cell-Measurement-Results_Carrier-Type.c	\
+	Measurement-BW.c	\
+	Timing-Offset-Rx.c	\
+	LTE-ML1-AdvRx-IC-Cell-List-S-H.c	\
+	Serving.c	\
+	Carrier-index.c	\
+	ENB-Type.c	\
+	Fw-mode.c	\
+	Cell-type.c	\
+	LTE-ML1-AdvRx-IC-Cell-List-Neighbor.c	\
+	Cell-Type.c	\
+	LTE-ML1-CA-Metrics-Log-Packet-S-H.c	\
+	Event.c	\
+	Endc-mode-enabled.c	\
+	LTE-ML1-CA-Metrics-Log-Packet-content.c	\
+	Pcell-start.c	\
+	Total-metrics.c	\
+	Pcell-only.c	\
+	Structure-end.c	\
+	LTE-ML1-CA-Metrics-Log-Packet-scells.c	\
+	Scells-start.c	\
+	Dl-state.c	\
+	Ul-state.c	\
+	LTE-ML1-Cell-Measurement-Results-S-H.c	\
+	LTE-ML1-Cell-Measurement-Results-cell-measurement.c	\
+	Valid-rx-data.c	\
+	LTE-ML1-Common-DC-Offset-S-H.c	\
+	Update.c	\
+	Bandwidth-index.c	\
+	DCIReport.c	\
+	DCIReport-S-Header.c	\
+	NumInfoMetaHeaderStructure.c	\
+	DuplexMode.c	\
+	RecordHeader.c	\
+	TpcDciRntiType.c	\
+	DCIUL.c	\
+	CELLINDEX.c	\
+	SRSQUEST.c	\
+	DCIReportModule_ModulationType.c	\
+	HOPPINGFLAG.c	\
+	DCIDL.c	\
+	RntiType.c	\
+	DlGrantFormatType.c	\
+	DlGrantCellIndex.c	\
+	LTE-ML1-GM-TX-Report-S-H.c	\
+	Duplex-mode.c	\
+	LTE-ML1-GM-TX-Report-R-H.c	\
+	Ack-nak-reporting-mode.c	\
+	Ul-ack-nak-present-flag.c	\
+	Ca-mode-enabled.c	\
+	LTE-ML1-GM-TX-Report-R-H-Exd.c	\
+	Eca-ack-reporting-mode.c	\
+	LTE-ML1-GM-TX-Report-R-H-PUCCH.c	\
+	Scheduling-request-present.c	\
+	LTE-ML1-GM-TX-Report-R-H-PUSCH.c	\
+	Modulation-type.c	\
+	Freq-hopping-flag.c	\
+	Tti-bundle-index.c	\
+	LTE-ML1-Idle-Measurement-Request-S-H.c	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-1.c	\
+	SubPacket-Idle-Meas-Common-Config.c	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-2.c	\
+	SubPacket-Idle-Meas-Resel-Common-Params.c	\
+	Same-Ref-Signals-in-Neighbors.c	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-5.c	\
+	SubPacket-Idle-Meas-Serving-Frequency-Resel-Info.c	\
+	Rel-9-Info.c	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-6.c	\
+	SubPacket-Idle-Meas-Intra-Frequency-Common-Config-Resel-Info.c	\
+	Rel-9-Info-subpkt-6.c	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-7.c	\
+	SubPacket-Idle-Meas-Intra-Frequency-Whitelist-Info.c	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-7-cell.c	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-8.c	\
+	SubPacket-Idle-Meas-Intra-Frequency-Blacklist-Cells.c	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-S-H.c	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-Payload-H.c	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-pkt-10.c	\
+	Idle-Mode-Resel-Meas-Common.c	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-pkt-5.c	\
+	Idle-Meas-Serving-Freq-Resel-Info.c	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-pkt-11.c	\
+	Idle-Mode-Resel-Meas-LTE-Frequency.c	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-pkt-11-layer.c	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-pkt-11-layer-cell.c	\
+	LTE-ML1-Random-Access-Request-MSG1-Report-S-H.c	\
+	LTE-ML1-Random-Access-Request-MSG1-Report_Carrier-Type.c	\
+	Duplex-Mode.c	\
+	Random-Access-Request-Timing.c	\
+	Random-Access-Response-Window-Start.c	\
+	Random-Access-Response-Window-End.c	\
+	LTE-ML1-Random-Access-Response-MSG2-Report-S-H.c	\
+	LTE-ML1-Random-Access-Response-MSG2-Report_Carrier-Type.c	\
+	Timing-advance-included.c	\
+	Rach-procedure-type.c	\
+	RACH-Procedure-Mode.c	\
+	RNTI-Type.c	\
+	LTE-ML1-S-Criteria-Check-Procedure-S-H.c	\
+	LTE-ML1-S-Criteria-Check-Procedure-Subpacket-ID-4.c	\
+	SubPacket-Idle-Meas-Cell-Select-Request.c	\
+	Versions-Standards-Version.c	\
+	Release-9-Info.c	\
+	LTE-ML1-S-Criteria-Check-Procedure-Subpacket-ID-9.c	\
+	SubPacket-Idle-Meas-Serving-Cell-Measurements.c	\
+	Display-Avg.c	\
+	LTE-ML1-Serving-Cell-Information-S-H.c	\
+	Dl-bandwidth.c	\
+	LTE-ML1-Serving-Cell-Measurements-And-Evaluation-S-H.c	\
+	Measurement-rules.c	\
+	Measurement-rules-updated.c	\
+	LTE-PDCP-DL-Data-PDU-Specific-Header.c	\
+	LTE-PDCP-DL-Data-PDU-Pdcp-State.c	\
+	LTE-PDCP-DL-Data-PDU-Meta-Log-Buffer.c	\
+	Rlcpath.c	\
+	Routestatus.c	\
+	LTE-PDCP-UL-Delay-Statistics-S-HEADER.c	\
+	LTE-PDCP-UL-Delay-Statistics-RBs.c	\
+	Total.c	\
+	Pdcp-delay-pkt-count.c	\
+	Pdcp-delay-pkt-count2.c	\
+	Pdcp-delay-pkt-count3.c	\
+	RLC-DL-AM-CONTROL-PDU-S-HEADER.c	\
+	RLC-DL-AM-CONTROL-PDU-PDU.c	\
+	Sys-Time.c	\
+	Payload.c	\
+	AM-PDU.c	\
+	Control-PDU.c	\
+	Cpt.c	\
+	RLC-DL-AM-Control-PDU-E1.c	\
+	LTE-RRC-Supported-CA-Combos-S-H.c	\
+	LTE-RRC-Supported-CA-Combos-CA-H.c	\
+	LTE-RRC-Supported-CA-Combos-Bw-Class.c	\
+	Dl-Bw-Class.c	\
+	Dl-Max-Antennas-Index.c	\
+	Ul-Max-Antennas-Index.c	\
+	Ul-Qam-Cap-Index.c	\
+	LTE-UE-Identification-Message-MSG3-Report-S-H.c	\
+	LTE-UE-Identification-Message-MSG3-Report_ModulationType.c	\
+	LTE-UE-Identification-Message-MSG3-Report_Carrier-Type.c	\
+	Cqi.c	\
+	Ul-Delay.c	\
+	Mcs.c	\
+	Hopping-flag.c	\
+	Transport-Block-Size-Index.c	\
+	MetadataHeader.c
+
+ASN_MODULE_HDRS=	\
+	LTE-Contention-Resolution-Message-MSG4-Report-S-H.h	\
+	Contention-Result.h	\
+	LTE-LL1-PCFICH-Decoding-Results-S-H.h	\
+	Carrier-Index.h	\
+	LTE-LL1-PCFICH-Decoding-Results-Record.h	\
+	LTE-LL1-RACH-Tx-Report-S-H.h	\
+	LTE-LL1-RACH-Tx-Report_Carrier-Type.h	\
+	LTE-LL1-Serving-Cell-Measurement-Results-S-H.h	\
+	Is-Idle-Mode.h	\
+	LTE-LL1-Serving-Cell-Measurement-Results_Carrier-Type.h	\
+	Measurement-BW.h	\
+	Timing-Offset-Rx.h	\
+	LTE-ML1-AdvRx-IC-Cell-List-S-H.h	\
+	Serving.h	\
+	Carrier-index.h	\
+	ENB-Type.h	\
+	Fw-mode.h	\
+	Cell-type.h	\
+	LTE-ML1-AdvRx-IC-Cell-List-Neighbor.h	\
+	Cell-Type.h	\
+	LTE-ML1-CA-Metrics-Log-Packet-S-H.h	\
+	Event.h	\
+	Endc-mode-enabled.h	\
+	LTE-ML1-CA-Metrics-Log-Packet-content.h	\
+	Pcell-start.h	\
+	Total-metrics.h	\
+	Pcell-only.h	\
+	Structure-end.h	\
+	LTE-ML1-CA-Metrics-Log-Packet-scells.h	\
+	Scells-start.h	\
+	Dl-state.h	\
+	Ul-state.h	\
+	LTE-ML1-Cell-Measurement-Results-S-H.h	\
+	LTE-ML1-Cell-Measurement-Results-cell-measurement.h	\
+	Valid-rx-data.h	\
+	LTE-ML1-Common-DC-Offset-S-H.h	\
+	Update.h	\
+	Bandwidth-index.h	\
+	DCIReport.h	\
+	DCIReport-S-Header.h	\
+	NumInfoMetaHeaderStructure.h	\
+	DuplexMode.h	\
+	RecordHeader.h	\
+	TpcDciRntiType.h	\
+	DCIUL.h	\
+	CELLINDEX.h	\
+	SRSQUEST.h	\
+	DCIReportModule_ModulationType.h	\
+	HOPPINGFLAG.h	\
+	DCIDL.h	\
+	RntiType.h	\
+	DlGrantFormatType.h	\
+	DlGrantCellIndex.h	\
+	LTE-ML1-GM-TX-Report-S-H.h	\
+	Duplex-mode.h	\
+	LTE-ML1-GM-TX-Report-R-H.h	\
+	Ack-nak-reporting-mode.h	\
+	Ul-ack-nak-present-flag.h	\
+	Ca-mode-enabled.h	\
+	LTE-ML1-GM-TX-Report-R-H-Exd.h	\
+	Eca-ack-reporting-mode.h	\
+	LTE-ML1-GM-TX-Report-R-H-PUCCH.h	\
+	Scheduling-request-present.h	\
+	LTE-ML1-GM-TX-Report-R-H-PUSCH.h	\
+	Modulation-type.h	\
+	Freq-hopping-flag.h	\
+	Tti-bundle-index.h	\
+	LTE-ML1-Idle-Measurement-Request-S-H.h	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-1.h	\
+	SubPacket-Idle-Meas-Common-Config.h	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-2.h	\
+	SubPacket-Idle-Meas-Resel-Common-Params.h	\
+	Same-Ref-Signals-in-Neighbors.h	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-5.h	\
+	SubPacket-Idle-Meas-Serving-Frequency-Resel-Info.h	\
+	Rel-9-Info.h	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-6.h	\
+	SubPacket-Idle-Meas-Intra-Frequency-Common-Config-Resel-Info.h	\
+	Rel-9-Info-subpkt-6.h	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-7.h	\
+	SubPacket-Idle-Meas-Intra-Frequency-Whitelist-Info.h	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-7-cell.h	\
+	LTE-ML1-Idle-Measurement-Request-Sub-Pkt-8.h	\
+	SubPacket-Idle-Meas-Intra-Frequency-Blacklist-Cells.h	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-S-H.h	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-Payload-H.h	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-pkt-10.h	\
+	Idle-Mode-Resel-Meas-Common.h	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-pkt-5.h	\
+	Idle-Meas-Serving-Freq-Resel-Info.h	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-pkt-11.h	\
+	Idle-Mode-Resel-Meas-LTE-Frequency.h	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-pkt-11-layer.h	\
+	LTE-ML1-Intra-Frequency-Cell-Reselection-pkt-11-layer-cell.h	\
+	LTE-ML1-Random-Access-Request-MSG1-Report-S-H.h	\
+	LTE-ML1-Random-Access-Request-MSG1-Report_Carrier-Type.h	\
+	Duplex-Mode.h	\
+	Random-Access-Request-Timing.h	\
+	Random-Access-Response-Window-Start.h	\
+	Random-Access-Response-Window-End.h	\
+	LTE-ML1-Random-Access-Response-MSG2-Report-S-H.h	\
+	LTE-ML1-Random-Access-Response-MSG2-Report_Carrier-Type.h	\
+	Timing-advance-included.h	\
+	Rach-procedure-type.h	\
+	RACH-Procedure-Mode.h	\
+	RNTI-Type.h	\
+	LTE-ML1-S-Criteria-Check-Procedure-S-H.h	\
+	LTE-ML1-S-Criteria-Check-Procedure-Subpacket-ID-4.h	\
+	SubPacket-Idle-Meas-Cell-Select-Request.h	\
+	Versions-Standards-Version.h	\
+	Release-9-Info.h	\
+	LTE-ML1-S-Criteria-Check-Procedure-Subpacket-ID-9.h	\
+	SubPacket-Idle-Meas-Serving-Cell-Measurements.h	\
+	Display-Avg.h	\
+	LTE-ML1-Serving-Cell-Information-S-H.h	\
+	Dl-bandwidth.h	\
+	LTE-ML1-Serving-Cell-Measurements-And-Evaluation-S-H.h	\
+	Measurement-rules.h	\
+	Measurement-rules-updated.h	\
+	LTE-PDCP-DL-Data-PDU-Specific-Header.h	\
+	LTE-PDCP-DL-Data-PDU-Pdcp-State.h	\
+	LTE-PDCP-DL-Data-PDU-Meta-Log-Buffer.h	\
+	Rlcpath.h	\
+	Routestatus.h	\
+	LTE-PDCP-UL-Delay-Statistics-S-HEADER.h	\
+	LTE-PDCP-UL-Delay-Statistics-RBs.h	\
+	Total.h	\
+	Pdcp-delay-pkt-count.h	\
+	Pdcp-delay-pkt-count2.h	\
+	Pdcp-delay-pkt-count3.h	\
+	RLC-DL-AM-CONTROL-PDU-S-HEADER.h	\
+	RLC-DL-AM-CONTROL-PDU-PDU.h	\
+	Sys-Time.h	\
+	Payload.h	\
+	AM-PDU.h	\
+	Control-PDU.h	\
+	Cpt.h	\
+	RLC-DL-AM-Control-PDU-E1.h	\
+	LTE-RRC-Supported-CA-Combos-S-H.h	\
+	LTE-RRC-Supported-CA-Combos-CA-H.h	\
+	LTE-RRC-Supported-CA-Combos-Bw-Class.h	\
+	Dl-Bw-Class.h	\
+	Dl-Max-Antennas-Index.h	\
+	Ul-Max-Antennas-Index.h	\
+	Ul-Qam-Cap-Index.h	\
+	LTE-UE-Identification-Message-MSG3-Report-S-H.h	\
+	LTE-UE-Identification-Message-MSG3-Report_ModulationType.h	\
+	LTE-UE-Identification-Message-MSG3-Report_Carrier-Type.h	\
+	Cqi.h	\
+	Ul-Delay.h	\
+	Mcs.h	\
+	Hopping-flag.h	\
+	Transport-Block-Size-Index.h	\
+	MetadataHeader.h
+
+ASN_MODULE_HDRS+=OPEN_TYPE.h
+ASN_MODULE_SRCS+=OPEN_TYPE.c
+ASN_MODULE_HDRS+=constr_CHOICE.h
+ASN_MODULE_HDRS+=INTEGER.h
+ASN_MODULE_SRCS+=INTEGER.c
+ASN_MODULE_HDRS+=NativeEnumerated.h
+ASN_MODULE_SRCS+=NativeEnumerated.c
+ASN_MODULE_HDRS+=NativeInteger.h
+ASN_MODULE_SRCS+=NativeInteger.c
+ASN_MODULE_SRCS+=constr_CHOICE.c
+ASN_MODULE_HDRS+=constr_SEQUENCE.h
+ASN_MODULE_SRCS+=constr_SEQUENCE.c
+ASN_MODULE_HDRS+=asn_application.h
+ASN_MODULE_SRCS+=asn_application.c
+ASN_MODULE_HDRS+=asn_ioc.h
+ASN_MODULE_HDRS+=asn_system.h
+ASN_MODULE_HDRS+=asn_codecs.h
+ASN_MODULE_HDRS+=asn_internal.h
+ASN_MODULE_SRCS+=asn_internal.c
+ASN_MODULE_HDRS+=asn_random_fill.h
+ASN_MODULE_SRCS+=asn_random_fill.c
+ASN_MODULE_HDRS+=asn_bit_data.h
+ASN_MODULE_SRCS+=asn_bit_data.c
+ASN_MODULE_HDRS+=OCTET_STRING.h
+ASN_MODULE_SRCS+=OCTET_STRING.c
+ASN_MODULE_HDRS+=BIT_STRING.h
+ASN_MODULE_SRCS+=BIT_STRING.c
+ASN_MODULE_SRCS+=asn_codecs_prim.c
+ASN_MODULE_HDRS+=asn_codecs_prim.h
+ASN_MODULE_HDRS+=ber_tlv_length.h
+ASN_MODULE_SRCS+=ber_tlv_length.c
+ASN_MODULE_HDRS+=ber_tlv_tag.h
+ASN_MODULE_SRCS+=ber_tlv_tag.c
+ASN_MODULE_HDRS+=ber_decoder.h
+ASN_MODULE_SRCS+=ber_decoder.c
+ASN_MODULE_HDRS+=der_encoder.h
+ASN_MODULE_SRCS+=der_encoder.c
+ASN_MODULE_HDRS+=constr_TYPE.h
+ASN_MODULE_SRCS+=constr_TYPE.c
+ASN_MODULE_HDRS+=constraints.h
+ASN_MODULE_SRCS+=constraints.c
+ASN_MODULE_HDRS+=xer_support.h
+ASN_MODULE_SRCS+=xer_support.c
+ASN_MODULE_HDRS+=xer_decoder.h
+ASN_MODULE_SRCS+=xer_decoder.c
+ASN_MODULE_HDRS+=xer_encoder.h
+ASN_MODULE_SRCS+=xer_encoder.c
+ASN_MODULE_HDRS+=per_support.h
+ASN_MODULE_SRCS+=per_support.c
+ASN_MODULE_HDRS+=per_decoder.h
+ASN_MODULE_SRCS+=per_decoder.c
+ASN_MODULE_HDRS+=per_encoder.h
+ASN_MODULE_SRCS+=per_encoder.c
+ASN_MODULE_HDRS+=per_opentype.h
+ASN_MODULE_SRCS+=per_opentype.c
+ASN_MODULE_HDRS+=oer_decoder.h
+ASN_MODULE_HDRS+=oer_encoder.h
+ASN_MODULE_HDRS+=oer_support.h
+ASN_MODULE_SRCS+=oer_decoder.c
+ASN_MODULE_SRCS+=oer_encoder.c
+ASN_MODULE_SRCS+=oer_support.c
+ASN_MODULE_SRCS+=OPEN_TYPE_oer.c
+ASN_MODULE_SRCS+=INTEGER_oer.c
+ASN_MODULE_SRCS+=BIT_STRING_oer.c
+ASN_MODULE_SRCS+=OCTET_STRING_oer.c
+ASN_MODULE_SRCS+=NativeInteger_oer.c
+ASN_MODULE_SRCS+=NativeEnumerated_oer.c
+ASN_MODULE_SRCS+=constr_CHOICE_oer.c
+ASN_MODULE_SRCS+=constr_SEQUENCE_oer.c
+
+ASN_MODULE_CFLAGS=
+
+lib_LTLIBRARIES+=libasncodec.la
+libasncodec_la_SOURCES=$(ASN_MODULE_SRCS) $(ASN_MODULE_HDRS)
+libasncodec_la_CPPFLAGS=-I$(top_srcdir)/
+libasncodec_la_CFLAGS=$(ASN_MODULE_CFLAGS)
+libasncodec_la_LDFLAGS=-lm
