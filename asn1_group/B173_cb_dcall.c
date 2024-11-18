@@ -7,30 +7,30 @@
 #include "LTE-ML1-PDSCH-Stat-Indication-R-T.h"
 #include "B173_cb_dcall.h"
 
-void convert_S_H_B173(uint8_t *hex_data, size_t *index)
+void convert_S_H_B173(uint8_t *hex_data, int *index)
 {
     *index+=4;
 }
 
-void convert_R_H_B173(uint8_t *hex_data, size_t *index)
+void convert_R_H_B173(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 2);
     *index+=10;
 }
 
-void convert_TB_B173(uint8_t *hex_data, size_t *index)
+void convert_TB_B173(uint8_t *hex_data, int *index)
 {
     *index+=4;
     convert_endianess(hex_data, index, 2);
     *index+=6;
 }
 
-void convert_R_T_B173(uint8_t *hex_data, size_t *index)
+void convert_R_T_B173(uint8_t *hex_data, int *index)
 {
     *index+=4;
 }
 
-void decode_B173(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B173(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_ML1_PDSCH_Stat_Indication_S_H_t *t_S_H=0;
     asn_dec_rval_t rval_S_H;
@@ -47,7 +47,7 @@ void decode_B173(uint8_t *hex_data, size_t length, size_t *index)
     convert_S_H_B173(hex_data, index);
     int S_H_length = *index - start_S_H;
     printf("S_H_Length=%d\n", S_H_length);
-    printf("Converted Hex Data: ");
+    //printf("Converted Hex Data: ");
     //print_hex(hex_data, start_S_H, *index);
 
     rval_S_H = uper_decode(0, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_S_H, (void **)&t_S_H, hex_data+start_S_H, S_H_length, 0, 0);
