@@ -401,6 +401,17 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
                     // {
                     // }
 
+                    FILE *decode_file;
+                    decode_file = fopen("decode_result.txt","a");
+                    fprintf(decode_file, "Msg_len = %d\n", msg_header[0]);
+                    fprintf(decode_file, "logcode = %02X\n", msg_header[1]);
+                    fprintf(decode_file, "timestamp = %llu\n", msg_header[2]);
+                    fprintf(decode_file, "timestamp is us total = %llu\n", time_in_us_total);
+                    fprintf(decode_file, "Final datetime: %d-%02d-%02d %02d:%02d:%02d.%06d\n",
+                        final_time->tm_year + 1900, final_time->tm_mon + 1, final_time->tm_mday,
+                        final_time->tm_hour, final_time->tm_min, final_time->tm_sec, usecond);
+                    fclose(decode_file);
+
                     uint16_t logcode_now = (uint16_t) msg_header[1];
                     int decode_libarary = S_D_V_decode((uint8_t *)output_frame, 65536, logcode_now, &start_index);
                 }

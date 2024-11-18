@@ -30,7 +30,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         perror("failed");
         return -1;
     }
-    printf("in\n");
+    // printf("in\n");
     // fclose(fp);
 
     //fp=freopen("decode_result.txt","a",stdout);
@@ -39,7 +39,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
 
     // size_t index = *index_in;
     int index = *index_in;
-    printf("index_in=%d\n", index);
+    // printf("index_in=%d\n", index);
 
     //fclose(fp);
     //fp=freopen("decode_result.txt","a",stdout);
@@ -49,12 +49,13 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         case 0xB083:
         {
             decode_B083(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 0;
         }
         case 0xB16C:
         {
-            printf("in B16C\n");
+            printf("in B16C branch\n");
             decode_B16C(hex_data, file_size, &index);
             *index_in = index;
             fclose(fp);
@@ -62,7 +63,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         }
         case 0xB173:
         {
-            printf("in B173\n");
+            printf("in B173 branch\n");
             decode_B173(hex_data, file_size, &index);
             *index_in = index;
             fclose(fp);
@@ -71,6 +72,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         case 0xB0A1:
         {
             decode_B0A1(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 2;
         }
@@ -78,6 +80,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B0B6 branch\n");
             decode_B0B6(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 3;
         }
@@ -85,6 +88,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B0CD branch\n");
             decode_B0CD(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 4;
         }
@@ -92,6 +96,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B116 branch\n");
             decode_B116(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 5;
         }
@@ -99,6 +104,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B12A branch\n");
             decode_B12A(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 6;
         }
@@ -106,6 +112,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B144 branch\n");
             decode_B144(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 7;
         }
@@ -113,6 +120,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B167 branch\n");
             decode_B167(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 8;
         }
@@ -120,6 +128,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B168 branch\n");
             decode_B168(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 9;
         }
@@ -127,6 +136,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B169 branch\n");
             decode_B169(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 10;
         }
@@ -134,6 +144,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B16A branch\n");
             decode_B16A(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 11;
         }
@@ -141,6 +152,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B17A branch\n");
             decode_B17A(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 12;
         }
@@ -148,6 +160,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B17D branch\n");
             decode_B17D(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 13;
         }
@@ -155,6 +168,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B17F branch\n");
             decode_B17F(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 20;
         }
@@ -162,6 +176,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B18F branch\n");
             decode_B18F(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 14;
         }
@@ -169,6 +184,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B197 branch\n");
             decode_B197(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 15;
         }
@@ -176,6 +192,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B1B2 branch\n");
             decode_B1B2(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 16;
         }
@@ -183,6 +200,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B181 branch\n");
             decode_B181(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 17;
         }
@@ -190,6 +208,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B184 branch\n");
             decode_B184(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 18;
         }
@@ -197,6 +216,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         {
             printf("into B196 branch\n");
             decode_B196(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 19;
         }
@@ -207,12 +227,14 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
             // fclose(fp1);
             printf("into B16D branch\n");
             decode_B16D(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 21;
         }
         default:
         {
             printf("over\n");
+            *index_in = index;
             fclose(fp);
             return 999;
         }
