@@ -6,12 +6,12 @@
 #include "LTE-ML1-S-Criteria-Check-Procedure-Subpacket-ID-9.h"
 #include "B17A_cb_dcall.h"
 
-void convert_S_H_B17A(uint8_t *hex_data, size_t *index)
+void convert_S_H_B17A(uint8_t *hex_data, int *index)
 {
     *index+=4;
 }
 
-void convert_Subpacket_id4_B17A(uint8_t *hex_data, size_t *index)
+void convert_Subpacket_id4_B17A(uint8_t *hex_data, int *index)
 {
     //1 2 3 4 5 6 7
     *index+=7;
@@ -31,7 +31,7 @@ void convert_Subpacket_id4_B17A(uint8_t *hex_data, size_t *index)
     *index+=2;
 }
 
-void convert_Subpacket_id9_B17A(uint8_t *hex_data, size_t *index)
+void convert_Subpacket_id9_B17A(uint8_t *hex_data, int *index)
 {
     //1 2 3 4 5 6 7 8 9
     *index+=9;
@@ -51,7 +51,7 @@ void convert_Subpacket_id9_B17A(uint8_t *hex_data, size_t *index)
     *index +=2;
 }
 
-void decode_B17A(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B17A(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_ML1_S_Criteria_Check_Procedure_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

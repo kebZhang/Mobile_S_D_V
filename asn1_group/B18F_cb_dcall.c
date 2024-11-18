@@ -5,7 +5,7 @@
 #include "LTE-ML1-AdvRx-IC-Cell-List-Neighbor.h"
 #include "B18F_cb_dcall.h"
 
-void convert_S_H_B18F(uint8_t *hex_data, size_t *index)
+void convert_S_H_B18F(uint8_t *hex_data, int *index)
 {
     //1 2 3 4
     *index+=4;
@@ -33,7 +33,7 @@ void convert_S_H_B18F(uint8_t *hex_data, size_t *index)
     *index+=18;
 }
 
-void convert_Neighbor_B18F(uint8_t *hex_data, size_t *index)
+void convert_Neighbor_B18F(uint8_t *hex_data, int *index)
 {
     //1 2
     convert_endianess(hex_data, index, 2);
@@ -47,7 +47,7 @@ void convert_Neighbor_B18F(uint8_t *hex_data, size_t *index)
     *index+=18;
 }
 
-void decode_B18F(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B18F(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_ML1_AdvRx_IC_Cell_List_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

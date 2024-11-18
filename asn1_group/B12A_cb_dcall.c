@@ -5,7 +5,7 @@
 #include "LTE-LL1-PCFICH-Decoding-Results-Record.h"
 #include "B12A_cb_dcall.h"
 
-void convert_S_H_B12A(uint8_t *hex_data, size_t *index)
+void convert_S_H_B12A(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 1);
     convert_endianess(hex_data, index, 3);
@@ -13,14 +13,14 @@ void convert_S_H_B12A(uint8_t *hex_data, size_t *index)
     *index+=10;
 }
 
-void convert_Record_B12A(uint8_t *hex_data, size_t *index)
+void convert_Record_B12A(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 2);
     *index += 2;
     convert_endianess(hex_data, index, 4);
 }
 
-void decode_B12A(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B12A(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_LL1_PCFICH_Decoding_Results_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

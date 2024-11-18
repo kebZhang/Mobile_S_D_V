@@ -8,12 +8,12 @@
 #include "LTE-ML1-GM-TX-Report-R-H-PUSCH.h"
 #include "B16D_cb_dcall.h"
 
-void convert_S_H_B16D(uint8_t *hex_data, size_t *index)
+void convert_S_H_B16D(uint8_t *hex_data, int *index)
 {
     *index+=4;
 }
 
-void convert_R_H_B16D(uint8_t *hex_data, size_t *index)
+void convert_R_H_B16D(uint8_t *hex_data, int *index)
 {
     *index+=4;
     //5 6 7
@@ -22,12 +22,12 @@ void convert_R_H_B16D(uint8_t *hex_data, size_t *index)
     *index+=1;
 }
 
-void convert_R_H_Exd_B16D(uint8_t *hex_data, size_t *index)
+void convert_R_H_Exd_B16D(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 2);
 }
 
-void convert_PUSCH_B16D(uint8_t *hex_data, size_t *index)
+void convert_PUSCH_B16D(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 4);
     convert_endianess(hex_data, index, 4);
@@ -38,7 +38,7 @@ void convert_PUSCH_B16D(uint8_t *hex_data, size_t *index)
     convert_endianess(hex_data, index, 2);
     *index+=2;
 }
-void convert_PUCCH_B16D(uint8_t *hex_data, size_t *index)
+void convert_PUCCH_B16D(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 4);
     convert_endianess(hex_data, index, 4);
@@ -50,7 +50,7 @@ void convert_PUCCH_B16D(uint8_t *hex_data, size_t *index)
     *index+=2;
 }
 
-void decode_B16D(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B16D(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_ML1_GM_TX_Report_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

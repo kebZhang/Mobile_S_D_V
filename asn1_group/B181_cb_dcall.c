@@ -10,17 +10,17 @@
 #include "LTE-ML1-Intra-Frequency-Cell-Reselection-pkt-11-layer-cell.h"
 #include "B181_cb_dcall.h"
 
-void convert_S_H_B181(uint8_t *hex_data, size_t *index)
+void convert_S_H_B181(uint8_t *hex_data, int *index)
 {
     *index+=4;
 }
 
-void convert_payload_H_B181(uint8_t *hex_data, size_t *index)
+void convert_payload_H_B181(uint8_t *hex_data, int *index)
 {
     *index+=4;
 }
 
-void convert_pkt_10_B181(uint8_t *hex_data, size_t *index)
+void convert_pkt_10_B181(uint8_t *hex_data, int *index)
 {
     //1 2 3 4
     convert_endianess(hex_data, index, 4);
@@ -30,7 +30,7 @@ void convert_pkt_10_B181(uint8_t *hex_data, size_t *index)
     *index+=2;
 }
 
-void convert_pkt_5_B181(uint8_t *hex_data, size_t *index)
+void convert_pkt_5_B181(uint8_t *hex_data, int *index)
 {
     //1-8
     *index+=8;
@@ -40,13 +40,13 @@ void convert_pkt_5_B181(uint8_t *hex_data, size_t *index)
     *index+=2;
 }
 
-void convert_pkt_11_B181(uint8_t *hex_data, size_t *index)
+void convert_pkt_11_B181(uint8_t *hex_data, int *index)
 {
     //1-8
     *index+=8;
 }
 
-void convert_pkt_11_layer_B181(uint8_t *hex_data, size_t *index)
+void convert_pkt_11_layer_B181(uint8_t *hex_data, int *index)
 {
     //1-4
     convert_endianess(hex_data, index, 4);
@@ -54,7 +54,7 @@ void convert_pkt_11_layer_B181(uint8_t *hex_data, size_t *index)
     *index+=8;
 }
 
-void convert_pkt_11_layer_cell_B181(uint8_t *hex_data, size_t *index)
+void convert_pkt_11_layer_cell_B181(uint8_t *hex_data, int *index)
 {
     //1-4
     convert_endianess(hex_data, index, 4);
@@ -66,7 +66,7 @@ void convert_pkt_11_layer_cell_B181(uint8_t *hex_data, size_t *index)
     *index+=4;
 }
 
-void decode_B181(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B181(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_ML1_Intra_Frequency_Cell_Reselection_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

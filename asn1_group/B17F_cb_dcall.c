@@ -4,7 +4,7 @@
 #include "LTE-ML1-Serving-Cell-Measurements-And-Evaluation-S-H.h"
 #include "B17F_cb_dcall.h"
 
-void convert_S_H_B17F(uint8_t *hex_data, size_t *index)
+void convert_S_H_B17F(uint8_t *hex_data, int *index)
 {
     //1 2 3 4
     *index+=4;
@@ -36,7 +36,7 @@ void convert_S_H_B17F(uint8_t *hex_data, size_t *index)
     *index+=1;
 }
 
-void decode_B17F(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B17F(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_ML1_Serving_Cell_Measurements_And_Evaluation_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

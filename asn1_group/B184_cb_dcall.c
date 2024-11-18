@@ -6,7 +6,7 @@
 #include "LTE-ML1-CA-Metrics-Log-Packet-scells.h"
 #include "B184_cb_dcall.h"
 
-void convert_S_H_B184(uint8_t *hex_data, size_t *index)
+void convert_S_H_B184(uint8_t *hex_data, int *index)
 {
     //1-4
     *index+=4;
@@ -17,14 +17,14 @@ void convert_S_H_B184(uint8_t *hex_data, size_t *index)
 }
 
 
-void convert_pcell_start_B184(uint8_t *hex_data, size_t *index)
+void convert_pcell_start_B184(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 4);
     convert_endianess(hex_data, index, 2);
     *index+=2;
 }
 
-void convert_pcell_only_B184(uint8_t *hex_data, size_t *index)
+void convert_pcell_only_B184(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 4);
     convert_endianess(hex_data, index, 4);
@@ -34,13 +34,13 @@ void convert_pcell_only_B184(uint8_t *hex_data, size_t *index)
     *index+=4;
 }
 
-void convert_structure_end_B184(uint8_t *hex_data, size_t *index)
+void convert_structure_end_B184(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 4);
     *index+=4;
 }
 
-void convert_total_metrics_B184(uint8_t *hex_data, size_t *index)
+void convert_total_metrics_B184(uint8_t *hex_data, int *index)
 {
     convert_pcell_only_B184(hex_data,index);
     convert_pcell_only_B184(hex_data,index);
@@ -49,7 +49,7 @@ void convert_total_metrics_B184(uint8_t *hex_data, size_t *index)
     convert_structure_end_B184(hex_data,index);
 }
 
-void convert_content_B184(uint8_t *hex_data, size_t *index)
+void convert_content_B184(uint8_t *hex_data, int *index)
 {
     convert_pcell_start_B184(hex_data,index);
     convert_total_metrics_B184(hex_data,index);
@@ -57,14 +57,14 @@ void convert_content_B184(uint8_t *hex_data, size_t *index)
     convert_total_metrics_B184(hex_data,index);
 }
 
-void convert_scell_start_B184(uint8_t *hex_data, size_t *index)
+void convert_scell_start_B184(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 4);
     convert_endianess(hex_data, index, 2);
     *index+=6; 
 }
 
-void convert_scell_B184(uint8_t *hex_data, size_t *index)
+void convert_scell_B184(uint8_t *hex_data, int *index)
 {
     convert_scell_start_B184(hex_data,index);
     convert_pcell_only_B184(hex_data,index);
@@ -72,7 +72,7 @@ void convert_scell_B184(uint8_t *hex_data, size_t *index)
     convert_pcell_only_B184(hex_data,index);
 }
 
-void decode_B184(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B184(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_ML1_CA_Metrics_Log_Packet_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

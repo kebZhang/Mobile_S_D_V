@@ -4,7 +4,7 @@
 #include "LTE-Contention-Resolution-Message-MSG4-Report-S-H.h"
 #include "B16A_cb_dcall.h"
 
-void convert_S_H_B16A(uint8_t *hex_data, size_t *index)
+void convert_S_H_B16A(uint8_t *hex_data, int *index)
 {
     //1 2 3 4
     *index+=4;
@@ -12,7 +12,7 @@ void convert_S_H_B16A(uint8_t *hex_data, size_t *index)
     convert_endianess(hex_data, index, 4);
 }
 
-void decode_B16A(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B16A(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_Contention_Resolution_Message_MSG4_Report_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

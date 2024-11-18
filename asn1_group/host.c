@@ -48,10 +48,11 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
     {
         case 0xB083:
         {
+            printf("in B083 branch\n");
             decode_B083(hex_data, file_size, &index);
             *index_in = index;
             fclose(fp);
-            return 0;
+            return 83;
         }
         case 0xB16C:
         {
@@ -71,6 +72,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         }
         case 0xB0A1:
         {
+            printf("into B0A1 branch\n");
             decode_B0A1(hex_data, file_size, &index);
             *index_in = index;
             fclose(fp);

@@ -62,6 +62,18 @@
         "b16c_cb_dcall.h": "c",
         "*.inc": "cpp",
         "chrono": "cpp",
-        "change_byte_sequence.h": "c"
+        "change_byte_sequence.h": "c",
+        "b0b6_cb_dcall.h": "c",
+        "b12a_cb_dcall.h": "c",
+        "b144_cb_dcall.h": "c",
+        "b167_cb_dcall.h": "c",
+        "b168_cb_dcall.h": "c",
+        "b16a_cb_dcall.h": "c",
+        "b17a_cb_dcall.h": "c",
+        "b17d_cb_dcall.h": "c",
+        "b18f_cb_dcall.h": "c",
+        "b197_cb_dcall.h": "c",
+        "b184_cb_dcall.h": "c",
+        "b16d_cb_dcall.h": "c"
     }
 }

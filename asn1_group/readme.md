@@ -41,6 +41,7 @@ we will solve it later
 |20|LTE_ML1_Cell_Measurement_Results|0xB196|41|1|1|none|
 |21|LTE_ML1_Serving_Cell_Information|0xB197|2|1|1|none|
 |22|LTE_ML1_Common_DC_Offset|0xB1B2|49|1|1|none|
+|23|LTE_ML1_PDSCH_Stat_Indication|0xB173|48|1|1|none|
 
 
 

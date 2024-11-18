@@ -4,7 +4,7 @@
 #include "LTE-LL1-RACH-Tx-Report-S-H.h"
 #include "B144_cb_dcall.h"
 
-void convert_S_H_B144(uint8_t *hex_data, size_t *index)
+void convert_S_H_B144(uint8_t *hex_data, int *index)
 {
     //version + skip0
     *index+=2;
@@ -20,7 +20,7 @@ void convert_S_H_B144(uint8_t *hex_data, size_t *index)
     convert_endianess(hex_data, index, 4);
 }
 
-void decode_B144(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B144(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_LL1_RACH_Tx_Report_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

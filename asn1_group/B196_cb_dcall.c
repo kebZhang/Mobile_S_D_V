@@ -5,12 +5,12 @@
 #include "LTE-ML1-Cell-Measurement-Results-cell-measurement.h"
 #include "B196_cb_dcall.h"
 
-void convert_S_H_B196(uint8_t *hex_data, size_t *index)
+void convert_S_H_B196(uint8_t *hex_data, int *index)
 {
     *index+=4;
 }
 
-void convert_cell_B196(uint8_t *hex_data, size_t *index)
+void convert_cell_B196(uint8_t *hex_data, int *index)
 {
     //1-4
     convert_endianess(hex_data, index, 4);
@@ -34,7 +34,7 @@ void convert_cell_B196(uint8_t *hex_data, size_t *index)
     convert_endianess(hex_data, index, 4);
 }
 
-void decode_B196(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B196(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_ML1_Cell_Measurement_Results_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

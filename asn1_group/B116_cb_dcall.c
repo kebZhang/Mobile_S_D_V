@@ -4,7 +4,7 @@
 #include "LTE-LL1-Serving-Cell-Measurement-Results-S-H.h"
 #include "B116_cb_dcall.h"
 
-void convert_S_H_B116(uint8_t *hex_data, size_t *index)
+void convert_S_H_B116(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 1);
     convert_endianess(hex_data, index, 2);
@@ -14,7 +14,7 @@ void convert_S_H_B116(uint8_t *hex_data, size_t *index)
     *index += 42;
 }
 
-void decode_B116(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B116(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_LL1_Serving_Cell_Measurement_Results_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

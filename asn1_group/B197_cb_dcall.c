@@ -4,7 +4,7 @@
 #include "LTE-ML1-Serving-Cell-Information-S-H.h"
 #include "B197_cb_dcall.h"
 
-void convert_S_H_B197(uint8_t *hex_data, size_t *index)
+void convert_S_H_B197(uint8_t *hex_data, int *index)
 {
     //1 2
     *index+=2;
@@ -30,7 +30,7 @@ void convert_S_H_B197(uint8_t *hex_data, size_t *index)
     convert_endianess(hex_data, index, 4);
 }
 
-void decode_B197(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B197(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_ML1_Serving_Cell_Information_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

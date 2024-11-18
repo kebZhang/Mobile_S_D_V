@@ -6,18 +6,18 @@
 #include "LTE-RRC-Supported-CA-Combos-Bw-Class.h"
 #include "B0CD_cb_dcall.h"
 
-void convert_S_H_B0CD(uint8_t *hex_data, size_t *index)
+void convert_S_H_B0CD(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 1);
     convert_endianess(hex_data, index, 1);
 }
 
-void convert_CA_Combos_H_B0CD(uint8_t *hex_data, size_t *index)
+void convert_CA_Combos_H_B0CD(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 1);
 }
 
-void convert_BW_Class_B0CD(uint8_t *hex_data, size_t *index)
+void convert_BW_Class_B0CD(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 2);
     convert_endianess(hex_data, index, 1);
@@ -27,7 +27,7 @@ void convert_BW_Class_B0CD(uint8_t *hex_data, size_t *index)
     convert_endianess(hex_data, index, 1);
 }
 
-void decode_B0CD(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B0CD(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_RRC_Supported_CA_Combos_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

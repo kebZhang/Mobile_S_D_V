@@ -7,13 +7,13 @@
 #include "B083_cb_dcall.h"
 
 // specific header
-void convert_S_H_B083(uint8_t *hex_data, size_t *index)
+void convert_S_H_B083(uint8_t *hex_data, int *index)
 {
     *index+=8;
 }
 
 // pdu structure
-void convert_pdu_B083(uint8_t *hex_data, size_t *index)
+void convert_pdu_B083(uint8_t *hex_data, int *index)
 {
     *index+=2;
     convert_endianess(hex_data, index, 2);
@@ -22,13 +22,13 @@ void convert_pdu_B083(uint8_t *hex_data, size_t *index)
 }
 
 // specific header
-void convert_E1_B083(uint8_t *hex_data, size_t *index)
+void convert_E1_B083(uint8_t *hex_data, int *index)
 {
     *index+=2;
 }
 
 
-void decode_B083(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B083(uint8_t *hex_data, size_t length, int *index)
 {
     /*introduce different sub structure*/
     RLC_DL_AM_CONTROL_PDU_S_HEADER_t *t_S_H =0;

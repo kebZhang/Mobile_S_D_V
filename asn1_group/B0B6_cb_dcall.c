@@ -7,7 +7,7 @@
 
 
 // specific header
-void convert_S_H_B0B6(uint8_t *hex_data, size_t *index)
+void convert_S_H_B0B6(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 1);
     convert_endianess(hex_data, index, 3);
@@ -17,7 +17,7 @@ void convert_S_H_B0B6(uint8_t *hex_data, size_t *index)
 }
 
 //RBs
-void convert_RBS_B0B6(uint8_t *hex_data, size_t *index)
+void convert_RBS_B0B6(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 1);
     convert_endianess(hex_data, index, 2);
@@ -63,7 +63,7 @@ void convert_RBS_B0B6(uint8_t *hex_data, size_t *index)
     *index+=10;
 }
 
-void decode_B0B6(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B0B6(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_PDCP_UL_Delay_Statistics_S_HEADER_t *t_S_H=0;
     asn_dec_rval_t rval_S_H;

@@ -4,7 +4,7 @@
 #include "LTE-UE-Identification-Message-MSG3-Report-S-H.h"
 #include "B169_cb_dcall.h"
 
-void convert_S_H_B169(uint8_t *hex_data, size_t *index)
+void convert_S_H_B169(uint8_t *hex_data, int *index)
 {
     //1-4
     *index+=4;
@@ -16,7 +16,7 @@ void convert_S_H_B169(uint8_t *hex_data, size_t *index)
     *index+=1;
 }
 
-void decode_B169(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B169(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_UE_Identification_Message_MSG3_Report_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

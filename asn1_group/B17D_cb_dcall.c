@@ -11,12 +11,12 @@
 #include "LTE-ML1-Idle-Measurement-Request-Sub-Pkt-8.h"
 #include "B17D_cb_dcall.h"
 
-void convert_S_H_B17D(uint8_t *hex_data, size_t *index)
+void convert_S_H_B17D(uint8_t *hex_data, int *index)
 {
     *index+=4;
 }
 
-void convert_pkt1_B17D(uint8_t *hex_data, size_t *index)
+void convert_pkt1_B17D(uint8_t *hex_data, int *index)
 {
     //1 2 3
     *index+=3;
@@ -26,7 +26,7 @@ void convert_pkt1_B17D(uint8_t *hex_data, size_t *index)
     convert_endianess(hex_data, index, 2);
 }
 
-void convert_pkt2_B17D(uint8_t *hex_data, size_t *index)
+void convert_pkt2_B17D(uint8_t *hex_data, int *index)
 {
     //1 2 3
     *index+=3;
@@ -36,7 +36,7 @@ void convert_pkt2_B17D(uint8_t *hex_data, size_t *index)
     convert_endianess(hex_data, index, 2);
 }
 
-void convert_pkt5_B17D(uint8_t *hex_data, size_t *index)
+void convert_pkt5_B17D(uint8_t *hex_data, int *index)
 {
     //1 2 3
     *index+=3;
@@ -50,7 +50,7 @@ void convert_pkt5_B17D(uint8_t *hex_data, size_t *index)
     *index +=2;
 }
 
-void convert_pkt6_B17D(uint8_t *hex_data, size_t *index)
+void convert_pkt6_B17D(uint8_t *hex_data, int *index)
 {
     //1 2 3
     *index+=3;
@@ -64,7 +64,7 @@ void convert_pkt6_B17D(uint8_t *hex_data, size_t *index)
     *index +=2;
 }
 
-void convert_pkt7_B17D(uint8_t *hex_data, size_t *index)
+void convert_pkt7_B17D(uint8_t *hex_data, int *index)
 {
     //1 2 3
     *index+=3;
@@ -72,12 +72,12 @@ void convert_pkt7_B17D(uint8_t *hex_data, size_t *index)
     convert_endianess(hex_data, index, 2);
 }
 
-void convert_pkt7_cell_B17D(uint8_t *hex_data, size_t *index)
+void convert_pkt7_cell_B17D(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 2);
 }
 
-void convert_pkt8_B17D(uint8_t *hex_data, size_t *index)
+void convert_pkt8_B17D(uint8_t *hex_data, int *index)
 {
     //1 2 3
     *index+=3;
@@ -87,7 +87,7 @@ void convert_pkt8_B17D(uint8_t *hex_data, size_t *index)
     *index+=2;
 }
 
-void decode_B17D(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B17D(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_ML1_Idle_Measurement_Request_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

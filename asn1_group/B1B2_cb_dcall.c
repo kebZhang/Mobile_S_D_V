@@ -5,7 +5,7 @@
 #include "B1B2_cb_dcall.h"
 
 /*now we can only decode the first 8 Bytes*/
-void convert_S_H_B1B2(uint8_t *hex_data, size_t *index)
+void convert_S_H_B1B2(uint8_t *hex_data, int *index)
 {
     //1 2 3 4
     *index+=4;
@@ -14,7 +14,7 @@ void convert_S_H_B1B2(uint8_t *hex_data, size_t *index)
 }
 
 
-void decode_B1B2(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B1B2(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_ML1_Common_DC_Offset_S_H_t  *t_S_H = 0;
     asn_dec_rval_t rval_S_H;

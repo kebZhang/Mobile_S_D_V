@@ -7,7 +7,7 @@
 #include "B0A1_cb_dcall.h"
 
 // specific header
-void convert_S_H_B0A1(uint8_t *hex_data, size_t *index)
+void convert_S_H_B0A1(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 1);
     convert_endianess(hex_data, index, 3);
@@ -17,7 +17,7 @@ void convert_S_H_B0A1(uint8_t *hex_data, size_t *index)
 }
 
 // PDCP State
-void convert_pdcp_state_B0A1(uint8_t *hex_data, size_t *index)
+void convert_pdcp_state_B0A1(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 1);
     convert_endianess(hex_data, index, 2);
@@ -31,7 +31,7 @@ void convert_pdcp_state_B0A1(uint8_t *hex_data, size_t *index)
 }
 
 //meta log buffer
-void convert_meta_log_buffer_B0A1(uint8_t *hex_data, size_t *index)
+void convert_meta_log_buffer_B0A1(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 2);
     convert_endianess(hex_data, index, 2);
@@ -55,7 +55,7 @@ void convert_meta_log_buffer_B0A1(uint8_t *hex_data, size_t *index)
     convert_endianess(hex_data, index, 2);
 }
 
-void decode_B0A1(uint8_t *hex_data, size_t length, size_t *index)
+void decode_B0A1(uint8_t *hex_data, size_t length, int *index)
 {
     LTE_PDCP_DL_Data_PDU_Specific_Header_t *t_S_H=0;
     asn_dec_rval_t rval_S_H;
