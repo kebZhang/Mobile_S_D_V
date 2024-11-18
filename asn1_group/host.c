@@ -65,6 +65,17 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
             fclose(fp);
             return 1;
         }
+        case 0xB173:
+        {
+            printf("in B173\n");
+            //fclose(fp);
+            // fp=freopen("decode_result.txt","a",stdout);
+
+            decode_B173(hex_data, file_size, &index);
+            *index_in = index;
+            fclose(fp);
+            return 173;
+        }
         case 0xB0A1:
         {
             decode_B0A1(hex_data, file_size, &index);
