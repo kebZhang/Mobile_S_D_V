@@ -117,7 +117,7 @@ LTE-ML1-PDSCH-Stat-Indication-R-T ::= SEQUENCE
     area-id                     INTEGER(0..255),
     skip10                      BIT STRING(SIZE (6)),
     alt-tbs-index               Alt-Tbs-Index,
-    skip11                      BIT STRING(SIZE (7)).
+    skip11                      BIT STRING(SIZE (7)),
     alt-mcs-enabled             Alt-Mcs-Enabled
 }
 Alt-Tbs-Index ::= ENUMERATED

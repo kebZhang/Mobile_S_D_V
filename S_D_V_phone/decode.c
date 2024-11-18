@@ -401,7 +401,7 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
                     // {
                     // }
 
-                    uint16_t logcode_now = 0xB16C;
+                    uint16_t logcode_now = 0xB173;
                     int decode_libarary = S_D_V_decode((uint8_t *)output_frame, 65536, logcode_now, &start_index);
                 }
                 

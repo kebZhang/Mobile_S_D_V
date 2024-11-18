@@ -61,6 +61,7 @@
         "b17f_cb_dcall.h": "c",
         "b16c_cb_dcall.h": "c",
         "*.inc": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "change_byte_sequence.h": "c"
     }
 }

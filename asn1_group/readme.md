@@ -48,6 +48,13 @@ we will solve it later
 #### Tip
 1.in logcode_cb_dacll.c remember to call converter function with the paramter index, no * 
 2.change_byte_sequence c and h file is used for change byte sequence, print hex, write to file  
-3.we have changed the cb method in B0A1,B0B6,B0CD,B116 but not in B16C,B083
+3.we have changed the cb method in B0A1,B0B6,B0CD,B116 but not in B16C,B083  
+4.We usually do local test in Dell /home/ty/Desktop/test/Test_asn1_group_local/asn1_group, each time we need to move the test.c into the asn1_group and test, the result will show in decode_result.txt
+```
+asn1c -S /usr/local/share/asn1c -fcompound-names -fskeletons-copy -gen-PER -pdu=auto *.asn1
+rm converter-example.c
+cc -I. -o test *.c
+./test B173_test_data.dat B173
+```
  
 

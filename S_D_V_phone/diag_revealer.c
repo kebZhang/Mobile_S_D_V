@@ -1250,7 +1250,10 @@ main (int argc, char **argv)
 	// }
 
 	// ***************************** drain in user space ****************************
-``
+			pthread_t drain_thread;
+			fprintf(log_file, "fd=%d\n", fd);
+			pthread_create(&drain_thread, NULL, drain_thread_func, NULL);
+			fprintf(log_file, "drain thread created\n");
 
 	// ***************************** drain in kernel ****************************
 	// uint8_t peripheral = 0;
