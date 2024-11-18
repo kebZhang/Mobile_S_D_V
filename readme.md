@@ -90,3 +90,6 @@ Actually we don't need the logcode in command but we still keep it for future
 
 ## 1022 change
 We add the S_D_V_plugin directory as the plugin to the mobileinsight-core repository  
+
+## 1118 change
+We add the S_D_V_phone directory to save the decode.c diag_revealer.c generate_diag_cfg.c which could be used in generat exectuable program in dell /home/ty/Desktop/S_D_V_apk/Ty_apk/S_D_V_diagrevealer  
