@@ -26,7 +26,7 @@ if __name__ == "__main__":
     # resource control) monitoring
     #src.enable_log("5G_NR_RRC_OTA_Packet")
     # src.enable_log("LTE_RRC_OTA_Packet")
-    src.enable_log("ML1_DCI_Infomation_Report")
+    src.enable_log("LTE_RRC_OTA_Packet")
     # src.enable_log("LTE_RRC_OTA_Packet")
     # src.enable_log("WCDMA_RRC_Serv_Cell_Info")
 
