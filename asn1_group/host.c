@@ -22,7 +22,7 @@ int trY()
 }
 
 //我们直接把这个函数作为补充放进mobileinisght的decode_log_packet函数中
-int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode)
+int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *index_in)
 {
     FILE *fp=freopen("decode_result.txt","a",stdout);
     if(fp==NULL)
@@ -31,10 +31,20 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode)
         return -1;
     }
     printf("in\n");
+    // fclose(fp);
 
-    size_t index=0;
-    size_t out_index=0;
+    //fp=freopen("decode_result.txt","a",stdout);
+
     uint8_t *output = NULL;
+
+    // size_t index = *index_in;
+    int index = *index_in;
+    printf("index_in=%d\n", index);
+
+    //fclose(fp);
+
+
+    //fp=freopen("decode_result.txt","a",stdout);
 
     switch (logcode)
     {
@@ -46,8 +56,12 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode)
         }
         case 0xB16C:
         {
+            printf("in B16C\n");
+            //fclose(fp);
+            // fp=freopen("decode_result.txt","a",stdout);
 
             decode_B16C(hex_data, file_size, &index);
+            *index_in = index;
             fclose(fp);
             return 1;
         }

@@ -38,11 +38,11 @@ uint64_t convert_8_bytes_little_to_big(uint64_t little_endian)
 }
 
 // 字节序转换函数，将从 hex_data + *index 开始的 length 个字节按小端转大端顺序转换
-void convert_endianess(uint8_t* hex_data, size_t *index, size_t length) 
+void convert_endianess(uint8_t* hex_data, int *index, size_t length) 
 {
     // 对从 index 开始的 length 个字节按字节顺序进行反转
-    size_t start = *index;
-    size_t end = *index + length - 1;
+    int start = *index;
+    int end = *index + length - 1;
 
     while (start < end) {
         // 交换起始字节和结束字节
@@ -57,10 +57,10 @@ void convert_endianess(uint8_t* hex_data, size_t *index, size_t length)
 }
 
 
-void print_hex(const uint8_t *data, size_t start, size_t end)
+void print_hex(const uint8_t *data, int start, int end)
 {
     printf("print hex\n");
-    for (size_t i = start; i < end; i++)
+    for (int i = start; i < end; i++)
     {
         printf("%02x", data[i]);
     }
