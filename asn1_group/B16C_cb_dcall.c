@@ -9,7 +9,7 @@
 
 
 // Metadata header
-void convert_S_H_B16C(uint8_t *hex_data, int *index)
+void convert_S_H_B16C(uint8_t *hex_data, size_t *index)
 {
     *index+=1;
     convert_endianess(hex_data, index, 2);
@@ -17,13 +17,13 @@ void convert_S_H_B16C(uint8_t *hex_data, int *index)
 }
 
 
-void convert_R_H_B16C(uint8_t *hex_data, int *index)
+void convert_R_H_B16C(uint8_t *hex_data, size_t *index)
 {
     convert_endianess(hex_data, index, 4);
 }
 
 
-void convert_UL_B16C(uint8_t *hex_data, int *index)
+void convert_UL_B16C(uint8_t *hex_data, size_t *index)
 {
     convert_endianess(hex_data, index, 2);
     convert_endianess(hex_data, index, 2);
@@ -37,7 +37,7 @@ void convert_UL_B16C(uint8_t *hex_data, int *index)
 
 
 //DL decode
-void convert_DL_B16C(uint8_t *hex_data, int *index)
+void convert_DL_B16C(uint8_t *hex_data, size_t *index)
 {
     convert_endianess(hex_data, index, 2);
     *index+=6;
@@ -45,10 +45,8 @@ void convert_DL_B16C(uint8_t *hex_data, int *index)
 
 
 
-void decode_B16C(uint8_t *hex_data, size_t length, int *index)
+void decode_B16C(uint8_t *hex_data, size_t length, size_t *index)
 {
-    
-    //FILE *fp1=freopen("decode_result.txt","a",stdout);
     /*引入不同的子结构*/
     DCIReport_t *t =0;
     asn_dec_rval_t rval; /* Decoder return value  */
@@ -59,31 +57,14 @@ void decode_B16C(uint8_t *hex_data, size_t length, int *index)
     DCIDL_t *t3 =0;
     asn_dec_rval_t rval3;
 
-    printf("in B16c decode\n");
-    //fclose(fp1);
-
 
     //S_H
-    //fp1=freopen("decode_result.txt","a",stdout);
-
-
     int start_S_H = *index;
     printf("start_S_H=%d\n",start_S_H);
-
-    //fclose(fp1);
-
-    //fp1=freopen("decode_result.txt","a",stdout);
-
     convert_S_H_B16C(hex_data, index);
-
-    //fclose(fp1);
-    //fp1=freopen("decode_result.txt","a",stdout);
-
-
     int S_H_length = *index - start_S_H;
     printf("S_H_length=%d\n", S_H_length);
     printf("Converted Hex Data: ");
-    print_hex(hex_data, start_S_H, start_S_H+S_H_length);
 
     rval = uper_decode(0, &asn_DEF_DCIReport, (void **)&t, hex_data+start_S_H, S_H_length, 0, 0);
     if(rval.code != RC_OK) {

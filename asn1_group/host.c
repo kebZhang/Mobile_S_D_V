@@ -22,7 +22,7 @@ int trY()
 }
 
 //我们直接把这个函数作为补充放进mobileinisght的decode_log_packet函数中
-int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *index_in)
+int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode)
 {
     FILE *fp=freopen("decode_result.txt","a",stdout);
     if(fp==NULL)
@@ -31,20 +31,10 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         return -1;
     }
     printf("in\n");
-    // fclose(fp);
 
-    //fp=freopen("decode_result.txt","a",stdout);
-
+    size_t index=0;
+    size_t out_index=0;
     uint8_t *output = NULL;
-
-    // size_t index = *index_in;
-    int index = *index_in;
-    printf("index_in=%d\n", index);
-
-    //fclose(fp);
-
-
-    //fp=freopen("decode_result.txt","a",stdout);
 
     switch (logcode)
     {
@@ -56,25 +46,10 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         }
         case 0xB16C:
         {
-            printf("in B16C\n");
-            //fclose(fp);
-            // fp=freopen("decode_result.txt","a",stdout);
 
             decode_B16C(hex_data, file_size, &index);
-            *index_in = index;
             fclose(fp);
             return 1;
-        }
-        case 0xB173:
-        {
-            printf("in B173\n");
-            //fclose(fp);
-            // fp=freopen("decode_result.txt","a",stdout);
-
-            decode_B173(hex_data, file_size, &index);
-            *index_in = index;
-            fclose(fp);
-            return 173;
         }
         case 0xB0A1:
         {

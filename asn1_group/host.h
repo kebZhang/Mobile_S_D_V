@@ -29,9 +29,8 @@ extern "C" {
 #include "B184_cb_dcall.h"
 #include "B196_cb_dcall.h"
 #include "B144_cb_dcall.h"
-#include "B173_cb_dcall.h"
 
-int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *index);
+int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode);
 long get_file_size(const char *filename);
 int trY();
 
