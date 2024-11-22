@@ -78,6 +78,7 @@
         "stdio.h": "c",
         "decode.h": "c",
         "string.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "b16c_v48_cb_dcall.h": "c"
     }
 }
