@@ -92,13 +92,15 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
             }
             xer_fprint(stdout, &asn_DEF_LTE_MAC_Ul_Transport_Block_Sample_H, t_Sample_H);
 
-            int hdrlen = hex_data[start_Sample_H + 13] printf("hdrlen=%d\n", hdrlen);
+            int hdrlen = hex_data[start_Sample_H + 13];
+            printf("hdrlen=%d\n", hdrlen);
 
             /*element*/
             int lcg = -1;
             int bsr_type = 0;
-            int step = *index;
-            printf("start_element=%d\n", step);
+            int step = 0;
+            int start_element=*index;
+            printf("start_element= *index = %d\n", start_element);
             int E = -1;
             int LCID_data = -1;
             int F = -1;
@@ -106,19 +108,19 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
             int buffer_size[4] = {0, 0, 0, 0};
             while (step < hdrlen)
             {
-                E = (hex_data[step] >> 5) & 1;
+                E = (hex_data[start_element+step] >> 5) & 1;
                 printf("E=%d\n", E);
-                LCID_data = (hex_data[step]) & 31;
+                LCID_data = (hex_data[start_element+step]) & 31;
                 printf("LCID_data=%d\n", LCID_data);
 
                 if (LCID_data == 29)
                 {
-                    printf("***** Short BSRT *****\n");
+                    printf("***** Short BSR *****\n");
                     bsr_type = 1;
                 }
                 else if (LCID_data == 30)
                 {
-                    printf("***** Long BSRT *****\n");
+                    printf("***** Long BSR *****\n");
                     bsr_type = 2;
                 }
                 else if (LCID_data == 31)
@@ -134,11 +136,11 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
                 if (E == 1 && LCID_data <= 11)
                 {
                     step += 1;
-                    F = (hex_data[step] >> 7) & 1;
+                    F = (hex_data[start_element+step] >> 7) & 1;
                     printf("F=%d\n", F);
                     if (F == 0)
                     {
-                        L = (hex_data[step]) & 127;
+                        L = (hex_data[start_element+step]) & 127;
                         printf("L=%d\n", L);
                     }
                     else if (F != 0)
@@ -151,20 +153,20 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
                     step += 1;
                     if (bsr_type == 1)
                     {
-                        lcg = (hex_data[step] >> 6) & 3;
-                        buffer_size[lcg] = (hex_data[step] & 63);
+                        lcg = (hex_data[start_element+step] >> 6) & 3;
+                        buffer_size[lcg] = (hex_data[start_element+step] & 63);
                         printf("BSR index saved\n");
                     }
                     else if (bsr_type == 2)
                     {
-                        buffer_size[0] = (hex_data[step] & 0xFC) >> 2;
-                        buffer_size[1] = ((hex_data[step] & 3) << 4) | ((hex_data[step + 1] & 0xF0) >> 4);
-                        buffer_size[2] = ((hex_data[step + 1] & 15) << 2) | ((hex_data[step + 2] & 0xC0) >> 6);
-                        buffer_size[3] = (hex_data[step + 2] & 63);
+                        buffer_size[0] = (hex_data[start_element+step] & 0xFC) >> 2;
+                        buffer_size[1] = ((hex_data[start_element+step] & 3) << 4) | ((hex_data[start_element+step + 1] & 0xF0) >> 4);
+                        buffer_size[2] = ((hex_data[start_element+step + 1] & 15) << 2) | ((hex_data[start_element+step + 2] & 0xC0) >> 6);
+                        buffer_size[3] = (hex_data[start_element+step + 2] & 63);
                         printf("BSR index saved\n");
                         step += 2;
                     }
-                    if (step + 1 > hdrlen)
+                    if (step + 1 > (hdrlen))
                     {
                         bsr_type -= bsr_type;
                     }
@@ -172,7 +174,7 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
                 }
                 step += 1;
             }
-            *index = step;
+            *index += (hdrlen) ;
         }
     }
     printf("B064 over!!!!\n");

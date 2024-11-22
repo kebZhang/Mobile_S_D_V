@@ -320,6 +320,13 @@ get_posix_timestamp ()
 	return (double)(tv.tv_sec) + (double)(tv.tv_usec) / 1.0e6;
 }
 
+double user_timestamp() {
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts); // 使用 CLOCK_MONOTONIC 获取时间
+    return (double)ts.tv_sec + (double)ts.tv_nsec / 1.0e9;
+}
+
+
 typedef struct {
 	char *p;
 	size_t len;
@@ -1118,7 +1125,7 @@ main (int argc, char **argv)
 
 	//generate_cfg
 	int logcode_num=1;
-	uint16_t logcode_list[1] = {0xB064};
+	uint16_t logcode_list[1] = {0xB173};
 	generate_diag_cfg(logcode_list,logcode_num);
 	const char *filename_diag_cfg = "Diag_ty.cfg";
 	
@@ -1268,6 +1275,7 @@ main (int argc, char **argv)
 	{
 		// LOGI("Reading logs...\n");
 		double ts_before = get_posix_timestamp();
+		//double ts_before_change_src = user_timestamp();
 		fprintf(log_file, "New reading start at %lf\n", ts_before);
 
 		// uint8_t peripheral = 0;
@@ -1279,13 +1287,14 @@ main (int argc, char **argv)
 		// }
 
 		int read_len = read(fd, buf_read, sizeof(buf_read));
-		double ts_after = get_posix_timestamp();
-		fprintf(log_file, "Receive logs at %lf, wait for %lf, read_len=%d\n", ts_after, ts_after - ts_before, read_len);
 
 		if (read_len > 0) 
 		{
 			if (*((int *)buf_read) == USER_SPACE_DATA_TYPE) 
 			{
+				double ts_after = get_posix_timestamp();
+				fprintf(log_file, "Original: Receive logs at %lf, wait for %lf, read_len=%d\n", ts_after, ts_after - ts_before, read_len);
+
 				int num_data = *((int *)(buf_read + 4));
 				fprintf(log_file, "num_data=%d\n", num_data);
 				int i = 0;

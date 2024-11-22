@@ -165,6 +165,13 @@ int check_frame_format(char *output_frame)
     return 0;
 }
 
+static double get_posix_timestamp1 ()
+{
+	struct timeval tv;
+	(void) gettimeofday(&tv, NULL);
+	return (double)(tv.tv_sec) + (double)(tv.tv_usec) / 1.0e6;
+}
+
 int find_pkt_type(char *output_frame, int start_index)
 {
     if(output_frame[start_index]=='\x10')
@@ -269,8 +276,11 @@ void decode_header(char *output_frame, int start_index, uint64_t *msg_header)
 
     uint64_t timestamp = ((t_8<<56)|(t_7<<48)|(t_6<<40)|(t_5<<32)|(t_4<<24)|(t_3<<16)|(t_2<<8)|t_1);
     int version = (output_frame[timestamp_start_index+8] & 0xFF);
-    int num_of_record = (output_frame[timestamp_start_index+9] & 0xFF);
-
+    
+    int B173_num_of_record = (output_frame[timestamp_start_index+9] & 0xFF);
+    
+    int B064_num_sample = (output_frame[timestamp_start_index+16] & 0xFF);
+    int B064_subpkt_ver = (output_frame[timestamp_start_index+13] & 0xFF);
     //fprintf(debug_file_decode, "[decode_header]    timestamp=%04X\n", timestamp);
     
     //fclose(debug_file_decode);
@@ -282,14 +292,29 @@ void decode_header(char *output_frame, int start_index, uint64_t *msg_header)
     msg_header[3]=0;
     msg_header[4]=0;
 
-    if((logcode==0xB16D || logcode == 0xB064 || logcode==0xB173 || logcode==0xB16C || logcode == 0xB063) && msg_len!=0)
+    msg_header[0]=msg_len;
+    msg_header[1]=logcode;
+    msg_header[2]=timestamp;
+
+    if(logcode == 0xB173 && msg_len!=0)
     {
-        msg_header[0]=msg_len;
-        msg_header[1]=logcode;
-        msg_header[2]=timestamp;
         msg_header[3]=version;
-        msg_header[4]=num_of_record;
+        msg_header[4]= B173_num_of_record;
     }
+    else if(logcode == 0xB064 && msg_len!=0)
+    {
+        msg_header[3]= B064_subpkt_ver;
+        msg_header[4]= B064_num_sample;
+    }
+    else if((logcode == 0xB16C || logcode == 0xB16D) && msg_len!=0)
+    {
+        msg_header[3]=version;
+        msg_header[4]= 0;
+    }
+    else
+    {
+    }
+
 
     //computer_timestamp(timestamp);
 }
@@ -344,16 +369,13 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
 
                 if(msg_header[0]>0)
                 {
+
+
+                    //double t_pkt_after_crc_log = get_posix_timestamp1();
+                    //fprintf(log_file_decode, "Userspace recognize and decode this Msg at %lf \n", (t_pkt_after_crc_log));
+
                     msglen_effect_time[0] +=1;
                     //msglen_effect_time[1] += msg_len;
-                    
-                    
-                    fprintf(log_file_decode, "Msg_len = %d \t logcode = %02X \t version = %d \t timestamp = %llu \n", msg_header[0], msg_header[1], msg_header[3], msg_header[2]);
-                    if(msg_header[1]==0xB173)
-                    {
-                        fprintf(log_file_decode, "B173 number of record = %d\n", msg_header[4]);
-                    }
-                    
 
                     uint64_t time_real = msg_header[2];
                     int second = (int)(time_real/PER_SECOND);
@@ -361,10 +383,22 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
 
                     uint64_t time_in_us_total = (uint64_t)second * 1000000 + (uint64_t)usecond;
 
-                    fprintf(log_file_decode, "timestamp is us total = %llu\n", time_in_us_total);
 
-
-
+                    if(msg_header[1]==0xB173)
+                    {
+                        fprintf(log_file_decode, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, version = %d, num of record = %d \n", 
+                            msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3], msg_header[4]);
+                    }
+                    else if(msg_header[1]==0xB064)
+                    {
+                        fprintf(log_file_decode, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, Subpkt version = %d, num of sample = %d \n", 
+                            msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3], msg_header[4]);
+                    }
+                    else
+                    {
+                        fprintf(log_file_decode, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, version = %d \n", 
+                            msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3]);
+                    }
 
                     // 基准时间 1980-01-06
                     struct tm epoch = {0};
@@ -374,49 +408,58 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
                     epoch.tm_hour = 0;
                     epoch.tm_min = 0;
                     epoch.tm_sec = 0;
-
                     // 将基准时间转换为 time_t 类型
                     time_t epoch_time = mktime(&epoch);
                     if (epoch_time == -1) {
                         printf("Error: Unable to convert epoch to time_t.\n");
                     }
-
                     // 增加秒数
                     epoch_time += second;
-
                     // 将时间转换为 struct tm
                     struct tm *final_time = gmtime(&epoch_time);
                     if (final_time == NULL) {
                         printf("Error: Unable to convert time to struct tm.\n");
                     }
-
-                    // 打印最终时间
-                    fprintf(log_file_decode, "Final datetime: %d-%02d-%02d %02d:%02d:%02d.%06d\n",
-                        final_time->tm_year + 1900, final_time->tm_mon + 1, final_time->tm_mday,
-                        final_time->tm_hour, final_time->tm_min, final_time->tm_sec, usecond);
-                    // if(logcode==0xB063)
-                    // {
-                    //     record += (int)(output_frame[start_index+18] & 0xFF);
-                    // }
-                    // if(logcode==0xB063)
-                    // {
-                    // }
+                
+                    /*print real time*/
+                    // fprintf(log_file_decode, "Final datetime: %d-%02d-%02d %02d:%02d:%02d.%06d\n",
+                    //     final_time->tm_year + 1900, final_time->tm_mon + 1, final_time->tm_mday,
+                    //     final_time->tm_hour, final_time->tm_min, final_time->tm_sec, usecond);
 
                     FILE *decode_file;
                     decode_file = fopen("decode_result.txt","a");
-                    fprintf(decode_file, "Msg_len = %d \t logcode = %02X \t version = %d \t timestamp = %llu \n", msg_header[0], msg_header[1], msg_header[3], msg_header[2]);
                     if(msg_header[1]==0xB173)
                     {
-                        fprintf(log_file_decode, "B173 number of record = %d\n", msg_header[4]);
+                        fprintf(decode_file, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, version = %d, num of record = %d \n", 
+                            msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3], msg_header[4]);
                     }
-                    fprintf(decode_file, "timestamp is us total = %llu\n", time_in_us_total);
+                    else if(msg_header[1]==0xB064)
+                    {
+                        fprintf(decode_file, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, Subpkt version = %d, num of sample = %d \n", 
+                            msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3], msg_header[4]);
+                    }
+                    else
+                    {
+                        fprintf(decode_file, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, version = %d \n", 
+                            msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3]);
+                    }
+
                     fprintf(decode_file, "Final datetime: %d-%02d-%02d %02d:%02d:%02d.%06d\n",
                         final_time->tm_year + 1900, final_time->tm_mon + 1, final_time->tm_mday,
                         final_time->tm_hour, final_time->tm_min, final_time->tm_sec, usecond);
                     fclose(decode_file);
 
                     uint16_t logcode_now = (uint16_t) msg_header[1];
-                    int decode_libarary = S_D_V_decode((uint8_t *)output_frame, 65536, logcode_now, &start_index);
+
+                    /*decode library part*/
+
+                    // double t_before_decode_libarary = get_posix_timestamp1();
+                    // int decode_libarary = S_D_V_decode((uint8_t *)output_frame, 65536, logcode_now, &start_index);
+                    // double t_after_decode_libarary = get_posix_timestamp1();
+
+                    // decode_file = fopen("decode_result.txt","a");
+                    // fprintf(decode_file, "Decode Library using %lf for this MSG\n", (t_after_decode_libarary-t_before_decode_libarary));
+                    // fclose(decode_file);
                 }
                 
                 

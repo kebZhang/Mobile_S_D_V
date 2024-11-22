@@ -74,6 +74,10 @@
         "b18f_cb_dcall.h": "c",
         "b197_cb_dcall.h": "c",
         "b184_cb_dcall.h": "c",
-        "b16d_cb_dcall.h": "c"
+        "b16d_cb_dcall.h": "c",
+        "stdio.h": "c",
+        "decode.h": "c",
+        "string.h": "c",
+        "stdint.h": "c"
     }
 }

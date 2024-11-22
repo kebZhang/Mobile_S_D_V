@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <time.h>
+#include <sys/time.h>
 #include "./asn1_group/host.h"
 
 static unsigned short calc_crc (unsigned char *data, size_t len, unsigned short crc);
