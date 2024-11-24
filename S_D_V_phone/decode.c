@@ -426,36 +426,36 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
                     //     final_time->tm_year + 1900, final_time->tm_mon + 1, final_time->tm_mday,
                     //     final_time->tm_hour, final_time->tm_min, final_time->tm_sec, usecond);
 
-                    FILE *decode_file;
-                    decode_file = fopen("decode_result.txt","a");
-                    if(msg_header[1]==0xB173)
-                    {
-                        fprintf(decode_file, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, version = %d, num of record = %d \n", 
-                            msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3], msg_header[4]);
-                    }
-                    else if(msg_header[1]==0xB064)
-                    {
-                        fprintf(decode_file, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, Subpkt version = %d, num of sample = %d \n", 
-                            msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3], msg_header[4]);
-                    }
-                    else
-                    {
-                        fprintf(decode_file, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, version = %d \n", 
-                            msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3]);
-                    }
+                    // FILE *decode_file;
+                    // decode_file = fopen("decode_result.txt","a");
+                    // if(msg_header[1]==0xB173)
+                    // {
+                    //     fprintf(decode_file, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, version = %d, num of record = %d \n", 
+                    //         msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3], msg_header[4]);
+                    // }
+                    // else if(msg_header[1]==0xB064)
+                    // {
+                    //     fprintf(decode_file, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, Subpkt version = %d, num of sample = %d \n", 
+                    //         msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3], msg_header[4]);
+                    // }
+                    // else
+                    // {
+                    //     fprintf(decode_file, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, version = %d \n", 
+                    //         msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3]);
+                    // }
 
-                    fprintf(decode_file, "Final datetime: %d-%02d-%02d %02d:%02d:%02d.%06d\n",
-                        final_time->tm_year + 1900, final_time->tm_mon + 1, final_time->tm_mday,
-                        final_time->tm_hour, final_time->tm_min, final_time->tm_sec, usecond);
-                    fclose(decode_file);
+                    // fprintf(decode_file, "Final datetime: %d-%02d-%02d %02d:%02d:%02d.%06d\n",
+                    //     final_time->tm_year + 1900, final_time->tm_mon + 1, final_time->tm_mday,
+                    //     final_time->tm_hour, final_time->tm_min, final_time->tm_sec, usecond);
+                    // fclose(decode_file);
 
                     uint16_t logcode_now = (uint16_t) msg_header[1];
 
                     /*decode library part*/
 
-                    // double t_before_decode_libarary = get_posix_timestamp1();
-                    // int decode_libarary = S_D_V_decode((uint8_t *)output_frame, 65536, logcode_now, &start_index);
-                    // double t_after_decode_libarary = get_posix_timestamp1();
+                    double t_before_decode_libarary = get_posix_timestamp1();
+                    int decode_libarary = S_D_V_decode((uint8_t *)output_frame, 65536, logcode_now, &start_index, time_in_us_total);
+                    double t_after_decode_libarary = get_posix_timestamp1();
 
                     // decode_file = fopen("decode_result.txt","a");
                     // fprintf(decode_file, "Decode Library using %lf for this MSG\n", (t_after_decode_libarary-t_before_decode_libarary));

@@ -31,8 +31,9 @@ extern "C" {
 #include "B144_cb_dcall.h"
 #include "B173_cb_dcall.h"
 #include "B064_cb_dcall.h"
+#include "B16C_v48_cb_dcall.h"
 
-int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *index);
+int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *index, uint64_t time_in_us_total);
 long get_file_size(const char *filename);
 int trY();
 

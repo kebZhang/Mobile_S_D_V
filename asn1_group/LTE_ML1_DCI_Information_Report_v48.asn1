@@ -33,7 +33,7 @@ LTE-ML1-DCI-Information-Report-v48-R-UL ::=SEQUENCE
     skip3                  BIT STRING(SIZE(9)),
 
     number-of-resource-blocks       INTEGER(0..127),
-    skip4                  OCTET STRINg(SIZE(117))
+    skip4                  OCTET STRING(SIZE(117))
 }
 TBS-Index ::=ENUMERATED
 {
