@@ -142,7 +142,7 @@ void generate_diag_cfg(uint16_t *logcode, int logcode_num)
             highest = 0x00000B56;
             break;
         case 0x0000000b:    // LTE, ......
-            highest = 0x000001C4;
+            highest = 0x00000FFF;
             //highest = 0x000001C4;
             break;
         default:

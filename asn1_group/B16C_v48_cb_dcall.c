@@ -92,7 +92,7 @@ void decode_B16C_v48(uint8_t *hex_data, size_t length, int *index, uint64_t time
             //     exit(65);
             // }
             //xer_fprint(stdout, &asn_DEF_LTE_ML1_DCI_Information_Report_v48_R_UL, t_R_UL); 
-            printf("%02X\t%llu\t%ld\t%ld\t%d\t%d\t%ld\t%ld\t%ld\t%ld\t%ld\t\n", logcode, time_in_us_total,
+            printf("%02X\t%llu\t%ld\t%ld\t%d\t%d\t%ld\t%ld\t%ld\t%ld\t%ld\n", logcode, time_in_us_total,
                 t_S_H->version, t_S_H->num_of_record, first_sub_frame_number, first_sys_frame_number,
                 t_R_H->sub_frame_number, t_R_H->sys_frame_number, 
                 t_R_UL->mcs_index, t_R_UL->rendundancy_version, t_R_UL->number_of_resource_blocks);

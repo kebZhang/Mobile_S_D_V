@@ -28,7 +28,55 @@ void convert_Sample_H_B064(uint8_t *hex_data, int *index)
     *index += 3;
 }
 
-void decode_B064(uint8_t *hex_data, size_t length, int *index)
+void getBsrEventString(int num, char *output) {
+    switch (num) {
+        case 0:
+            strcpy(output, "none");
+            break;
+        case 1:
+            strcpy(output, "periodic");
+            break;
+        case 2:
+            strcpy(output, "high-data-arrival");
+            break;
+        case 3:
+            strcpy(output, "robustness-bsr");
+            break;
+        default:
+            strcpy(output, "invalid");
+            break;
+    }
+}
+void getBsrTrigString(int num, char *output) {
+    switch (num) {
+        case 0:
+            strcpy(output, "no-bsr");
+            break;
+        case 1:
+            strcpy(output, "cacelled");
+            break;
+        case 2:
+            strcpy(output, "l-bsr");
+            break;
+        case 3:
+            strcpy(output, "s-bsr");
+            break;
+        case 4:
+            strcpy(output, "pad-l-bsr");
+            break;
+        case 5:
+            strcpy(output, "pad-s-bsr");
+            break;
+        case 6:
+            strcpy(output, "pad-t-bsr");
+            break;
+        default:
+            strcpy(output, "invalid");
+            break;
+    }
+}
+
+void decode_B064(uint8_t *hex_data, size_t length, int *index, uint64_t time_in_us_total, uint16_t logcode)
 {
     LTE_MAC_Ul_Transport_Block_S_H_t *t_S_H = 0;
     asn_dec_rval_t rval_S_H;
@@ -39,10 +87,10 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
 
     /*S_H*/
     int start_S_H = *index;
-    printf("index=%d\n", *index);
+    //printf("index=%d\n", *index);
     convert_S_H_B064(hex_data, index);
     int S_H_length = *index - start_S_H;
-    printf("S_H_Length=%d\n", S_H_length);
+    //printf("S_H_Length=%d\n", S_H_length);
 
     rval_S_H = uper_decode(0, &asn_DEF_LTE_MAC_Ul_Transport_Block_S_H, (void **)&t_S_H, hex_data + start_S_H, S_H_length, 0, 0);
     if (rval_S_H.code != RC_OK)
@@ -50,19 +98,20 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
         printf("rval_S_H decode error\n");
         exit(65);
     }
-    xer_fprint(stdout, &asn_DEF_LTE_MAC_Ul_Transport_Block_S_H, t_S_H);
+    //xer_fprint(stdout, &asn_DEF_LTE_MAC_Ul_Transport_Block_S_H, t_S_H);
 
-    int num_subpkt = hex_data[start_S_H + 1];
-    printf("num_subpkt=%d\n", num_subpkt);
 
-    for (int i = 0; i < num_subpkt; i++)
+    // int num_subpkt = hex_data[start_S_H + 1];
+    // printf("num_subpkt=%d\n", num_subpkt);
+
+    for (int i = 0; i < t_S_H->num_subpkt; i++)
     {
-        printf("Subpkt [%d]\n", i);
+        //printf("Subpkt [%d]\n", i);
         int start_Subpkt_H = *index;
-        printf("index=%d\n", *index);
+        //printf("index=%d\n", *index);
         convert_Subpkt_H_B064(hex_data, index);
         int Subpkt_H_length = *index - start_Subpkt_H;
-        printf("Subpkt_H_length=%d\n", Subpkt_H_length);
+        //printf("Subpkt_H_length=%d\n", Subpkt_H_length);
 
         rval_Subpkt_H = uper_decode(0, &asn_DEF_LTE_MAC_Ul_Transport_Block_Subpkt_H, (void **)&t_Subpkt_H, hex_data + start_Subpkt_H, Subpkt_H_length, 0, 0);
         if (rval_Subpkt_H.code != RC_OK)
@@ -70,19 +119,22 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
             printf("rval_Subpkt_H decode error\n");
             exit(65);
         }
-        xer_fprint(stdout, &asn_DEF_LTE_MAC_Ul_Transport_Block_Subpkt_H, t_Subpkt_H);
+        //xer_fprint(stdout, &asn_DEF_LTE_MAC_Ul_Transport_Block_Subpkt_H, t_Subpkt_H);
 
-        int num_sample = hex_data[start_Subpkt_H + 4];
-        printf("num_sample=%d\n", num_sample);
+        // int num_sample = hex_data[start_Subpkt_H + 4];
+        // printf("num_sample=%d\n", num_sample);
 
-        for (int j = 0; j < num_sample; j++)
+        int first_sub_frame_number = 0;
+        int first_sys_frame_number = 0;
+        
+        for (int j = 0; j < t_Subpkt_H->num_samples; j++)
         {
-            printf("Samples [%d]\n", j);
+            //printf("Samples [%d]\n", j);
             int start_Sample_H = *index;
-            printf("index=%d\n", *index);
+            //printf("index=%d\n", *index);
             convert_Sample_H_B064(hex_data, index);
             int Sample_H_length = *index - start_Sample_H;
-            printf("Sample_H_length=%d\n", Sample_H_length);
+            //printf("Sample_H_length=%d\n", Sample_H_length);
 
             rval_Sample_H = uper_decode(0, &asn_DEF_LTE_MAC_Ul_Transport_Block_Sample_H, (void **)&t_Sample_H, hex_data + start_Sample_H, Sample_H_length, 0, 0);
             if (rval_Sample_H.code != RC_OK)
@@ -90,17 +142,22 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
                 printf("rval_Sample_H decode error\n");
                 exit(65);
             }
-            xer_fprint(stdout, &asn_DEF_LTE_MAC_Ul_Transport_Block_Sample_H, t_Sample_H);
-
-            int hdrlen = hex_data[start_Sample_H + 13];
-            printf("hdrlen=%d\n", hdrlen);
+            //xer_fprint(stdout, &asn_DEF_LTE_MAC_Ul_Transport_Block_Sample_H, t_Sample_H);
+            
+            if(j==0)
+            {
+                first_sub_frame_number = t_Sample_H->sub_fn;
+                first_sys_frame_number = t_Sample_H->sfn;
+            }
+            int hdrlen = t_Sample_H->hdr_len;
+            // printf("hdrlen=%d\n", hdrlen);
 
             /*element*/
             int lcg = -1;
             int bsr_type = 0;
             int step = 0;
             int start_element=*index;
-            printf("start_element= *index = %d\n", start_element);
+            //printf("start_element= *index = %d\n", start_element);
             int E = -1;
             int LCID_data = -1;
             int F = -1;
@@ -109,25 +166,25 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
             while (step < hdrlen)
             {
                 E = (hex_data[start_element+step] >> 5) & 1;
-                printf("E=%d\n", E);
+                //printf("E=%d\n", E);
                 LCID_data = (hex_data[start_element+step]) & 31;
-                printf("LCID_data=%d\n", LCID_data);
+                //printf("LCID_data=%d\n", LCID_data);
 
                 if (LCID_data == 29)
                 {
-                    printf("***** Short BSR *****\n");
+                    //printf("***** Short BSR *****\n");
                     bsr_type = 1;
                 }
                 else if (LCID_data == 30)
                 {
-                    printf("***** Long BSR *****\n");
+                    //printf("***** Long BSR *****\n");
                     bsr_type = 2;
                 }
                 else if (LCID_data == 31)
                 {
                     if (bsr_type == 0)
                     {
-                        printf("***** Padding *****\n");
+                        //printf("***** Padding *****\n");
                         bsr_type = 3;
                     }
                 }
@@ -137,11 +194,11 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
                 {
                     step += 1;
                     F = (hex_data[start_element+step] >> 7) & 1;
-                    printf("F=%d\n", F);
+                    //printf("F=%d\n", F);
                     if (F == 0)
                     {
                         L = (hex_data[start_element+step]) & 127;
-                        printf("L=%d\n", L);
+                        //printf("L=%d\n", L);
                     }
                     else if (F != 0)
                     {
@@ -155,7 +212,7 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
                     {
                         lcg = (hex_data[start_element+step] >> 6) & 3;
                         buffer_size[lcg] = (hex_data[start_element+step] & 63);
-                        printf("BSR index saved\n");
+                        //printf("BSR index saved\n");
                     }
                     else if (bsr_type == 2)
                     {
@@ -163,7 +220,7 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
                         buffer_size[1] = ((hex_data[start_element+step] & 3) << 4) | ((hex_data[start_element+step + 1] & 0xF0) >> 4);
                         buffer_size[2] = ((hex_data[start_element+step + 1] & 15) << 2) | ((hex_data[start_element+step + 2] & 0xC0) >> 6);
                         buffer_size[3] = (hex_data[start_element+step + 2] & 63);
-                        printf("BSR index saved\n");
+                        //printf("BSR index saved\n");
                         step += 2;
                     }
                     if (step + 1 > (hdrlen))
@@ -175,7 +232,17 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index)
                 step += 1;
             }
             *index += (hdrlen) ;
+
+            char bsr_event[50];
+            getBsrEventString(t_Sample_H->bsr_event, bsr_event);
+            char bsr_trig[50];
+            getBsrTrigString(t_Sample_H->bsr_trig, bsr_trig);
+
+            printf("%02X\t%llu\t%d\t%d\t%ld\t%ld\t%ld\t%ld\t%s\t%d\t%d\t%s\t%d\t%d\t%d\t%d\n",
+                    logcode, time_in_us_total, first_sub_frame_number, first_sys_frame_number, t_Sample_H->sub_fn, t_Sample_H->sfn,
+                    t_Sample_H->grant_bytes, t_Sample_H->padding_bytes, bsr_event, bsr_type, lcg, bsr_trig,
+                    buffer_size[0], buffer_size[1], buffer_size[2], buffer_size[3]);
         }
     }
-    printf("B064 over!!!!\n");
+    //printf("B064 over!!!!\n");
 }

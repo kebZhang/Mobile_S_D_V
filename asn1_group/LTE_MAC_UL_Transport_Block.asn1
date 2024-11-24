@@ -61,12 +61,12 @@ Bsr-Event ::=ENUMERATED
 }
 Bsr-Trig ::=ENUMERATED
 {
-    no-bsr                          (1),
-    cacelled                        (2),
-    l-bsr                           (3),
-    s-bsr                           (4),
-    pad-l-bsr                       (5),
-    pad-s-bsr                       (6),
-    pad-t-bsr                       (7)
+    no-bsr                          (0),
+    cacelled                        (1),
+    l-bsr                           (2),
+    s-bsr                           (3),
+    pad-l-bsr                       (4),
+    pad-s-bsr                       (5),
+    pad-t-bsr                       (6)
 }
 END
