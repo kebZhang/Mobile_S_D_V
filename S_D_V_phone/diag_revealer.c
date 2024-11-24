@@ -1125,7 +1125,7 @@ main (int argc, char **argv)
 
 	//generate_cfg
 	int logcode_num=1;
-	uint16_t logcode_list[1] = {0xB064};
+	uint16_t logcode_list[1] = {0xB173};
 	generate_diag_cfg(logcode_list,logcode_num);
 	const char *filename_diag_cfg = "Diag_ty.cfg";
 	
