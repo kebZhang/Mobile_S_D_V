@@ -57,7 +57,7 @@ LTE-ML1-PDSCH-Stat-Indication-TB ::= SEQUENCE
 
     transport-block-size        INTEGER(0..65535),
     mcs-index                   INTEGER(0..255),
-    number-of-res               INTEGER(0..255),
+    number-of-rbs               INTEGER(0..255),
 
     skip7                       BIT STRING(SIZE (4)),
     modulation-type             Modulation-Type,

@@ -30,7 +30,7 @@ void convert_R_T_B173(uint8_t *hex_data, int *index)
     *index+=4;
 }
 
-void decode_B173(uint8_t *hex_data, size_t length, int *index)
+void decode_B173(uint8_t *hex_data, size_t length, int *index, uint64_t time_in_us_total, uint16_t logcode)
 {
     LTE_ML1_PDSCH_Stat_Indication_S_H_t *t_S_H=0;
     asn_dec_rval_t rval_S_H;
@@ -43,10 +43,10 @@ void decode_B173(uint8_t *hex_data, size_t length, int *index)
     
     /*S_H*/
     int start_S_H = *index;
-    printf("index=%d\n",*index);
+    //printf("index=%d\n",*index);
     convert_S_H_B173(hex_data, index);
     int S_H_length = *index - start_S_H;
-    printf("S_H_Length=%d\n", S_H_length);
+    //printf("S_H_Length=%d\n", S_H_length);
     //printf("Converted Hex Data: ");
     //print_hex(hex_data, start_S_H, *index);
 
@@ -55,28 +55,36 @@ void decode_B173(uint8_t *hex_data, size_t length, int *index)
       printf("rval_S_H decode error\n");
       exit(65);
     }
-    xer_fprint(stdout, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_S_H, t_S_H);   
+    //xer_fprint(stdout, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_S_H, t_S_H);   
 
     int num_of_record = (hex_data[start_S_H+1]);
-    printf("num_of_record=%d\n",num_of_record);
+    //printf("num_of_record=%d\n",num_of_record);
+
+    int firt_sub_frame_num = 0;
+    int first_sys_frame_num = 0;
 
     for(int i=0;i<num_of_record;i++)
     {
-        printf("[%d] Record\n",i);
+        //printf("[%d] Record\n",i);
         int start_record = *index;
         convert_R_H_B173(hex_data, index);
         int R_H_Length = *index-start_record;
-        printf("R_H_Length=%d\n", R_H_Length);
+        //printf("R_H_Length=%d\n", R_H_Length);
 
         rval_R_H = uper_decode(0, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_R_H, (void **)&t_R_H, hex_data+start_record, R_H_Length, 0, 0);
         if(rval_R_H.code != RC_OK) {
             printf("rval_R_H decode error\n");
             exit(65);
         }
-        xer_fprint(stdout, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_R_H, t_R_H); 
+        //xer_fprint(stdout, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_R_H, t_R_H); 
+        if(i==0)
+        {
+            firt_sub_frame_num = t_R_H->subframe_number;
+            first_sys_frame_num = t_R_H->frame_number;
+        }
 
         int number_of_TB = (hex_data[start_record+4]);
-        printf("number_of_TB=%d\n",number_of_TB);
+        //printf("number_of_TB=%d\n",number_of_TB);
 
         for(int j=0;j<2;j++)
         {
@@ -85,32 +93,37 @@ void decode_B173(uint8_t *hex_data, size_t length, int *index)
                 convert_TB_B173(hex_data, index);
                 continue;
             }
-            printf("[%d] TB\n",j);
+            //printf("[%d] TB\n",j);
             int start_TB = *index;
             convert_TB_B173(hex_data, index);
             int TB_Length = *index-start_TB;
-            printf("TB_Length=%d\n", TB_Length);
+            //printf("TB_Length=%d\n", TB_Length);
             
             rval_TB = uper_decode(0, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_TB, (void **)&t_TB, hex_data+start_TB, TB_Length, 0, 0);
             if(rval_TB.code != RC_OK) {
                 printf("rval_TB decode error\n");
                 exit(65);
             }
-            xer_fprint(stdout, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_TB, t_TB); 
+            //xer_fprint(stdout, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_TB, t_TB); 
+            printf("%02X\t%llu\t%d\t%d\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld\n",
+                    logcode, time_in_us_total, firt_sub_frame_num, first_sys_frame_num, 
+                    t_R_H->subframe_number, t_R_H->frame_number, t_R_H->number_of_transport_blocks, 
+                    t_TB->redundancy_version, t_TB->transport_block_index, t_TB->transport_block_size, 
+                    t_TB->mcs_index, t_TB->number_of_rbs);
         }
 
         int start_record_tail = *index;
         convert_R_T_B173(hex_data, index);
         int R_T_Length = *index-start_record_tail;
-        printf("R_T_Length=%d\n", R_T_Length);
+        //printf("R_T_Length=%d\n", R_T_Length);
 
         rval_R_T = uper_decode(0, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_R_T, (void **)&t_R_T, hex_data+start_record_tail, R_T_Length, 0, 0);
         if(rval_R_T.code != RC_OK) {
             printf("rval_R_T decode error\n");
             exit(65);
         }
-        xer_fprint(stdout, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_R_T, t_R_T); 
+        //xer_fprint(stdout, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_R_T, t_R_T); 
     }
 
-    printf("decode_B173 over!!!!\n");
+    //printf("decode_B173 over!!!!\n");
 }

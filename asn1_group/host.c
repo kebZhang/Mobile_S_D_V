@@ -72,14 +72,14 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
             fclose(fp);
             return 64;
         }
-        // case 0xB173:
-        // {
-        //     printf("in B173 branch\n");
-        //     decode_B173(hex_data, file_size, &index);
-        //     *index_in = index;
-        //     fclose(fp);
-        //     return 173;
-        // }
+        case 0xB173:
+        {
+            //printf("in B173 branch\n");
+            decode_B173(hex_data, file_size, &index, time_in_us_total, logcode);
+            *index_in = index;
+            fclose(fp);
+            return 173;
+        }
         // case 0xB0A1:
         // {
         //     printf("into B0A1 branch\n");
