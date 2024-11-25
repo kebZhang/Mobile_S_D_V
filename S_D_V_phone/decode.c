@@ -426,8 +426,8 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
                     //     final_time->tm_year + 1900, final_time->tm_mon + 1, final_time->tm_mday,
                     //     final_time->tm_hour, final_time->tm_min, final_time->tm_sec, usecond);
 
-                    // FILE *decode_file;
-                    // decode_file = fopen("decode_result.txt","a");
+                    FILE *decode_file;
+                    decode_file = fopen("decode_result.txt","a");
                     // if(msg_header[1]==0xB173)
                     // {
                     //     fprintf(decode_file, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, version = %d, num of record = %d \n", 
@@ -457,9 +457,9 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
                     int decode_libarary = S_D_V_decode((uint8_t *)output_frame, 65536, logcode_now, &start_index, time_in_us_total);
                     double t_after_decode_libarary = get_posix_timestamp1();
 
-                    // decode_file = fopen("decode_result.txt","a");
-                    // fprintf(decode_file, "Decode Library using %lf for this MSG\n", (t_after_decode_libarary-t_before_decode_libarary));
-                    // fclose(decode_file);
+                    decode_file = fopen("decode_result.txt","a");
+                    fprintf(decode_file, "Decode Library using %lf for this MSG\n", (t_after_decode_libarary-t_before_decode_libarary));
+                    fclose(decode_file);
                 }
                 
                 

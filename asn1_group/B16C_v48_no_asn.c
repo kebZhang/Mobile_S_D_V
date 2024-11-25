@@ -33,10 +33,10 @@ void decode_B16C_v48_no_asn(uint8_t *hex_data, size_t length, int *index, uint64
             int mcs_index = (hex_data[start_UL+5]&0xF8)>>3;
             int redundancy_version = (hex_data[start_UL+5]&0x06)>>1;
             int num_of_resource_blocks = (hex_data[start_UL+8]&0x7F);
-            printf("%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
-                    logcode, time_in_us_total, version, num_record, 
-                    first_sub_frame_number, first_sys_frame_number,
-                    subfn, sysfn, mcs_index, redundancy_version, num_of_resource_blocks);
+            // printf("%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
+            //         logcode, time_in_us_total, version, num_record, 
+            //         first_sub_frame_number, first_sys_frame_number,
+            //         subfn, sysfn, mcs_index, redundancy_version, num_of_resource_blocks);
         }
         else
         {
