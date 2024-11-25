@@ -238,10 +238,10 @@ void decode_B064(uint8_t *hex_data, size_t length, int *index, uint64_t time_in_
             char bsr_trig[50];
             getBsrTrigString(t_Sample_H->bsr_trig, bsr_trig);
 
-            printf("%02X\t%llu\t%d\t%d\t%ld\t%ld\t%ld\t%ld\t%s\t%d\t%d\t%s\t%d\t%d\t%d\t%d\n",
-                    logcode, time_in_us_total, first_sub_frame_number, first_sys_frame_number, t_Sample_H->sub_fn, t_Sample_H->sfn,
-                    t_Sample_H->grant_bytes, t_Sample_H->padding_bytes, bsr_event, bsr_type, lcg, bsr_trig,
-                    buffer_size[0], buffer_size[1], buffer_size[2], buffer_size[3]);
+            // printf("%02X\t%llu\t%d\t%d\t%ld\t%ld\t%ld\t%ld\t%s\t%d\t%d\t%s\t%d\t%d\t%d\t%d\n",
+            //         logcode, time_in_us_total, first_sub_frame_number, first_sys_frame_number, t_Sample_H->sub_fn, t_Sample_H->sfn,
+            //         t_Sample_H->grant_bytes, t_Sample_H->padding_bytes, bsr_event, bsr_type, lcg, bsr_trig,
+            //         buffer_size[0], buffer_size[1], buffer_size[2], buffer_size[3]);
         }
     }
     //printf("B064 over!!!!\n");
