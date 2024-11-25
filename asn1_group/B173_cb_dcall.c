@@ -105,11 +105,11 @@ void decode_B173(uint8_t *hex_data, size_t length, int *index, uint64_t time_in_
                 exit(65);
             }
             //xer_fprint(stdout, &asn_DEF_LTE_ML1_PDSCH_Stat_Indication_TB, t_TB); 
-            printf("%02X\t%llu\t%d\t%d\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld\n",
-                    logcode, time_in_us_total, firt_sub_frame_num, first_sys_frame_num, 
-                    t_R_H->subframe_number, t_R_H->frame_number, t_R_H->number_of_transport_blocks, 
-                    t_TB->redundancy_version, t_TB->transport_block_index, t_TB->transport_block_size, 
-                    t_TB->mcs_index, t_TB->number_of_rbs);
+            // printf("%02X\t%llu\t%d\t%d\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld\n",
+            //         logcode, time_in_us_total, firt_sub_frame_num, first_sys_frame_num, 
+            //         t_R_H->subframe_number, t_R_H->frame_number, t_R_H->number_of_transport_blocks, 
+            //         t_TB->redundancy_version, t_TB->transport_block_index, t_TB->transport_block_size, 
+            //         t_TB->mcs_index, t_TB->number_of_rbs);
         }
 
         int start_record_tail = *index;

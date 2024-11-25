@@ -1,13 +1,13 @@
 #include "B173_no_asn.h"
 #include "change_byte_sequence.h"
 
-void convert_R_H_B173(uint8_t *hex_data, int *index)
+void convert_R_H_B173_no_asn(uint8_t *hex_data, int *index)
 {
     convert_endianess(hex_data, index, 2);
     *index+=10;
 }
 
-void convert_TB_B173(uint8_t *hex_data, int *index)
+void convert_TB_B173_no_asn(uint8_t *hex_data, int *index)
 {
     *index+=4;
     convert_endianess(hex_data, index, 2);
@@ -28,7 +28,7 @@ void decode_B173_no_asn(uint8_t *hex_data, size_t length, int *index, uint64_t t
     for(int i=0;i<num_of_record;i++)
     {
         int start_record = *index;
-        convert_R_H_B173(hex_data, index);
+        convert_R_H_B173_no_asn(hex_data, index);
 
         int sysfn = (hex_data[start_record]<<4) | ((hex_data[start_record+1]&0xF0)>>4);
         int subfn = (hex_data[start_record+1]&0x0F);
@@ -44,11 +44,11 @@ void decode_B173_no_asn(uint8_t *hex_data, size_t length, int *index, uint64_t t
         {
             if(num_of_transport_blocks==1 && j==1)
             {
-                convert_TB_B173(hex_data, index);
+                convert_TB_B173_no_asn(hex_data, index);
                 continue;
             }
             int start_TB=*index;
-            convert_TB_B173(hex_data, index);
+            convert_TB_B173_no_asn(hex_data, index);
 
             int redundancy_version = (hex_data[start_TB]&0x30)>>4;
             int TB_index = (hex_data[start_TB+1]&0x10)>>4;
@@ -56,10 +56,10 @@ void decode_B173_no_asn(uint8_t *hex_data, size_t length, int *index, uint64_t t
             int mcs = hex_data[start_TB+6];
             int num_of_rbs = hex_data[start_TB+7];
 
-            printf("%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
-                    logcode, time_in_us_total, firt_sub_frame_num, first_sys_frame_num,
-                    subfn, sysfn, num_of_transport_blocks, redundancy_version, TB_index,
-                    TB_size, mcs, num_of_rbs);
+            // printf("%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
+            //         logcode, time_in_us_total, firt_sub_frame_num, first_sys_frame_num,
+            //         subfn, sysfn, num_of_transport_blocks, redundancy_version, TB_index,
+            //         TB_size, mcs, num_of_rbs);
         }
         /*Record tail*/
         *index+=4;
