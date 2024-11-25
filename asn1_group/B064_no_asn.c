@@ -193,10 +193,17 @@ void decode_B064_no_asn(uint8_t *hex_data, size_t length, int *index, uint64_t t
             char bsr_trig1[50];
             getBsrTrigString_no_asn(bsr_trig, bsr_trig1);
 
-            // printf("%02X\t%llu\t%d\t%d\t%ld\t%ld\t%ld\t%ld\t%s\t%d\t%d\t%s\t%d\t%d\t%d\t%d\n",
+            // printf("%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%d\t%s\t%d\t%d\t%d\t%d\n",
             //         logcode, time_in_us_total, first_sub_frame_number, first_sys_frame_number, subfn, sysfn,
             //         grant_bytes, padding, bsr_event1, bsr_type, lcg, bsr_trig1,
             //         buffer_size[0], buffer_size[1], buffer_size[2], buffer_size[3]);
+            FILE *fp_B064 = fopen("B064_report.txt", "a+");
+            fprintf(fp_B064, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%d\t%s\t%d\t%d\t%d\t%d\n",
+                                logcode, time_in_us_total, first_sub_frame_number, first_sys_frame_number, subfn, sysfn,
+                                grant_bytes, padding, bsr_event1, bsr_type, lcg, bsr_trig1,
+                                buffer_size[0], buffer_size[1], buffer_size[2], buffer_size[3]);
+            fclose(fp_B064);
+
         }
     }
     //printf("B064 over!!!!\n");

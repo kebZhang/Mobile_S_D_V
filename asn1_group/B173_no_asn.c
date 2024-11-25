@@ -60,6 +60,14 @@ void decode_B173_no_asn(uint8_t *hex_data, size_t length, int *index, uint64_t t
             //         logcode, time_in_us_total, firt_sub_frame_num, first_sys_frame_num,
             //         subfn, sysfn, num_of_transport_blocks, redundancy_version, TB_index,
             //         TB_size, mcs, num_of_rbs);
+
+            FILE *fp_B173 = fopen("B173_report.txt", "a+");
+            fprintf(fp_B173, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
+                                logcode, time_in_us_total, firt_sub_frame_num, first_sys_frame_num,
+                                subfn, sysfn, num_of_transport_blocks, redundancy_version, TB_index,
+                                TB_size, mcs, num_of_rbs);
+            fclose(fp_B173);
+
         }
         /*Record tail*/
         *index+=4;
