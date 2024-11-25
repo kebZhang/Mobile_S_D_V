@@ -83,6 +83,7 @@
         "b064_cb_dcall.h": "c",
         "b173_cb_dcall.h": "c",
         "b16c_v48_no_asn.h": "c",
-        "host.h": "c"
+        "host.h": "c",
+        "b173_no_asn.h": "c"
     }
 }

@@ -88,7 +88,7 @@ void decode_B173(uint8_t *hex_data, size_t length, int *index, uint64_t time_in_
 
         for(int j=0;j<2;j++)
         {
-            if(num_of_record==1 && j==1)
+            if(number_of_TB==1 && j==1)
             {
                 convert_TB_B173(hex_data, index);
                 continue;
