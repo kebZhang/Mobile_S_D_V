@@ -58,7 +58,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         case 0xB16C:
         {
             //printf("in B16C branch\n");
-            decode_B16C_v48(hex_data, file_size, &index, time_in_us_total, logcode);
+            decode_B16C_v48_no_asn(hex_data, file_size, &index, time_in_us_total, logcode);
             //decode_B16C(hex_data, file_size, &index);
             *index_in = index;
             fclose(fp);
