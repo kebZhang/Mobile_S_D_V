@@ -1318,11 +1318,11 @@ main (int argc, char **argv)
 					// print_hex(buf_read + offset + 4, msg_len);
 
 					// fprintf(log_file, "Timestamp: %lf, Content of msg:\n", ts_each);
-					for(int j=0;j<msg_len;j++)
-					{
-						fprintf(log_file, "%02X", (unsigned char)buf_read[offset+j]);
-					}
-					fprintf(log_file, "\n");
+					// for(int j=0;j<msg_len;j++)
+					// {
+					// 	fprintf(log_file, "%02X", (unsigned char)buf_read[offset+j]);
+					// }
+					// fprintf(log_file, "\n");
 
 					// LOGD("ret_err0");
 					// ret_err = write(fifo_fd, &fifo_msg_type, sizeof(short));

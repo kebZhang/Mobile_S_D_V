@@ -371,8 +371,6 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
 
                 if(msg_header[0]>0)
                 {
-
-
                     //double t_pkt_after_crc_log = get_posix_timestamp1();
                     //fprintf(log_file_decode, "Userspace recognize and decode this Msg at %lf \n", (t_pkt_after_crc_log));
 
@@ -402,8 +400,8 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
                     //         msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3]);
                     // }
 
-                    fprintf(log_file_decode, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, version = %d \n", 
-                        msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3]);
+                    // fprintf(log_file_decode, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, version = %d \n", 
+                    //     msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3]);
 
                     // 基准时间 1980-01-06
                     struct tm epoch = {0};
@@ -459,7 +457,7 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
                     /*decode library part*/
 
                     double t_before_decode_libarary = get_posix_timestamp1();
-                    //int decode_libarary = S_D_V_decode((uint8_t *)output_frame, 65536, logcode_now, &start_index, time_in_us_total);
+                    int decode_libarary = S_D_V_decode((uint8_t *)output_frame, 65536, logcode_now, &start_index, time_in_us_total);
                     double t_after_decode_libarary = get_posix_timestamp1();
 
                     // decode_file = fopen("decode_result.txt","a");
