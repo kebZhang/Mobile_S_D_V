@@ -33,6 +33,7 @@ void decode_B173_no_asn(uint8_t *hex_data, size_t length, int *index, uint64_t t
         int sysfn = (hex_data[start_record]<<4) | ((hex_data[start_record+1]&0xF0)>>4);
         int subfn = (hex_data[start_record+1]&0x0F);
         int num_of_transport_blocks = hex_data[start_record+4];
+        int serving_cell_index = (hex_data[start_record+5] & 0x03);
 
         if(i==0)
         {
@@ -62,9 +63,9 @@ void decode_B173_no_asn(uint8_t *hex_data, size_t length, int *index, uint64_t t
             //         TB_size, mcs, num_of_rbs);
 
             FILE *fp_B173 = fopen("B173_report.txt", "a+");
-            fprintf(fp_B173, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
+            fprintf(fp_B173, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
                                 logcode, time_in_us_total, firt_sub_frame_num, first_sys_frame_num,
-                                subfn, sysfn, num_of_transport_blocks, redundancy_version, TB_index,
+                                subfn, sysfn, num_of_transport_blocks, serving_cell_index, redundancy_version, TB_index,
                                 TB_size, mcs, num_of_rbs);
             fclose(fp_B173);
 

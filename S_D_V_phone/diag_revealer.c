@@ -1124,8 +1124,9 @@ main (int argc, char **argv)
 	}
 
 	//generate_cfg
-	int logcode_num=3;
-	uint16_t logcode_list[3] = {0xB064, 0xB173, 0xB16C};
+	int logcode_num=1;
+	// uint16_t logcode_list[3] = {0xB064, 0xB173, 0xB16C};
+	uint16_t logcode_list[1] = {0xB84E};
 	generate_diag_cfg(logcode_list,logcode_num);
 	const char *filename_diag_cfg = "Diag_ty.cfg";
 	
@@ -1317,11 +1318,11 @@ main (int argc, char **argv)
 					// print_hex(buf_read + offset + 4, msg_len);
 
 					// fprintf(log_file, "Timestamp: %lf, Content of msg:\n", ts_each);
-					// for(int j=0;j<msg_len;j++)
-					// {
-					// 	fprintf(log_file, "%02X", (unsigned char)buf_read[offset+j]);
-					// }
-					// fprintf(log_file, "\n");
+					for(int j=0;j<msg_len;j++)
+					{
+						fprintf(log_file, "%02X", (unsigned char)buf_read[offset+j]);
+					}
+					fprintf(log_file, "\n");
 
 					// LOGD("ret_err0");
 					// ret_err = write(fifo_fd, &fifo_msg_type, sizeof(short));
