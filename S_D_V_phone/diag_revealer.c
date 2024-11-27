@@ -1126,7 +1126,7 @@ main (int argc, char **argv)
 	//generate_cfg
 	int logcode_num=1;
 	// uint16_t logcode_list[3] = {0xB064, 0xB173, 0xB16C};
-	uint16_t logcode_list[1] = {0xB84E};
+	uint16_t logcode_list[6] = {0xB84E, 0xB872, 0xB873, 0xB883, 0xB885, 0xB887};
 	generate_diag_cfg(logcode_list,logcode_num);
 	const char *filename_diag_cfg = "Diag_ty.cfg";
 	
@@ -1258,10 +1258,10 @@ main (int argc, char **argv)
 	// }
 
 	// ***************************** drain in user space ****************************
-			pthread_t drain_thread;
-			fprintf(log_file, "fd=%d\n", fd);
-			pthread_create(&drain_thread, NULL, drain_thread_func, NULL);
-			fprintf(log_file, "drain thread created\n");
+			// pthread_t drain_thread;
+			// fprintf(log_file, "fd=%d\n", fd);
+			// pthread_create(&drain_thread, NULL, drain_thread_func, NULL);
+			// fprintf(log_file, "drain thread created\n");
 
 	// ***************************** drain in kernel ****************************
 	// uint8_t peripheral = 0;
@@ -1318,11 +1318,11 @@ main (int argc, char **argv)
 					// print_hex(buf_read + offset + 4, msg_len);
 
 					// fprintf(log_file, "Timestamp: %lf, Content of msg:\n", ts_each);
-					// for(int j=0;j<msg_len;j++)
-					// {
-					// 	fprintf(log_file, "%02X", (unsigned char)buf_read[offset+j]);
-					// }
-					// fprintf(log_file, "\n");
+					for(int j=0;j<msg_len;j++)
+					{
+						fprintf(log_file, "%02X", (unsigned char)buf_read[offset+j]);
+					}
+					fprintf(log_file, "\n");
 
 					// LOGD("ret_err0");
 					// ret_err = write(fifo_fd, &fifo_msg_type, sizeof(short));
@@ -1419,7 +1419,7 @@ main (int argc, char **argv)
 	}
 	*/
 
-	pthread_join(drain_thread, NULL);
+	//pthread_join(drain_thread, NULL);
 	// ret = ioctl(fd, DIAG_IOCTL_BUF_DRAIN_END, &peripheral);
 	// if(ret < 0){
 	// 	fprintf(log_file, "ioctl DIAG_IOCTL_BUF_DRAIN_END fails, ret= %d\n", ret);
