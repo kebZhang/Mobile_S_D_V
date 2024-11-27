@@ -1124,9 +1124,9 @@ main (int argc, char **argv)
 	}
 
 	//generate_cfg
-	int logcode_num=1;
-	// uint16_t logcode_list[3] = {0xB064, 0xB173, 0xB16C};
-	uint16_t logcode_list[6] = {0xB84E, 0xB872, 0xB873, 0xB883, 0xB885, 0xB887};
+	int logcode_num=3;
+	uint16_t logcode_list[3] = {0xB064, 0xB173, 0xB16C};
+	// uint16_t logcode_list[6] = {0xB84E, 0xB872, 0xB873, 0xB883, 0xB885, 0xB887};
 	generate_diag_cfg(logcode_list,logcode_num);
 	const char *filename_diag_cfg = "Diag_ty.cfg";
 	
@@ -1272,12 +1272,16 @@ main (int argc, char **argv)
 	// 	fprintf(log_file, "ioctl DIAG_IOCTL_BUF_DRAIN_START succeeds, ret= %d\n", ret);
 	// }
 
+	fclose(log_file);
+
 	while (1) 
 	{
+		log_file = fopen("Log_file.txt","a+");
 		// LOGI("Reading logs...\n");
 		double ts_before = get_posix_timestamp();
 		//double ts_before_change_src = user_timestamp();
 		fprintf(log_file, "New reading start at %lf\n", ts_before);
+		fclose(log_file);
 
 		// uint8_t peripheral = 0;
 		// int ret_drain = ioctl(fd, DIAG_IOCTL_PERIPHERAL_BUF_DRAIN, &peripheral);
@@ -1293,11 +1297,14 @@ main (int argc, char **argv)
 		{
 			if (*((int *)buf_read) == USER_SPACE_DATA_TYPE) 
 			{
+				log_file = fopen("Log_file.txt","a+");
 				double ts_after = get_posix_timestamp();
 				fprintf(log_file, "Original: Receive logs at %lf, wait for %lf, read_len=%d\n", ts_after, ts_after - ts_before, read_len);
 
 				int num_data = *((int *)(buf_read + 4));
 				fprintf(log_file, "num_data=%d\n", num_data);
+				fclose(log_file);
+
 				int i = 0;
 				// long long offset = 8;
 				long long offset = remote_dev ? 12 : 8;
@@ -1318,11 +1325,13 @@ main (int argc, char **argv)
 					// print_hex(buf_read + offset + 4, msg_len);
 
 					// fprintf(log_file, "Timestamp: %lf, Content of msg:\n", ts_each);
+					log_file = fopen("Log_file.txt","a+");
 					for(int j=0;j<msg_len;j++)
 					{
 						fprintf(log_file, "%02X", (unsigned char)buf_read[offset+j]);
 					}
 					fprintf(log_file, "\n");
+					fclose(log_file);
 
 					// LOGD("ret_err0");
 					// ret_err = write(fifo_fd, &fifo_msg_type, sizeof(short));
@@ -1358,7 +1367,6 @@ main (int argc, char **argv)
                     // ****************************decode****************************
 					double ts_each = get_posix_timestamp();
 					int msglen_effect_time[2]={0,0};
-					fclose(log_file);
 
 					decode(buf_read, read_len, offset, msglen_effect_time);
 
@@ -1428,7 +1436,7 @@ main (int argc, char **argv)
 	// }
 	
 	close(fd);
-	fclose(log_file);
+	//fclose(log_file);
 	fclose(debug_file);
 
 	return (ret < 0 ? ret : 0);

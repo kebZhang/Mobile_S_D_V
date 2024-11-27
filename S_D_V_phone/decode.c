@@ -45,7 +45,7 @@ static unsigned short calc_crc (unsigned char *data, size_t len, unsigned short 
     crc = crc ^ 0xFFFFU;
     while (len > 0)
     {
-        crc = table[*data ^ (unsigned char)crc] ^ (crc >> 8);
+        crc = table[*data ^ (uint8_t)crc] ^ (crc >> 8);
         data++;
         len--;
     }
@@ -60,13 +60,14 @@ void unescape(char *ouput_frame, int output_frame_length)
     // fprintf(debug_file_decode, "[unescape]  output frame lenth=%d\n", output_frame_length);
 
     int esc = 0;
-    size_t output_index = 0;
+    int output_index = 0;
+    char *output;
 
-    for (size_t i = 0; i < output_frame_length; i++)
+    for (int i = 0; i < output_frame_length; i++)
     {
         if (esc)
         {
-            ouput_frame[output_index++] = ouput_frame[i] ^ ESCAPE_XOR;
+            output[output_index++] = (char)(ouput_frame[i] ^ ESCAPE_XOR);
             esc = 0;  
         }
         else if (ouput_frame[i] == '\x7d')
@@ -76,9 +77,10 @@ void unescape(char *ouput_frame, int output_frame_length)
         }
         else
         {
-            ouput_frame[output_index++] = ouput_frame[i];
+            output[output_index++] = ouput_frame[i];
         }
     }
+    ouput_frame = output;
     // fclose(debug_file_decode);
 }
 
@@ -91,11 +93,15 @@ int get_next_frame(char *buffer_read, char *output_frame, int buffer_size, int *
     // fprintf(debug_file_decode, "[get next frame]    enter get next frame fun\n");
     // fprintf(debug_file_decode, "[get next frame]    current_index=%d\n", *current_index);
     // fclose(debug_file_decode);
+    FILE *log_file_decode;
 
     for(int i = *current_index; i < buffer_size; i++)
     {
         if(buffer_read[i]=='\x7e')
         {
+            log_file_decode = fopen("Log_file.txt","a+");
+            fprintf(log_file_decode, "Met 7e\n");
+            fclose(log_file_decode);
             // debug_file_decode = fopen(debug_decode_filename,"a");
             // fprintf(debug_file_decode, "[get next frame]    find 7e index i=%d\n", i);
 
@@ -138,6 +144,10 @@ int get_next_frame(char *buffer_read, char *output_frame, int buffer_size, int *
 
             unsigned short crc16 = calc_crc((unsigned char *)output_frame, *output_frame_length, 0);
             *crc_correct = (frame_crc16==crc16);
+
+            log_file_decode = fopen("Log_file.txt","a+");
+            fprintf(log_file_decode, "crc_correct = %d\n", (*crc_correct));
+            fclose(log_file_decode);
 
             // debug_file_decode = fopen(debug_decode_filename,"a");
             // fprintf(debug_file_decode, " b1 = %d, b2 = %d\n", b1, b2);
@@ -336,7 +346,6 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
     // fclose(debug_file_decode);
 
     FILE *log_file_decode;
-    log_file_decode = fopen("Log_file.txt","a+");
 
     while(success)
     {
@@ -351,19 +360,27 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
             int check_format = check_frame_format(output_frame);
             if(check_format)
             {
-                // debug_file_decode = fopen("Ty_debug_file_decode.txt","a");
-                // fprintf(debug_file_decode, "chech format pass\n");
-                // fclose(debug_file_decode);
+                log_file_decode = fopen("Log_file.txt","a+");
+                fprintf(log_file_decode,"check_format pass\n");
+                fclose(log_file_decode);
+
                 start_index+=8;
+            }
+            else
+            {
+                log_file_decode = fopen("Log_file.txt","a+");
+                fprintf(log_file_decode,"check_format fail\n");
+                fclose(log_file_decode);
             }
             int pkt_type = find_pkt_type(output_frame, start_index);
             start_index+=2;
 
             if(pkt_type==1)//log pkt
             {
-                // debug_file_decode = fopen("Ty_debug_file_decode.txt","a");
-                // fprintf(debug_file_decode, "pkt type=1 pass\n");
-                // fclose(debug_file_decode);
+                log_file_decode = fopen("Log_file.txt","a+");
+                fprintf(log_file_decode,"pkt_type = %d, pass\n", pkt_type);
+                fclose(log_file_decode);
+
                 uint64_t msg_header[5];
 
                 decode_header(output_frame, start_index, msg_header);
@@ -400,8 +417,10 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
                     //         msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3]);
                     // }
 
+                    log_file_decode = fopen("Log_file.txt","a+");
                     fprintf(log_file_decode, "This Msg is %02X: Msg_len = %d, logcode = %02X, timestamp in us = %llu, version = %d \n", 
                         msg_header[1], msg_header[0], msg_header[1], time_in_us_total, msg_header[3]);
+                    fclose(log_file_decode);
 
                     // 基准时间 1980-01-06
                     struct tm epoch = {0};
@@ -472,6 +491,9 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
             }
             else
             {
+                log_file_decode = fopen("Log_file.txt","a+");
+                fprintf(log_file_decode,"pkt_type = %d, fail\n", pkt_type);
+                fclose(log_file_decode);
                 continue;
             }
         }
@@ -480,5 +502,5 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
             continue;
         }
     }
-    fclose(log_file_decode);
+    //fclose(log_file_decode);
 }
