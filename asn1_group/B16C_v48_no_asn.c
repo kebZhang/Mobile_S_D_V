@@ -130,7 +130,7 @@ void get_tbs_index_String_no_asn(int num, char *output) {
 }
 
 
-void decode_B16C_v48_no_asn(uint8_t *hex_data, size_t length, int *index, uint64_t time_in_us_total, uint16_t logcode)
+void decode_B16C_v48_no_asn(uint8_t *hex_data, size_t length, int *index, uint64_t time_in_us_total, uint16_t logcode, int crc_check, int check_format, int pkt_type)
 {
     /*S_H*/
     int start_S_H = *index;
@@ -172,10 +172,11 @@ void decode_B16C_v48_no_asn(uint8_t *hex_data, size_t length, int *index, uint64
             //         subfn, sysfn, mcs_index, redundancy_version, num_of_resource_blocks);
 
             FILE *fp_B16C = fopen("B16C_report.txt", "a+");
-            fprintf(fp_B16C, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\n",
+            fprintf(fp_B16C, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%d\t%d\t%d\n",
                                 logcode, time_in_us_total, version, num_record, 
                                 first_sub_frame_number, first_sys_frame_number,
-                                subfn, sysfn, mcs_index, redundancy_version, tbs_index_1, num_of_resource_blocks);
+                                subfn, sysfn, mcs_index, redundancy_version, tbs_index_1, num_of_resource_blocks,
+                                crc_check, check_format, pkt_type);
             fclose(fp_B16C);
         }
         else

@@ -36,7 +36,7 @@ extern "C" {
 #include "B173_no_asn.h"
 #include "B064_no_asn.h"
 
-int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *index, uint64_t time_in_us_total);
+int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *index_in, uint64_t time_in_us_total, int crc_check, int check_format, int pkt_type);
 long get_file_size(const char *filename);
 int trY();
 

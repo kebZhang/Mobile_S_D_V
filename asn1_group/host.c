@@ -22,7 +22,7 @@ int trY()
 }
 
 //我们直接把这个函数作为补充放进mobileinisght的decode_log_packet函数中
-int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *index_in, uint64_t time_in_us_total)
+int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *index_in, uint64_t time_in_us_total, int crc_check, int check_format, int pkt_type)
 {
     // FILE *fp=freopen("decode_result.txt","a",stdout);
     // if(fp==NULL)
@@ -58,7 +58,7 @@ int S_D_V_decode(uint8_t *hex_data, size_t file_size, uint16_t logcode, int *ind
         case 0xB16C:
         {
             //printf("in B16C branch\n");
-            decode_B16C_v48_no_asn(hex_data, file_size, &index, time_in_us_total, logcode);
+            decode_B16C_v48_no_asn(hex_data, file_size, &index, time_in_us_total, logcode, crc_check, check_format, pkt_type);
             //decode_B16C(hex_data, file_size, &index);
             *index_in = index;
             //fclose(fp);

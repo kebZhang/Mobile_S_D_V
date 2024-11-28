@@ -1258,10 +1258,10 @@ main (int argc, char **argv)
 	// }
 
 	// ***************************** drain in user space ****************************
-			// pthread_t drain_thread;
-			// fprintf(log_file, "fd=%d\n", fd);
-			// pthread_create(&drain_thread, NULL, drain_thread_func, NULL);
-			// fprintf(log_file, "drain thread created\n");
+			pthread_t drain_thread;
+			fprintf(log_file, "fd=%d\n", fd);
+			pthread_create(&drain_thread, NULL, drain_thread_func, NULL);
+			fprintf(log_file, "drain thread created\n");
 
 	// ***************************** drain in kernel ****************************
 	// uint8_t peripheral = 0;
@@ -1325,13 +1325,13 @@ main (int argc, char **argv)
 					// print_hex(buf_read + offset + 4, msg_len);
 
 					// fprintf(log_file, "Timestamp: %lf, Content of msg:\n", ts_each);
-					log_file = fopen("Log_file.txt","a+");
-					for(int j=0;j<msg_len;j++)
-					{
-						fprintf(log_file, "%02X", (unsigned char)buf_read[offset+j]);
-					}
-					fprintf(log_file, "\n");
-					fclose(log_file);
+					// log_file = fopen("Log_file.txt","a+");
+					// for(int j=0;j<msg_len;j++)
+					// {
+					// 	fprintf(log_file, "%02X ", (unsigned char)buf_read[offset+j]);
+					// }
+					// fprintf(log_file, "\n");
+					// fclose(log_file);
 
 					// LOGD("ret_err0");
 					// ret_err = write(fifo_fd, &fifo_msg_type, sizeof(short));
@@ -1368,7 +1368,7 @@ main (int argc, char **argv)
 					double ts_each = get_posix_timestamp();
 					int msglen_effect_time[2]={0,0};
 
-					decode(buf_read, read_len, offset, msglen_effect_time);
+					decode(buf_read, msg_len, offset, msglen_effect_time);
 
 					log_file = fopen("Log_file.txt","a+");
 					fprintf(log_file, "Timestamp: %lf, msg num:%d, effective total msg len=%d\n", ts_each, msglen_effect_time[0],msglen_effect_time[1]);
@@ -1427,7 +1427,7 @@ main (int argc, char **argv)
 	}
 	*/
 
-	//pthread_join(drain_thread, NULL);
+	pthread_join(drain_thread, NULL);
 	// ret = ioctl(fd, DIAG_IOCTL_BUF_DRAIN_END, &peripheral);
 	// if(ret < 0){
 	// 	fprintf(log_file, "ioctl DIAG_IOCTL_BUF_DRAIN_END fails, ret= %d\n", ret);
