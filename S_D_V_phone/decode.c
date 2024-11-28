@@ -395,6 +395,7 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
 
     FILE *log_file_decode;
     FILE *crc_frame_pkt_msgh_check;
+    int frame_num = 0;
 
     while(success)
     {
@@ -428,6 +429,7 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
 
             if(pkt_type==1)//log pkt
             {
+                frame_num+=1;
                 // log_file_decode = fopen("Log_file.txt","a+");
                 // fprintf(log_file_decode,"pkt_type = %d, pass\n", pkt_type);
                 // fclose(log_file_decode);
@@ -437,12 +439,12 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
                 decode_header(output_frame, start_index, msg_header);
                 start_index+=14;
 
-                crc_frame_pkt_msgh_check = fopen("Check.txt","a+");
-                if(msg_header[1]==0xB16C)
-                {
-                    fprintf(crc_frame_pkt_msgh_check, "%d\t%d\t%d\t%02X\t%d\n", crc_check, check_format, pkt_type, msg_header[1], msg_header[0]);
-                }
-                fclose(crc_frame_pkt_msgh_check);
+                // crc_frame_pkt_msgh_check = fopen("Check.txt","a+");
+                // if(msg_header[1]==0xB16C)
+                // {
+                //     fprintf(crc_frame_pkt_msgh_check, "%d\t%d\t%d\t%02X\t%d\n", crc_check, check_format, pkt_type, msg_header[1], msg_header[0]);
+                // }
+                // fclose(crc_frame_pkt_msgh_check);
 
                 if(msg_header[0]>0)
                 {
@@ -560,5 +562,8 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
             continue;
         }
     }
+    log_file_decode = fopen("Log_file.txt","a+");
+    fprintf(log_file_decode,"In this decode func, the frame Num = %d\n", frame_num);
+    fclose(log_file_decode);
     //fclose(log_file_decode);
 }
