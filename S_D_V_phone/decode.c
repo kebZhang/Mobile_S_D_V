@@ -109,23 +109,23 @@ int unescape(char *ouput_frame, int output_frame_length)
 
 
 
-int get_next_frame(char *buffer_read, char *output_frame, int buffer_size, int *current_index, int *crc_correct, int *output_frame_length)
+int get_next_frame(char *buffer_read, char *output_frame, int msg_len, int first_msg_index, int *current_index, int *crc_correct, int *output_frame_length)
 {
-    const char *debug_decode_filename = "Ty_debug_file_decode.txt";
-
+    //const char *debug_decode_filename = "Ty_debug_file_decode.txt";
     // debug_file_decode = fopen(debug_decode_filename,"a");
     // fprintf(debug_file_decode, "[get next frame]    enter get next frame fun\n");
     // fprintf(debug_file_decode, "[get next frame]    current_index=%d\n", *current_index);
     // fclose(debug_file_decode);
     FILE *log_file_decode;
 
-    for(int i = *current_index; i < (*current_index + buffer_size); i++)
+    for(int i = *current_index; i < (first_msg_index + msg_len); i++)
     {
         // in case num_data=2 falthly recognize
-        if(*current_index-12>=buffer_size)
-        {
-            return 0;
-        }
+        // 这里循环只能循环在你这个特定的num_data里面的数据，超过，否则会到下一个num_data里面去
+        // if(*current_index-12>=msg_len)
+        // {
+        //     return 0;
+        // }
 
         if(buffer_read[i]=='\x7e')
         {
@@ -133,24 +133,25 @@ int get_next_frame(char *buffer_read, char *output_frame, int buffer_size, int *
             // fprintf(log_file_decode, "Met 7e\n");
             // fclose(log_file_decode);
 
+            // there is no 7e in output_frame
             *output_frame_length = i - *current_index ;
 
             // fprintf(debug_file_decode, "[get next frame]    output_frame_length=%d\n", *output_frame_length);
             // fclose(debug_file_decode);
 
-            // log_file_decode = fopen("Log_file.txt","a+");
-            // fprintf(log_file_decode, "output frame length = %d\n", *output_frame_length);
-            // fprintf(log_file_decode, "*current_index = %d\n", *current_index);
-            // fprintf(log_file_decode, "buffer_size = %d\n", buffer_size);
-            // fprintf(log_file_decode, "Found a frame and output 1 Bytes more\n");
-            // for(int j=0;j<(*output_frame_length+1);j++)
-            // {
-            //     fprintf(log_file_decode,"%02X ", buffer_read[*current_index+j]);
-            // }
-            // fprintf(log_file_decode,"\n");
-            // fclose(log_file_decode);
+            log_file_decode = fopen("Log_file.txt","a+");
+            fprintf(log_file_decode, "output frame length = %d\n", *output_frame_length);
+            fprintf(log_file_decode, "*current_index = %d\n", *current_index);
+            fprintf(log_file_decode, "msg_len = %d\n", msg_len);
+            fprintf(log_file_decode, "Found a frame and output 1 Bytes more\n");
+            for(int j=0;j<(*output_frame_length+1);j++)
+            {
+                fprintf(log_file_decode,"%02X ", buffer_read[*current_index+j]);
+            }
+            fprintf(log_file_decode,"\n");
+            fclose(log_file_decode);
 
-            if (*output_frame_length >= buffer_size) 
+            if (*output_frame_length >= msg_len) 
             {
                 return 0;
             }
@@ -392,13 +393,16 @@ void decode_header(char *output_frame, int start_index, uint64_t *msg_header)
     //computer_timestamp(timestamp);
 }
 
-void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2])
+void decode(char *buffer_read, int msglen, int offset, int msglen_effect_time[2])
 {
     msglen_effect_time[0]=0;//msg num
     msglen_effect_time[1]=0;//total msg len
 
     int success=1;
     int current_index = offset + 4 ;
+    // record the first msg index in this num_data flow
+    // control how many data should be checked 7e this time
+    int first_msg_index = current_index;
     int crc_correct=1;
     
     // debug_file_decode = fopen("Ty_debug_file_decode.txt","a");
@@ -412,10 +416,15 @@ void decode(char *buffer_read, int readlen, int offset, int msglen_effect_time[2
 
     while(success)
     {
+        //init output_frame 
         char output_frame[65536] = {};
+        for(int k=0;k<msglen;k++)
+        {
+            output_frame[k]=0;
+        }
         int output_frame_length=0;
 
-        success = get_next_frame(buffer_read, output_frame, readlen, &current_index, &crc_correct, &output_frame_length);
+        success = get_next_frame(buffer_read, output_frame, msglen, first_msg_index, &current_index, &crc_correct, &output_frame_length);
         int start_index=0;
 
         int crc_check = crc_correct;

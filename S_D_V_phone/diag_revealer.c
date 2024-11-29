@@ -1291,7 +1291,7 @@ main (int argc, char **argv)
 		// 	fprintf(log_file, "ioctl DIAG_IOCTL_PERIPHERAL_BUF_DRAIN succeeds, ret= %d\n", ret_drain);
 		// }
 		
-		//clean buf_read
+		//clean buf_read and init incase 
 		for(int k=0;k<65535;k++)
 		{
 			buf_read[k]=0;
@@ -1331,17 +1331,17 @@ main (int argc, char **argv)
 					// print_hex(buf_read + offset + 4, msg_len);
 
 					// fprintf(log_file, "Timestamp: %lf, Content of msg:\n", ts_each);
-					// log_file = fopen("Log_file.txt","a+");
-					// fprintf(log_file, "offset=%d\n", offset);
-					// fprintf(log_file, "read_len=%d\n", read_len);
-					// fprintf(log_file, "msg_len=%d\n",msg_len);
-					// fprintf(log_file, "read raw binary\n");
-					// for(int j=0;j<read_len;j++)
-					// {
-					// 	fprintf(log_file, "%02X ", (unsigned char)buf_read[j]);
-					// }
-					// fprintf(log_file, "\n");
-					// fclose(log_file);
+					log_file = fopen("Log_file.txt","a+");
+					fprintf(log_file, "offset=%d\n", offset);
+					fprintf(log_file, "read_len=%d\n", read_len);
+					fprintf(log_file, "msg_len=%d\n",msg_len);
+					fprintf(log_file, "read raw binary\n");
+					for(int j=0;j<read_len;j++)
+					{
+						fprintf(log_file, "%02X ", (unsigned char)buf_read[j]);
+					}
+					fprintf(log_file, "\n");
+					fclose(log_file);
 
 					// LOGD("ret_err0");
 					// ret_err = write(fifo_fd, &fifo_msg_type, sizeof(short));
