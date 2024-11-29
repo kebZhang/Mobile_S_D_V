@@ -1258,10 +1258,10 @@ main (int argc, char **argv)
 	// }
 
 	// ***************************** drain in user space ****************************
-			pthread_t drain_thread;
-			fprintf(log_file, "fd=%d\n", fd);
-			pthread_create(&drain_thread, NULL, drain_thread_func, NULL);
-			fprintf(log_file, "drain thread created\n");
+			// pthread_t drain_thread;
+			// fprintf(log_file, "fd=%d\n", fd);
+			// pthread_create(&drain_thread, NULL, drain_thread_func, NULL);
+			// fprintf(log_file, "drain thread created\n");
 
 	// ***************************** drain in kernel ****************************
 	// uint8_t peripheral = 0;
@@ -1290,6 +1290,12 @@ main (int argc, char **argv)
 		// }else{
 		// 	fprintf(log_file, "ioctl DIAG_IOCTL_PERIPHERAL_BUF_DRAIN succeeds, ret= %d\n", ret_drain);
 		// }
+		
+		//clean buf_read
+		for(int k=0;k<65535;k++)
+		{
+			buf_read[k]=0;
+		}
 
 		int read_len = read(fd, buf_read, sizeof(buf_read));
 
@@ -1326,9 +1332,13 @@ main (int argc, char **argv)
 
 					// fprintf(log_file, "Timestamp: %lf, Content of msg:\n", ts_each);
 					// log_file = fopen("Log_file.txt","a+");
-					// for(int j=0;j<msg_len;j++)
+					// fprintf(log_file, "offset=%d\n", offset);
+					// fprintf(log_file, "read_len=%d\n", read_len);
+					// fprintf(log_file, "msg_len=%d\n",msg_len);
+					// fprintf(log_file, "read raw binary\n");
+					// for(int j=0;j<read_len;j++)
 					// {
-					// 	fprintf(log_file, "%02X ", (unsigned char)buf_read[offset+j]);
+					// 	fprintf(log_file, "%02X ", (unsigned char)buf_read[j]);
 					// }
 					// fprintf(log_file, "\n");
 					// fclose(log_file);
@@ -1400,8 +1410,10 @@ main (int argc, char **argv)
 					// 		return -1;
 					// 	}
 					// }
-					offset += msg_len + 4;
+					offset += (msg_len+4);
 				}
+				
+			
 			} 
 			else {
 				// fprintf(logfile, "no user space data type\n");
@@ -1427,7 +1439,7 @@ main (int argc, char **argv)
 	}
 	*/
 
-	pthread_join(drain_thread, NULL);
+	// pthread_join(drain_thread, NULL);
 	// ret = ioctl(fd, DIAG_IOCTL_BUF_DRAIN_END, &peripheral);
 	// if(ret < 0){
 	// 	fprintf(log_file, "ioctl DIAG_IOCTL_BUF_DRAIN_END fails, ret= %d\n", ret);

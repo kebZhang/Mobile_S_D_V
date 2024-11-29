@@ -45,7 +45,7 @@ static unsigned short calc_crc (unsigned char *data, size_t len, unsigned short 
     crc = crc ^ 0xFFFFU;
     while (len > 0)
     {
-        crc = table[*data ^ (uint8_t)crc] ^ (crc >> 8);
+        crc = table[*data ^ (unsigned char)crc] ^ (crc >> 8);
         data++;
         len--;
     }
@@ -119,8 +119,14 @@ int get_next_frame(char *buffer_read, char *output_frame, int buffer_size, int *
     // fclose(debug_file_decode);
     FILE *log_file_decode;
 
-    for(int i = *current_index; i < buffer_size; i++)
+    for(int i = *current_index; i < (*current_index + buffer_size); i++)
     {
+        // in case num_data=2 falthly recognize
+        if(*current_index-12>=buffer_size)
+        {
+            return 0;
+        }
+
         if(buffer_read[i]=='\x7e')
         {
             // log_file_decode = fopen("Log_file.txt","a+");
@@ -134,6 +140,8 @@ int get_next_frame(char *buffer_read, char *output_frame, int buffer_size, int *
 
             // log_file_decode = fopen("Log_file.txt","a+");
             // fprintf(log_file_decode, "output frame length = %d\n", *output_frame_length);
+            // fprintf(log_file_decode, "*current_index = %d\n", *current_index);
+            // fprintf(log_file_decode, "buffer_size = %d\n", buffer_size);
             // fprintf(log_file_decode, "Found a frame and output 1 Bytes more\n");
             // for(int j=0;j<(*output_frame_length+1);j++)
             // {
@@ -152,6 +160,11 @@ int get_next_frame(char *buffer_read, char *output_frame, int buffer_size, int *
                 return 0;
             }
             memcpy(output_frame, &buffer_read[*current_index], *output_frame_length);
+
+            // for(int k=*current_index; k<i+1; k++)
+            // {
+            //     buffer_read[k] = 0;
+            // }
 
             // debug_file_decode = fopen(debug_decode_filename,"a");
             // for(int j=0; j< *output_frame_length; j++)
