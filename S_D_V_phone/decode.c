@@ -139,17 +139,17 @@ int get_next_frame(char *buffer_read, char *output_frame, int msg_len, int first
             // fprintf(debug_file_decode, "[get next frame]    output_frame_length=%d\n", *output_frame_length);
             // fclose(debug_file_decode);
 
-            log_file_decode = fopen("Log_file.txt","a+");
-            fprintf(log_file_decode, "output frame length = %d\n", *output_frame_length);
-            fprintf(log_file_decode, "*current_index = %d\n", *current_index);
-            fprintf(log_file_decode, "msg_len = %d\n", msg_len);
-            fprintf(log_file_decode, "Found a frame and output 1 Bytes more\n");
-            for(int j=0;j<(*output_frame_length+1);j++)
-            {
-                fprintf(log_file_decode,"%02X ", buffer_read[*current_index+j]);
-            }
-            fprintf(log_file_decode,"\n");
-            fclose(log_file_decode);
+            // log_file_decode = fopen("Log_file.txt","a+");
+            // fprintf(log_file_decode, "output frame length = %d\n", *output_frame_length);
+            // fprintf(log_file_decode, "*current_index = %d\n", *current_index);
+            // fprintf(log_file_decode, "msg_len = %d\n", msg_len);
+            // fprintf(log_file_decode, "Found a frame and output 1 Bytes more\n");
+            // for(int j=0;j<(*output_frame_length+1);j++)
+            // {
+            //     fprintf(log_file_decode,"%02X ", buffer_read[*current_index+j]);
+            // }
+            // fprintf(log_file_decode,"\n");
+            // fclose(log_file_decode);
 
             if (*output_frame_length >= msg_len) 
             {
