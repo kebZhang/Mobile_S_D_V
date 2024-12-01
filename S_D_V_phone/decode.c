@@ -378,7 +378,7 @@ void decode_header(char *output_frame, int start_index, uint64_t *msg_header)
         msg_header[3]= B064_subpkt_ver;
         msg_header[4]= B064_num_sample;
     }
-    else if((logcode == 0xB16C || logcode == 0xB16D) && msg_len!=0)
+    else if((logcode == 0xB16C || logcode == 0xB16D || logcode == 0xB139) && msg_len!=0)
     {
         msg_header[3]=version;
         msg_header[4]= 0;
@@ -561,9 +561,9 @@ void decode(char *buffer_read, int msglen, int offset, int msglen_effect_time[2]
                     int decode_libarary = S_D_V_decode((uint8_t *)output_frame, 65536, logcode_now, &start_index, time_in_us_total, crc_check, check_format, pkt_type);
                     double t_after_decode_libarary = get_posix_timestamp1();
 
-                    // decode_file = fopen("decode_result.txt","a");
-                    // fprintf(decode_file, "Decode Library using %lf for this MSG\n", (t_after_decode_libarary-t_before_decode_libarary));
-                    // fclose(decode_file);
+                    log_file_decode = fopen("Log_file.txt","a+");
+                    fprintf(log_file_decode, "Decode Library using %lf for this MSG\n", (t_after_decode_libarary-t_before_decode_libarary));
+                    fclose(log_file_decode);
                 }
                 
                 

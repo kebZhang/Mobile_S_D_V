@@ -38,10 +38,10 @@ void decode_B139_v161_no_asn(uint8_t *hex_data, size_t length, int *index, uint6
         int pusch_tb_size = (hex_data[start_record+8]<<8)|(hex_data[start_record+9]);
 
 
-        FILE *fp_B139 = fopen("B139_report.txt", "a+");
-        fprintf(fp_B139, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\n",
-                            logcode, time_in_us_total, dispatch_sfn_sf,
-                            current_sfn_sf, redund_ver, num_of_rb, pusch_tb_size);
-        fclose(fp_B139);
+        // FILE *fp_B139 = fopen("B139_report.txt", "a+");
+        // fprintf(fp_B139, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\n",
+        //                     logcode, time_in_us_total, dispatch_sfn_sf,
+        //                     current_sfn_sf, redund_ver, num_of_rb, pusch_tb_size);
+        // fclose(fp_B139);
     }
 }

@@ -175,18 +175,18 @@ void decode_B16C_v48_no_asn(uint8_t *hex_data, size_t length, int *index, uint64
 
             is_num_ul_grant = 1;
 
-            FILE *fp_B16C = fopen("B16C_report.txt", "a+");
-            // fprintf(fp_B16C, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%d\t%d\t%d\n",
-            //                     logcode, time_in_us_total, version, num_record, 
-            //                     first_sub_frame_number, first_sys_frame_number,
-            //                     subfn, sysfn, mcs_index, redundancy_version, tbs_index_1, num_of_resource_blocks,
-            //                     crc_check, check_format, pkt_type);
-            fprintf(fp_B16C, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%d\n",
-                    logcode, time_in_us_total, version, num_record, 
-                    first_sub_frame_number, first_sys_frame_number,
-                    subfn, sysfn, mcs_index, redundancy_version, tbs_index_1, num_of_resource_blocks,
-                    is_num_ul_grant);
-            fclose(fp_B16C);
+            // FILE *fp_B16C = fopen("B16C_report.txt", "a+");
+            // // fprintf(fp_B16C, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%d\t%d\t%d\n",
+            // //                     logcode, time_in_us_total, version, num_record, 
+            // //                     first_sub_frame_number, first_sys_frame_number,
+            // //                     subfn, sysfn, mcs_index, redundancy_version, tbs_index_1, num_of_resource_blocks,
+            // //                     crc_check, check_format, pkt_type);
+            // fprintf(fp_B16C, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%d\n",
+            //         logcode, time_in_us_total, version, num_record, 
+            //         first_sub_frame_number, first_sys_frame_number,
+            //         subfn, sysfn, mcs_index, redundancy_version, tbs_index_1, num_of_resource_blocks,
+            //         is_num_ul_grant);
+            // fclose(fp_B16C);
         }
         else
         {
@@ -206,27 +206,27 @@ void decode_B16C_v48_no_asn(uint8_t *hex_data, size_t length, int *index, uint64
             //         first_sub_frame_number, first_sys_frame_number,
             //         subfn, sysfn, mcs_index, redundancy_version, num_of_resource_blocks);
 
-            FILE *fp_B16C = fopen("B16C_report.txt", "a+");
-            // fprintf(fp_B16C, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%d\t%d\t%d\n",
-            //                     logcode, time_in_us_total, version, num_record, 
-            //                     first_sub_frame_number, first_sys_frame_number,
-            //                     subfn, sysfn, mcs_index, redundancy_version, tbs_index_1, num_of_resource_blocks,
-            //                     crc_check, check_format, pkt_type);
-            fprintf(fp_B16C, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%d\n",
-                    logcode, time_in_us_total, version, num_record, 
-                    first_sub_frame_number, first_sys_frame_number,
-                    subfn, sysfn, mcs_index, redundancy_version, tbs_index_1, num_of_resource_blocks,
-                    is_num_ul_grant);
+            // FILE *fp_B16C = fopen("B16C_report.txt", "a+");
+            // // fprintf(fp_B16C, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%d\t%d\t%d\n",
+            // //                     logcode, time_in_us_total, version, num_record, 
+            // //                     first_sub_frame_number, first_sys_frame_number,
+            // //                     subfn, sysfn, mcs_index, redundancy_version, tbs_index_1, num_of_resource_blocks,
+            // //                     crc_check, check_format, pkt_type);
+            // fprintf(fp_B16C, "%02X\t%llu\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%d\n",
+            //         logcode, time_in_us_total, version, num_record, 
+            //         first_sub_frame_number, first_sys_frame_number,
+            //         subfn, sysfn, mcs_index, redundancy_version, tbs_index_1, num_of_resource_blocks,
+            //         is_num_ul_grant);
 
-            fclose(fp_B16C);
+            // fclose(fp_B16C);
 
-            FILE *fp_B16C_UL_0 = fopen("B16C_UL_judge_0.txt", "a+");
-            for(int k=0;k<128;k++)
-            {
-                fprintf(fp_B16C_UL_0, "%02X ", hex_data[start_record+k]);
-            }
-            fprintf(fp_B16C_UL_0,"\n");
-            fclose(fp_B16C_UL_0);
+            // FILE *fp_B16C_UL_0 = fopen("B16C_UL_judge_0.txt", "a+");
+            // for(int k=0;k<128;k++)
+            // {
+            //     fprintf(fp_B16C_UL_0, "%02X ", hex_data[start_record+k]);
+            // }
+            // fprintf(fp_B16C_UL_0,"\n");
+            // fclose(fp_B16C_UL_0);
 
         }
     }

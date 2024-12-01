@@ -1079,22 +1079,22 @@ next:
 }
 
 void* drain_thread_func(void* arg){
-	FILE *log_drain_file;
-	log_drain_file = fopen("Log_drain_file.txt","w+");
-	fclose(log_drain_file);
-	log_drain_file = fopen("Log_drain_file.txt","a+");
-	setvbuf(log_drain_file, NULL, _IONBF, 0);
+	// FILE *log_drain_file;
+	// log_drain_file = fopen("Log_drain_file.txt","w+");
+	// fclose(log_drain_file);
+	// log_drain_file = fopen("Log_drain_file.txt","a+");
+	// setvbuf(log_drain_file, NULL, _IONBF, 0);
 	uint8_t peripheral = 0;
 	int ret;
-	fprintf(log_drain_file, "drain thread start\n");
+	// fprintf(log_drain_file, "drain thread start\n");
 
 	while(1){
 		ret = ioctl(fd, DIAG_IOCTL_PERIPHERAL_BUF_DRAIN, &peripheral);
 		double ts_drain = get_posix_timestamp();
-		fprintf(log_drain_file, "drain at %lf, ret=%d\n", ts_drain, ret);
+		// fprintf(log_drain_file, "drain at %lf, ret=%d\n", ts_drain, ret);
 		usleep(1000);
 	}
-	fclose(log_drain_file);
+	// fclose(log_drain_file);
 }
 
 int
@@ -1125,7 +1125,7 @@ main (int argc, char **argv)
 
 	//generate_cfg
 	int logcode_num=3;
-	uint16_t logcode_list[3] = {0xB064, 0xB173, 0xB16C};
+	uint16_t logcode_list[3] = {0xB064, 0xB139, 0xB173};
 	// uint16_t logcode_list[6] = {0xB84E, 0xB872, 0xB873, 0xB883, 0xB885, 0xB887};
 	generate_diag_cfg(logcode_list,logcode_num);
 	const char *filename_diag_cfg = "Diag_ty.cfg";
@@ -1258,10 +1258,10 @@ main (int argc, char **argv)
 	// }
 
 	// ***************************** drain in user space ****************************
-		// pthread_t drain_thread;
-		// fprintf(log_file, "fd=%d\n", fd);
-		// pthread_create(&drain_thread, NULL, drain_thread_func, NULL);
-		// fprintf(log_file, "drain thread created\n");
+		pthread_t drain_thread;
+		fprintf(log_file, "fd=%d\n", fd);
+		pthread_create(&drain_thread, NULL, drain_thread_func, NULL);
+		fprintf(log_file, "drain thread created\n");
 
 	// ***************************** drain in kernel ****************************
 	// uint8_t peripheral = 0;
@@ -1439,7 +1439,7 @@ main (int argc, char **argv)
 	}
 	*/
 
-	// pthread_join(drain_thread, NULL);
+	pthread_join(drain_thread, NULL);
 	// ret = ioctl(fd, DIAG_IOCTL_BUF_DRAIN_END, &peripheral);
 	// if(ret < 0){
 	// 	fprintf(log_file, "ioctl DIAG_IOCTL_BUF_DRAIN_END fails, ret= %d\n", ret);
