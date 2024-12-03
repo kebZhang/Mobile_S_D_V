@@ -1126,6 +1126,23 @@ main (int argc, char **argv)
 	//generate_cfg
 	int logcode_num=3;
 	uint16_t logcode_list[3] = {0xB064, 0xB139, 0xB173};
+
+	/*enable all*/
+	// int logcode_num=60;
+	// uint16_t logcode_list[60] = {0xB061, 0xB062, 0xB063, 0xB064, 0xB067, 
+	// 							0xB081, 0xB082, 0xB083, 0xB087, 0xB091,
+	// 							0xB092, 0xB097, 0xB0A1, 0xB0A4, 0xB0A5,
+	// 							0xB0B1, 0xB0B4, 0xB0B5, 0xB0B6, 0xB0C0,
+	// 							0xB0C2, 0xB0CD, 0xB0E5, 0xB0ED, 0xB0EE,
+	// 							0xB116, 0xB126, 0xB12A, 0xB130, 0xB139,
+	// 							0xB144, 0xB14D, 0xB14E, 0xB160, 0xB167,       
+	// 							0xB168, 0xB169, 0xB16A, 0xB16C, 0xB16D,
+	// 							0xB16E, 0xB173, 0xB179, 0xB17A, 0xB17D,
+	// 							0xB17F, 0xB181, 0xB184, 0xB187, 0xB18F,
+	// 							0xB192, 0xB193, 0xB195, 0xB196, 0xB197,
+	// 							0xB198, 0xB19E, 0xB1A1, 0xB1A2, 0xB1B2};
+
+
 	// uint16_t logcode_list[6] = {0xB84E, 0xB872, 0xB873, 0xB883, 0xB885, 0xB887};
 	generate_diag_cfg(logcode_list,logcode_num);
 	const char *filename_diag_cfg = "Diag_ty.cfg";
@@ -1134,8 +1151,8 @@ main (int argc, char **argv)
 
 	if (argc < 2 || argc > 5) {
 		printf("Diag_revealer " DIAG_REVEALER_VERSION "\n");
-		printf("Author: Yuanjie Li, Jiayao Li, Ruihan Li\n");
-		printf("UCLA Wing Group, PKU SOAR Group\n");
+		printf("Author: xxx\n");
+		printf("xxx\n");
 		printf("Usage: diag_revealer DIAG_CFG_PATH FIFO_PATH [LOG_OUTPUT_DIR] [LOG_CUT_SIZE (in MB)]\n");
 		return 0;
 	}
@@ -1380,8 +1397,8 @@ main (int argc, char **argv)
 
 					decode(buf_read, msg_len, offset, msglen_effect_time);
 
-					log_file = fopen("Log_file.txt","a+");
-					fprintf(log_file, "Timestamp: %lf, msg num:%d, effective total msg len=%d\n", ts_each, msglen_effect_time[0],msglen_effect_time[1]);
+					// log_file = fopen("Log_file.txt","a+");
+					// fprintf(log_file, "Timestamp: %lf, msg num:%d, effective total msg len=%d\n", ts_each, msglen_effect_time[0],msglen_effect_time[1]);
 
 					// if (ret_err < 0) {
 					// 	LOGI("Pipe error (payload): %s", strerror(errno));
