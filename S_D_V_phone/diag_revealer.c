@@ -895,8 +895,45 @@ enable_logging (int fd, int mode)
 	fclose(debug_file_enable);
 
     ssize_t arglen = probe_ioctl_arglen(DIAG_IOCTL_SWITCH_LOGGING, sizeof(struct diag_logging_mode_param_t_q));
-    
-    if (strstr(board_name, "lito") != NULL && strstr(system_version, "11") != NULL){
+
+	if(strstr(board_name, "lito") == NULL && strstr(system_version, "11") != NULL)
+	{
+		int ret11=0;
+		printf("in android11 but not lito\n");
+		struct diag_logging_mode_param_t mode_param = {0};
+        struct diag_con_all_param_t con_all = {0};
+        
+        // 查询连接状态
+        con_all.diag_con_all = 0xff;
+        ret11 = ioctl(fd, DIAG_IOCTL_QUERY_CON_ALL, &con_all);
+        
+        // 配置 logging mode
+        mode_param.req_mode = mode;
+        mode_param.peripheral_mask = (ret11 == 0) ? con_all.diag_con_all : 0x7f;
+        mode_param.pd_mask = 0;  // 不使用 pd_mask
+        mode_param.mode_param = 1;
+        mode_param.diag_id = 0;
+        mode_param.pd_val = 0;
+        mode_param.reserved = 0;
+        mode_param.peripheral = -EINVAL;  // 设置为无效值
+        mode_param.device_mask = 1 << DIAG_MD_LOCAL;
+
+        ret11 = ioctl(fd, DIAG_IOCTL_SWITCH_LOGGING, &mode_param);
+        if (ret11 < 0) {
+            // 如果失败,尝试使用最基本的配置
+            mode_param.peripheral_mask = DIAG_CON_APSS;
+            mode_param.device_mask = 1;
+            mode_param.mode_param = 0;
+            ret11 = ioctl(fd, DIAG_IOCTL_SWITCH_LOGGING, &mode_param);
+        }
+        
+        if (ret11 == 0 && (con_all.diag_con_all & DIAG_CON_MPSS)) {
+            // g_use_mdm = 1;
+            printf("MDM support detected (Android 10+)\n");
+        }
+
+	}
+    else if (strstr(board_name, "lito") != NULL && strstr(system_version, "11") != NULL){
     	printf("MATCHED.\n");
     	/* Android 11.0.0 (RD1A.201105.003.C1)
 		 * Reference:
